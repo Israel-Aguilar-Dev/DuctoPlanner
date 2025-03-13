@@ -1,0 +1,68 @@
+# Visual Studio archivos de usuario y configuración
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.VC.db
+
+# Archivos de compilación
+bin/
+obj/
+out/
+*.exe
+*.dll
+*.pdb
+*.ilk
+*.obj
+*.log
+*.cache
+*.tlog
+*.lastbuildstate
+
+# Archivos de configuración y dependencias
+app.publish/
+logs/
+node_modules/
+node_modules/
+
+# Paquetes de NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+project.lock.json
+project.assets.json
+
+# Archivos específicos de Windows y desarrollo en .NET
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Caché de compilación
+ipch/
+*.iobj
+*.ipdb
+
+# Archivos de depuración
+*.sdf
+*.opensdf
+
+# Configuración de usuario en Visual Studio Code
+.vscode/
+
+# Archivos de configuración específicos de WinUI 3 y MSIX
+*.pri
+*.appxrecipe
+*.bundle
+*.appx
+*.appxbundle
+*.msix
+*.msixbundle
+*.msixupload
+AppPackages/
+
+# Excluir claves privadas y credenciales
+*.pfx
+*.key
+secrets.json

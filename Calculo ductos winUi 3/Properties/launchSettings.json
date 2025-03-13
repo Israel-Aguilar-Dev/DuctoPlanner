@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Calculo ductos winUi 3 (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Calculo ductos winUi 3 (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
