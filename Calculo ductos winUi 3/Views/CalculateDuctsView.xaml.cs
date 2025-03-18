@@ -360,6 +360,96 @@ namespace Calculo_ductos_winUi_3.Views
             }
         }
 
+        private void ShowDuctsByFloor2(List<Floor> calculatedFloors)
+        {
+            foreach (var floor in calculatedFloors)
+            {
+                bool addFloor = false;
+                int countSpan = 0;
+                int startRow = DuctsByFloorTable.RowDefinitions.Count; // Guardar el índice inicial
+
+                foreach (var duct in floor.Ducts)
+                {
+                    if (duct.Value > 0)
+                    {
+                        addFloor = true;
+                        DuctsByFloorTable.RowDefinitions.Add(new RowDefinition
+                        {
+                            Height = new GridLength(1, GridUnitType.Auto)
+                        });
+
+                        int currentRow = DuctsByFloorTable.RowDefinitions.Count - 1;
+
+                        TextBlock name = new TextBlock
+                        {
+                            Tag = 1,
+                            Text = duct.Key.ToString(),
+                            TextAlignment = TextAlignment.Center,
+                            Margin = new Thickness(10, 8, 13, 8),
+                            Padding = new Thickness(3)
+                        };
+                        TextBlock count = new TextBlock
+                        {
+                            Tag = 1,
+                            Text = duct.Value.ToString(),
+                            TextAlignment = TextAlignment.Center,
+                            Margin = new Thickness(10, 8, 13, 8),
+                            Padding = new Thickness(3)
+                        };
+                        var pathGeometry = new PathGeometry();
+                        var pathFigure = new PathFigure { StartPoint = new Windows.Foundation.Point(0, 0) };
+                        pathFigure.Segments.Add(new LineSegment { Point = new Windows.Foundation.Point(200, 0) });
+                        pathGeometry.Figures.Add(pathFigure);
+
+                        Path path = new Path
+                        {
+                            Tag = 1,
+                            Stroke = new SolidColorBrush(Microsoft.UI.Colors.Gray),
+                            StrokeThickness = 0.5,
+                            Data = pathGeometry,
+                            Margin = new Thickness(36, 0, 36, 0),
+                            Stretch = Stretch.Fill,
+                            VerticalAlignment = VerticalAlignment.Bottom
+                        };
+
+                        Grid.SetRow(name, currentRow);
+                        Grid.SetColumn(name, 1);
+                        DuctsByFloorTable.Children.Add(name);
+
+                        Grid.SetRow(count, currentRow);
+                        Grid.SetColumn(count, 2);
+                        DuctsByFloorTable.Children.Add(count);
+
+                        Grid.SetRow(path, currentRow);
+                        Grid.SetColumnSpan(path, 6);
+                        DuctsByFloorTable.Children.Add(path);
+
+                        countSpan++;
+                    }
+                }
+
+                if (addFloor && countSpan > 0)
+                {
+                    // Crear el TextBlock para el nombre del nivel
+                    TextBlock nameLevel = new TextBlock
+                    {
+                        Tag = 1,
+                        Text = floor.Name.ToString(),
+                        TextAlignment = TextAlignment.Center,
+                        Margin = new Thickness(10, 8, 13, 8),
+                        Padding = new Thickness(3)
+                    };
+
+                    // Colocar el nombre del nivel en la primera fila del grupo
+                    Grid.SetRow(nameLevel, startRow);
+                    Grid.SetColumn(nameLevel, 0);
+                    Grid.SetRowSpan(nameLevel, countSpan); // Abarca todas las filas del grupo
+
+                    DuctsByFloorTable.Children.Add(nameLevel);
+                }
+            }
+        }
+
         private void ShowComponents(List<Component> components)
         {
             foreach (var component in components)
