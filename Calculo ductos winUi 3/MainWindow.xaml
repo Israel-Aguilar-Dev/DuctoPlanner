@@ -8,6 +8,7 @@
     xmlns:controlPages="using:Calculo_ductos_winUi_3"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+
     <Page>
         <Page.Resources>
             <DataTemplate x:Key="NavLinkItemTemplate" x:DataType="controlPages:NavLink">
@@ -15,9 +16,6 @@
                     <SymbolIcon Symbol="{x:Bind Symbol}" />
                     <TextBlock Text="{x:Bind Label}" Margin="24,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
-            </DataTemplate>
-            <DataTemplate x:Key="ToolbarTemplate" x:DataType="controlPages:MenuBar">
-                <TextBlock Text="{x:Bind Label}" Margin="24,0,0,0" VerticalAlignment="Center" />
             </DataTemplate>
         </Page.Resources>
         
@@ -30,7 +28,7 @@
                 <!-- Botones principales en la barra -->
                 <AppBarButton Icon="OpenFile" Label="Abrir" />
                 <AppBarButton Icon="Save" Label="Guardar" />
-                <AppBarButton Icon="Share" Label="Exportar" />
+                <AppBarButton Icon="Share" Label="Exportar" Click="ExportButton_Click" />
 
                 <!-- Menú desplegable con más opciones -->
                 <CommandBar.SecondaryCommands>

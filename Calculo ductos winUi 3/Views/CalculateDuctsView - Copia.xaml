@@ -9,6 +9,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     
+ 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>
@@ -19,7 +20,7 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock 
-            Text="Calculo de ductos" 
+            Text="Ducto Planner" 
             Style="{StaticResource TitleTextBlockStyle}"
             Margin="36,16,36,16"
             Grid.Row="0"
@@ -60,7 +61,7 @@
                     Grid.ColumnSpan="2"
                     Margin="16"
                     Height="Auto">
-                    <TextBlock x:Name="lblNumero" >Numero de pisos</TextBlock>
+                    <TextBlock x:Name="lblNumero" >Numero de niveles</TextBlock>
                     <TextBox 
                         x:Name="txtNumeroPisos" 
                         Height="30"></TextBox>
@@ -72,7 +73,7 @@
                     Grid.ColumnSpan="2"
                     Margin="16"
                     Height="Auto">
-                    <TextBlock x:Name="lblNombrePiso" >Altura</TextBlock>
+                    <TextBlock x:Name="lblAltura" >Altura</TextBlock>
                     <TextBox 
                         x:Name="txtAltura" 
                         Height="30" ></TextBox>
@@ -83,8 +84,8 @@
                     Grid.Row="2" 
                     Grid.ColumnSpan="2"
                     Margin="16"
-                    Height="Auto">      
-                    <TextBlock x:Name="lblAltura" >Tipo de piso</TextBlock>
+                    Height="Auto">
+                    <TextBlock x:Name="lblTipo" >Tipo de nivel</TextBlock>
                     <ComboBox 
                         x:Name="cbxTipo" 
                         Height="30" 
@@ -100,8 +101,8 @@
                     Grid.Row="3" 
                     Grid.ColumnSpan="2"
                     Margin="16"
-                    Height="Auto">      
-                    <TextBlock x:Name="lblTipo">Necesitan compuerta</TextBlock>
+                    Height="Auto">
+                    <TextBlock x:Name="lblCompuerta">Necesitan puerta</TextBlock>
                     <ComboBox x:Name="cbxCompuerta" >
                         <ComboBoxItem>Si</ComboBoxItem>
                         <ComboBoxItem>No</ComboBoxItem>
@@ -114,10 +115,15 @@
                     Grid.ColumnSpan="2"
                     Margin="16"
                     Height="Auto">
-                    <TextBlock x:Name="lblCompuerta">Necesita chimenea</TextBlock>
-                    <ComboBox x:Name="cbxChimenea">
+                    <!--<TextBlock x:Name="lblChimenea">Necesita chimenea</TextBlock>-->
+                    <TextBlock x:Name="lblChimenea">Tipo de ventilación</TextBlock>
+                    <!--<ComboBox x:Name="cbxChimenea">
                         <ComboBoxItem>Si</ComboBoxItem>
                         <ComboBoxItem >No</ComboBoxItem>
+                    </ComboBox>-->
+                    <ComboBox x:Name="cbxChimenea">
+                        <ComboBoxItem>Chimenea</ComboBoxItem>
+                        <ComboBoxItem >Cuello de ganso</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
                 <StackPanel 
@@ -150,7 +156,7 @@
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <TextBlock 
-                    Text="Resumen de pisos" 
+                    Text="Resumen de niveles" 
                     Margin="36,36,36,0" 
                     HorizontalAlignment="Center"
                     Style="{StaticResource SubtitleTextBlockStyle}"
@@ -175,11 +181,12 @@
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
-                        <TextBlock Tag="0" Grid.Column="0" Padding="6" Margin="10" TextAlignment="Center">Tipo de piso</TextBlock>
-                        <TextBlock Tag="0" Grid.Column="1" Padding="6" Margin="10" TextAlignment="Center">Cantidad de pisos</TextBlock>
+                        <TextBlock Tag="0" Grid.Column="0" Padding="6" Margin="10" TextAlignment="Center">Tipo de nivel</TextBlock>
+                        <TextBlock Tag="0" Grid.Column="1" Padding="6" Margin="10" TextAlignment="Center">Cantidad de niveles</TextBlock>
                         <TextBlock Tag="0" Grid.Column="2" Padding="6" Margin="10" TextAlignment="Center">Altura</TextBlock>
                         <TextBlock Tag="0" Grid.Column="3" Padding="6" Margin="10" TextAlignment="Center">Necesita compuerta</TextBlock>
-                        <TextBlock Tag="0" Grid.Column="4" Padding="6" Margin="10" TextAlignment="Center">Necesita chimenea</TextBlock>
+                        <!--<TextBlock Tag="0" Grid.Column="4" Padding="6" Margin="10" TextAlignment="Center">Necesita chimenea</TextBlock>-->
+                        <TextBlock Tag="0" Grid.Column="4" Padding="6" Margin="10" TextAlignment="Center">Tipo de ventilación</TextBlock>
                         <TextBlock Tag="0" Grid.Column="5" Padding="6" Margin="10" TextAlignment="Center">Eliminar</TextBlock>
                         <Path 
                             Tag="0"
@@ -218,15 +225,15 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Grid
-                        x:Name="leftCardContainer"
+                    <Grid x:Name="leftCardContainer"
                         Grid.Column="0"
                         Grid.Row="1"
-                        CornerRadius="8"
-                        Margin="0,0,8,0"
-                        Background="White">
+                        >
                         <!-- Frente de la tarjeta -->
-                        <Grid x:Name="FrontCard" Background="white">
+                        <Grid x:Name="FrontCard" 
+                            Background="white"
+                            CornerRadius="8"
+                            Margin="0,0,8,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -242,7 +249,7 @@
                                 Grid.Row="0"
                                 Grid.ColumnSpan="2"
                                 Style="{StaticResource BodyStrongTextBlockStyle}"/>
-                            <!--<Button
+                            <Button
                                 x:Name="DetailDuctByFloor"
                                 HorizontalAlignment="Right"
                                 Grid.Row="0"
@@ -250,8 +257,9 @@
                                 Margin="0,16,36,0" 
                                 Background="white"
                                 Click="FlipCard">
-                                Detalles
-                            </Button>-->
+                                <!--Detalles-->
+                                <FontIcon Glyph="&#xEB91;" />
+                            </Button>
                             <ScrollViewer
                             VerticalScrollBarVisibility="Auto"
                             HorizontalScrollBarVisibility="Disabled"
@@ -276,7 +284,11 @@
                         </ScrollViewer>
                         </Grid>
                         <!-- Reverso de la tarjeta -->
-                        <Grid x:Name="BackCard" Background="white" Visibility="Collapsed" >
+                        <Grid x:Name="BackCard" 
+                            Background="white" 
+                            CornerRadius="8"
+                            Margin="0,0,8,0"
+                            Visibility="Collapsed" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
@@ -302,7 +314,9 @@
                                 BorderThickness="0"
                                 Background="white"
                                 Click="FlipCard">
-                                Resumen</Button>
+                                <!--Resumen-->
+                                <FontIcon Glyph="&#xEB91;" />
+                            </Button>
                             <ScrollViewer
                                 VerticalScrollBarVisibility="Auto"
                                 HorizontalScrollBarVisibility="Disabled"

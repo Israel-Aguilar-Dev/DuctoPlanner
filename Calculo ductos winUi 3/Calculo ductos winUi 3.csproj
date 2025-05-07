@@ -4,15 +4,19 @@
     <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <RootNamespace>Calculo_ductos_winUi_3</RootNamespace>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Platforms>x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <Platforms>x86;x64</Platforms>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
     <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\Ducts.json" />
+    <Content Remove="Assets\IconoVertical-VERDE.png" />
+    <Content Remove="Assets\logovertical.jpg" />
+    <Content Remove="Assets\torre.png" />
+    <Content Remove="Assets\torre2.png" />
     <Content Remove="Assets\Vertical.png" />
   </ItemGroup>
   <ItemGroup>
@@ -27,7 +31,13 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Content Include="Vertical-_2_.ico" />
+    <Content Include="Icono Vertical - VERDE.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Ducts.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -43,6 +53,8 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="25.4.0" />
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls.DataGrid" Version="7.1.2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
@@ -50,20 +62,28 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Tiles\" />
-  </ItemGroup>
-  <ItemGroup>
     <Reference Include="Calculo ductos">
       <HintPath>..\..\Calculo de ductos v1\Calculo ductos\bin\Debug\net8.0\Calculo ductos.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\CalculateDuctsView2.xaml">
+    <Page Update="Views\CalculateDuctsView - Copia.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CalculateDuctsView.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Tiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Models\FloorDuctDetailModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\IconoVertical-VERDE.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <!--
@@ -73,8 +93,8 @@
   -->
   <PropertyGroup Label="Globals">
     <HasPackageAndPublishMenu>true</HasPackageAndPublishMenu>
-    <AppxPackage>false</AppxPackage>
-    <WindowsPackageType>None</WindowsPackageType>
+    <AppxPackage>true</AppxPackage>
+    <WindowsPackageType>MSIX</WindowsPackageType>
   </PropertyGroup>
 
   <!-- Publish Properties -->
@@ -83,6 +103,19 @@
     <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
     <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
     <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>
-    <ApplicationIcon>Vertical-_2_.ico</ApplicationIcon>
+    <ApplicationIcon>Icono Vertical - VERDE.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AssemblyName></AssemblyName>
+    <GenerateAppInstallerFile>True</GenerateAppInstallerFile>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <PackageCertificateThumbprint>91A00ABF03DE06A491135BA40745B7564058C536</PackageCertificateThumbprint>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\Repos\Calculo ductos winUi 3\publish\</AppxPackageDir>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <AppxBundle>Never</AppxBundle>
+    <AppInstallerUri>http://192.168.10.228:8092/CotizadorVertical/</AppInstallerUri>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
 </Project>

@@ -1,0 +1,570 @@
+﻿using Aspose.Cells;
+using Calculo_ductos.Params;
+using Calculo_ductos_winUi_3.Models;
+using Calculo_ductos_winUi_3.ViewModels;
+using DocumentFormat.OpenXml.Office.CustomUI;
+using DocumentFormat.OpenXml.Vml.Office;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+namespace Calculo_ductos_winUi_3.Services
+{
+    internal static class ExcelFile
+    {
+        #region fields
+        private static Style greenBackground = new Style();
+        private static Style greenBackgroundYellowWords = new Style();
+        private static Style yellowBackground = new Style();
+        private static Style yellowBackgroundBorder = new Style();
+        private static Style yellowBackgroundRedWords = new Style();
+        private static Style styleYellowFont = new Style();
+        private static Style redWords = new Style();
+        private static Style greenWords = new Style();
+        private static Style defaultStyle = new Style();
+        private static Style redWordsBlackBorder = new Style();
+        private static Style redWordsYellowBackground = new Style();
+        #endregion
+
+        private static StateViewModel _state;
+        public static async Task ExportToExcel(this StateViewModel state, string filePath = null) {
+            _state = state;
+            using var workbook = new Workbook();
+            //var worksheet = workbook.Worksheets.Add("DUCTO 1");
+            var worksheet = workbook.Worksheets[0];
+            worksheet.Name = "DUCTO 1";
+            await CreateTemplateSheet(worksheet);
+            workbook.Save(filePath, SaveFormat.Xlsx);
+        }
+        public static async Task CreateTemplateSheet(Worksheet worksheet)
+        {
+            // Alineación horizontal centrada a toda la hoja
+            Style defaultStyle = worksheet.Cells.Rows[0].GetStyle();
+            defaultStyle.HorizontalAlignment = TextAlignmentType.Center;
+            worksheet.Cells.ApplyStyle(defaultStyle, new StyleFlag { HorizontalAlignment = true });
+
+            SetStyles(ref worksheet);
+            // Encabezados
+            WriteHeaders(worksheet, out int currentRow);
+
+            // Cargar datos del JSON
+            KitCollection dataTemplate = await LoadKitsFromJsonAsync();
+
+            // Escribir listas de kits
+            WriteKitList(dataTemplate.Ducts, worksheet, ref currentRow);
+
+            currentRow++;
+            currentRow++;
+
+            // Escribir títulos de columna
+            worksheet.Cells[currentRow, 0].PutValue("Kit");           // Columna A
+            worksheet.Cells[currentRow, 1].PutValue("Descripcion");   // Columna B
+            worksheet.Cells[currentRow, 8].PutValue("Cantidad");      // Columna I
+            worksheet.Cells[currentRow, 9].PutValue("Total");         // Columna J
+
+            // Combinar celdas de B hasta H (índices 1 a 7)
+            worksheet.Cells.Merge(currentRow, 1, 1, 7);
+
+            // Estilizar desde A hasta J (índices 0 a 9)
+            var range = worksheet.Cells.CreateRange(currentRow, 0, 1, 10);
+            Style style = worksheet.Workbook.CreateStyle();
+            style.Font.Color = System.Drawing.ColorTranslator.FromHtml("#00B0AC");
+            style.Font.IsBold = true;
+
+            StyleFlag flag = new StyleFlag { FontColor = true, FontBold = true };
+            range.ApplyStyle(style, flag);
+
+            currentRow++;
+
+            // Escribir más listas
+            WriteKitList(dataTemplate.Guillotine, worksheet, ref currentRow, TextAlignmentType.Left);
+            currentRow++;
+
+            WriteKitList(dataTemplate.Container, worksheet, ref currentRow, TextAlignmentType.Left);
+            currentRow++;
+
+            WriteKitList(dataTemplate.General, worksheet, ref currentRow, TextAlignmentType.Left);
+            currentRow++;
+
+            // Pie de página
+            WriteFooters(worksheet, ref currentRow);
+
+            // Ajustar ancho de columnas
+            worksheet.AutoFitColumns();
+        }
+
+        private static void SetStyles(ref Worksheet worksheet)
+        {
+            Color green = ColorTranslator.FromHtml("#00B0AC");
+            Color yellow = ColorTranslator.FromHtml("#FFD966");
+            Color yellowB = ColorTranslator.FromHtml("#FFF2CC");
+            Color red = ColorTranslator.FromHtml("#FF0000");
+
+            greenBackground = worksheet.Workbook.CreateStyle();
+            greenBackground.ForegroundColor = green;
+            greenBackground.Pattern = BackgroundType.Solid;
+            greenBackground.Font.Color = Color.White;
+            greenBackground.Font.IsBold = true;
+            greenBackground.VerticalAlignment = TextAlignmentType.Center;
+            greenBackground.HorizontalAlignment = TextAlignmentType.Center;
+            greenBackground.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Dotted;
+            greenBackground.Borders[BorderType.TopBorder].Color = green;
+            greenBackground.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Dotted;
+            greenBackground.Borders[BorderType.LeftBorder].Color = green;
+            greenBackground.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Dotted;
+            greenBackground.Borders[BorderType.RightBorder].Color = green;
+            greenBackground.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Dotted;
+            greenBackground.Borders[BorderType.BottomBorder].Color = green;
+
+            greenBackgroundYellowWords = worksheet.Workbook.CreateStyle();
+            greenBackgroundYellowWords.ForegroundColor = green;
+            greenBackgroundYellowWords.Pattern = BackgroundType.Solid;
+            greenBackgroundYellowWords.Font.Color = yellow;
+            greenBackgroundYellowWords.Font.IsBold = true;
+            greenBackgroundYellowWords.HorizontalAlignment = TextAlignmentType.Center;
+
+            yellowBackground = worksheet.Workbook.CreateStyle();
+            yellowBackground.ForegroundColor = yellowB;
+            yellowBackground.Pattern = BackgroundType.Solid;
+            yellowBackground.Font.IsBold = true;
+            yellowBackground.HorizontalAlignment = TextAlignmentType.Center;
+            
+            yellowBackgroundBorder = worksheet.Workbook.CreateStyle();
+            yellowBackgroundBorder.ForegroundColor = yellowB;
+            yellowBackgroundBorder.Pattern = BackgroundType.Solid;
+            yellowBackgroundBorder.Font.IsBold = true;
+            yellowBackgroundBorder.HorizontalAlignment = TextAlignmentType.Center;
+            yellowBackgroundBorder.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+            yellowBackgroundBorder.Borders[BorderType.TopBorder].Color = green;
+            yellowBackgroundBorder.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+            yellowBackgroundBorder.Borders[BorderType.LeftBorder].Color = green;
+            yellowBackgroundBorder.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+            yellowBackgroundBorder.Borders[BorderType.RightBorder].Color = green;
+            yellowBackgroundBorder.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+            yellowBackgroundBorder.Borders[BorderType.BottomBorder].Color = green;
+
+            yellowBackgroundRedWords = worksheet.Workbook.CreateStyle();
+            yellowBackgroundRedWords.ForegroundColor = yellowB;
+            yellowBackgroundRedWords.Pattern = BackgroundType.Solid;
+            yellowBackgroundRedWords.Font.IsBold = true;
+            yellowBackgroundRedWords.Font.Color = red;
+            yellowBackgroundRedWords.HorizontalAlignment = TextAlignmentType.Center;
+
+            styleYellowFont = worksheet.Workbook.CreateStyle();
+            styleYellowFont.Font.Color = yellow;
+            styleYellowFont.Font.IsBold = true;
+            styleYellowFont.HorizontalAlignment = TextAlignmentType.Center;
+
+            redWords = worksheet.Workbook.CreateStyle();
+            redWords.Font.Color = red;
+            redWords.Font.IsBold = true;
+            redWords.HorizontalAlignment = TextAlignmentType.Center;
+            redWords.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+            redWords.Borders[BorderType.TopBorder].Color = green;
+            redWords.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+            redWords.Borders[BorderType.LeftBorder].Color = green;
+            redWords.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+            redWords.Borders[BorderType.RightBorder].Color = green;
+            redWords.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+            redWords.Borders[BorderType.BottomBorder].Color = green;
+
+            redWordsBlackBorder = worksheet.Workbook.CreateStyle();
+            redWordsBlackBorder.Font.Color = red;
+            redWordsBlackBorder.Font.IsBold = true;
+            redWordsBlackBorder.HorizontalAlignment = TextAlignmentType.Left;
+            redWordsBlackBorder.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Dotted;
+            redWordsBlackBorder.Borders[BorderType.TopBorder].Color = Color.Black;
+            redWordsBlackBorder.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Dotted;
+            redWordsBlackBorder.Borders[BorderType.LeftBorder].Color = Color.Black;
+            redWordsBlackBorder.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Dotted;
+            redWordsBlackBorder.Borders[BorderType.RightBorder].Color = Color.Black;
+            redWordsBlackBorder.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Dotted;
+            redWordsBlackBorder.Borders[BorderType.BottomBorder].Color = Color.Black;
+
+
+            redWordsYellowBackground = worksheet.Workbook.CreateStyle();
+            redWordsYellowBackground.Font.Color = red;
+            redWordsYellowBackground.ForegroundColor = yellowB;
+            redWordsYellowBackground.Pattern = BackgroundType.Solid;
+            redWordsYellowBackground.Font.IsBold = true;
+            redWordsYellowBackground.HorizontalAlignment = TextAlignmentType.Center;
+            redWordsYellowBackground.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Dotted;
+            redWordsYellowBackground.Borders[BorderType.TopBorder].Color = green;
+            redWordsYellowBackground.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Dotted;
+            redWordsYellowBackground.Borders[BorderType.BottomBorder].Color = green;
+            redWordsYellowBackground.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Dotted;
+            redWordsYellowBackground.Borders[BorderType.LeftBorder].Color = green;
+            redWordsYellowBackground.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Dotted;
+            redWordsYellowBackground.Borders[BorderType.RightBorder].Color = green;
+
+            greenWords = worksheet.Workbook.CreateStyle();
+            greenWords.Font.Color = green;
+            greenWords.Font.IsBold = true;
+            greenWords.HorizontalAlignment = TextAlignmentType.Center;
+            greenWords.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Thin;
+            greenWords.Borders[BorderType.TopBorder].Color = green;
+            greenWords.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Thin;
+            greenWords.Borders[BorderType.BottomBorder].Color = green;
+            greenWords.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Thin;
+            greenWords.Borders[BorderType.LeftBorder].Color = green;
+            greenWords.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Thin;
+            greenWords.Borders[BorderType.RightBorder].Color = green;
+
+            defaultStyle = worksheet.Workbook.CreateStyle();
+            defaultStyle.HorizontalAlignment = TextAlignmentType.Center;
+            defaultStyle.Font.Color = default;
+            defaultStyle.Borders[BorderType.TopBorder].LineStyle = CellBorderType.Dotted;
+            defaultStyle.Borders[BorderType.TopBorder].Color = green;
+            defaultStyle.Borders[BorderType.BottomBorder].LineStyle = CellBorderType.Dotted;
+            defaultStyle.Borders[BorderType.BottomBorder].Color = green;
+            defaultStyle.Borders[BorderType.LeftBorder].LineStyle = CellBorderType.Dotted;
+            defaultStyle.Borders[BorderType.LeftBorder].Color = green;
+            defaultStyle.Borders[BorderType.RightBorder].LineStyle = CellBorderType.Dotted;
+            defaultStyle.Borders[BorderType.RightBorder].Color = green;
+            defaultStyle.IsTextWrapped = true;
+
+
+        }
+        private static async Task<KitCollection> LoadKitsFromJsonAsync()
+        {
+            try
+            {
+                var assembly = typeof(StateViewModel).Assembly;
+                foreach (var name in assembly.GetManifestResourceNames())
+                {
+                    System.Diagnostics.Debug.WriteLine("RECURSO: " + name);
+                }
+                //string basePath = AppContext.BaseDirectory;
+                //var assembly = typeof(StateViewModel).Assembly;
+                using Stream stream = assembly.GetManifestResourceStream("Calculo_ductos_winUi_3.Assets.Ducts.json");
+
+                //using FileStream stream = File.OpenRead(jsonPath);
+
+                var kitList = await JsonSerializer.DeserializeAsync<List<KitCollection>>(stream);
+
+                // Como viene dentro de un array con un solo objeto
+                return kitList?.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error leyendo JSON: {ex.Message}");
+                return default;
+            }
+        }
+
+        private static void WriteHeaders(Worksheet worksheet, out int currentRow)
+        {
+            // Primera fila
+            worksheet.Cells[0, 0].PutValue("DUCTO DE BASURA");
+            worksheet.Cells.CreateRange(0, 0, 1, 10).Merge();
+            var range = worksheet.Cells.CreateRange(0, 0, 1, 10);
+            range.SetStyle(greenBackground, true);
+
+            // Fila 2
+            worksheet.Cells[1, 1].PutValue("Proyecto:");
+            worksheet.Cells[1, 1].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Right });
+            worksheet.Cells.CreateRange(1, 2, 1, 3).Merge();
+            worksheet.Cells.CreateRange(1, 6, 1, 2).Merge();
+            //worksheet.Cells.CreateRange(1, 8, 1, 1).Merge();
+            worksheet.Cells.CreateRange(1, 2, 4, 3).SetStyle(yellowBackground,true);
+            worksheet.Cells.CreateRange(1, 6, 4, 2).SetStyle(yellowBackground, true);
+            worksheet.Cells.CreateRange(1, 8, 3, 1).SetStyle(yellowBackground, true);
+            worksheet.Cells.CreateRange(1, 9, 3, 1).SetStyle(yellowBackground, true);
+
+            worksheet.Cells[1, 5].PutValue("Obra:");
+            worksheet.Cells[1, 5].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Right });
+            worksheet.Cells[1, 8].PutValue("Version:");
+            worksheet.Cells[1, 8].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Right });
+            worksheet.Cells.CreateRange(1, 13, 1, 2).Merge();
+            worksheet.Cells.CreateRange(1, 13, 1, 2).SetStyle(greenBackground);
+
+            // Fila 3
+            worksheet.Cells[2, 1].PutValue("Sistema:");
+            worksheet.Cells[2, 1].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Right });
+            worksheet.Cells[2, 5].PutValue("Oportunidad:");
+            worksheet.Cells[2, 5].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Right });
+            worksheet.Cells[2, 8].PutValue("Fecha:");
+            worksheet.Cells[2, 8].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Right });
+            worksheet.Cells.CreateRange(2, 2, 1, 3).Merge();
+            worksheet.Cells.CreateRange(2, 6, 1, 2).Merge();
+            worksheet.Cells.CreateRange(2, 14, 2, 1).SetStyle(redWords);
+
+            // Fila 4
+            worksheet.Cells[3, 1].PutValue("Diametro:");
+            worksheet.Cells[3, 1].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Right });
+            worksheet.Cells[3, 5].PutValue("Unidad:");
+            worksheet.Cells[3, 5].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Right });
+            worksheet.Cells[3, 8].PutValue("Realizo:");
+            worksheet.Cells[3, 8].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Right });
+            worksheet.Cells.CreateRange(3, 2, 1, 3).Merge();
+            worksheet.Cells.CreateRange(3, 6, 1, 2).Merge();
+
+            // Fila 5
+            worksheet.Cells[4, 1].PutValue("Contacto:");
+            worksheet.Cells[4, 1].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Left });
+            worksheet.Cells[4, 5].PutValue("Estimacion:");
+            worksheet.Cells[4, 5].SetStyle(new Style() { HorizontalAlignment = TextAlignmentType.Left });
+            worksheet.Cells[4, 8].PutValue("Dias:");
+            worksheet.Cells[4, 9].Formula = "=O107"; // Fórmula de celda
+            worksheet.Cells.CreateRange(4, 2, 1, 3).Merge();
+            worksheet.Cells.CreateRange(4, 6, 1, 2).Merge();
+            worksheet.Cells.CreateRange(4, 13, 1, 2).Merge();
+            worksheet.Cells.CreateRange(4, 13, 1, 2).SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(4, 8, 1, 2).SetStyle(greenBackgroundYellowWords, true);
+
+            // Fila 6
+            worksheet.Cells[5, 0].PutValue("Lamina Galvanizada (Optimizado Calibre 18 - 20)");
+            worksheet.Cells.CreateRange(5, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(5, 13, 2, 1).Merge();
+            worksheet.Cells.CreateRange(5, 14, 2, 1).Merge();
+            worksheet.Cells.CreateRange(5, 0, 1, 10).SetStyle(greenBackground, true);
+            worksheet.Cells.CreateRange(5, 13, 2, 2).SetStyle(greenBackground, true);
+
+            // Fila 7
+            worksheet.Cells[6, 0].PutValue("Kit");
+            worksheet.Cells[6, 1].PutValue("Descripcion");
+            worksheet.Cells[6, 8].PutValue("Cantidad");
+            worksheet.Cells[6, 9].PutValue("Total");
+            worksheet.Cells.CreateRange(6, 1, 1, 7).Merge();
+            worksheet.Cells.CreateRange(6, 0, 1, 10).SetStyle(greenWords);
+
+            // Información adicional
+            worksheet.Cells[1, 13].PutValue("UBICACIÓN");
+            worksheet.Cells[2, 13].PutValue("CDMX Y ZM");
+            worksheet.Cells[2, 13].SetStyle(defaultStyle);
+            worksheet.Cells[3, 13].PutValue("FORÁNEO");
+            worksheet.Cells[3, 13].SetStyle(defaultStyle);
+            worksheet.Cells[2, 14].PutValue("0");
+            worksheet.Cells[3, 14].PutValue("1");
+            worksheet.Cells[4, 13].PutValue("TIEMPOS DE EJECUCIÓN");
+            worksheet.Cells[5, 13].PutValue("HRS DE INSTALACIÓN");
+            worksheet.Cells[5, 14].PutValue("TOTAL");
+
+            currentRow = 7;
+        }
+        private static void WriteKitList(List<KitModel> list, Worksheet sheet, ref int currentRow, TextAlignmentType alignmentType = TextAlignmentType.Center)
+        {
+            //Style yellowBackground = sheet.Workbook.CreateStyle();
+            //yellowBackground.ForegroundColor = ColorTranslator.FromHtml("#FFF2CC");
+            //yellowBackground.Pattern = BackgroundType.Solid;
+            //yellowBackground.Font.IsBold = true;
+            //yellowBackground.HorizontalAlignment = TextAlignmentType.Center;
+            TextAlignmentType alignmentTypeB = TextAlignmentType.Center;
+            foreach (KitModel item in list)
+            {
+                sheet.Cells[currentRow, 0].PutValue(item.Kit);          // Columna A
+                sheet.Cells[currentRow, 0].SetStyle(defaultStyle);          // Columna A
+                sheet.Cells[currentRow, 1].PutValue(item.Description);  // Columna B
+                sheet.Cells[currentRow, 1].SetStyle(defaultStyle);          // Columna A
+                sheet.Cells.Merge(currentRow, 1, 1, 7);                  // Bx:Hx
+                defaultStyle.HorizontalAlignment = alignmentType;
+                sheet.Cells.CreateRange(currentRow, 1, 1, 7).SetStyle(defaultStyle);                  // Bx:Hx
+
+                defaultStyle.HorizontalAlignment = alignmentTypeB;
+
+                //sheet.Cells[currentRow, 8].PutValue(item.Count);        // Columna I
+                sheet.Cells[currentRow, 8].PutValue(GetElementCount(item.Kit));        // Columna I
+                sheet.Cells[currentRow, 8].SetStyle(defaultStyle);          // Columna A
+                sheet.Cells[currentRow, 9].Formula = $"=I{currentRow + 1}"; // Jx
+                sheet.Cells[currentRow, 9].SetStyle(defaultStyle);          // Columna A
+
+                sheet.Cells[currentRow, 13].PutValue(item.InstalationTime); // N
+                sheet.Cells[currentRow, 13].SetStyle(defaultStyle);          // Columna A
+                sheet.Cells[currentRow, 14].Formula = $"=J{currentRow + 1}*N{currentRow + 1}"; // O
+                sheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder); // O
+
+                currentRow++;
+            }
+        }
+        private static void WriteFooters(Worksheet worksheet, ref int currentRow)
+        {
+            // Colores en Aspose.Cells (No es necesario usar ColorTranslator)
+            //Style greenBackground = worksheet.Workbook.CreateStyle();
+            //greenBackground.ForegroundColor = ColorTranslator.FromHtml("#00B0AC");
+            //greenBackground.Pattern = BackgroundType.Solid;
+            //greenBackground.Font.Color = Color.White;
+            //greenBackground.Font.IsBold = true;
+            var fontColor = redWordsBlackBorder.Font.Color;
+            redWordsBlackBorder.Font.Color = Color.Black;
+            // Notas importantes
+            worksheet.Cells[currentRow, 0].PutValue("Notas importantes:");
+            worksheet.Cells[currentRow, 0].SetStyle(new Style() { Font = { IsBold = true } });
+
+            worksheet.Cells[currentRow, 11].PutValue("Horas de instalación");
+            var range = worksheet.Cells.CreateRange(currentRow, 11, 1, 3);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells[currentRow, 14].Formula = "=SUM(O9:O52,O56:O70,O79:O89)";
+            worksheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder);
+
+            redWordsBlackBorder.Font.Color = fontColor;
+
+           currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("Jornadas de trabajo");
+            range = worksheet.Cells.CreateRange(currentRow, 11, 1, 3);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells[currentRow, 14].Formula = "=O91/8";
+            worksheet.Cells[currentRow, 14].SetStyle(redWordsYellowBackground);
+
+            currentRow++;
+
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            currentRow++;
+
+            // ACTIVIDADES ADICIONALES DE OBRA
+            worksheet.Cells[currentRow, 11].PutValue("ACTIVIDADES ADICIONALES DE OBRA");
+            range = worksheet.Cells.CreateRange(currentRow, 11, 1, 4);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 4).Merge();
+
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("Acarreo y distribución de ducto por nivel");
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).SetStyle(defaultStyle);
+            worksheet.Cells[currentRow, 14].Formula = "=(0.4*J8)";
+            worksheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder);
+
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("Entrega por nivel, instalación de marco y limpieza de puertas");
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).SetStyle(defaultStyle);
+            worksheet.Cells[currentRow, 14].Formula = "=(1*J8+1)";
+            worksheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder);
+
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("Horas de instalación");
+            range = worksheet.Cells.CreateRange(currentRow, 11, 1, 3);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells[currentRow, 14].Formula = "=SUM(O95:O96)";
+            worksheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder);
+
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("Jornadas de trabajo");
+            range = worksheet.Cells.CreateRange(currentRow, 11, 1, 3);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells[currentRow, 14].Formula = "=O97/8";
+            worksheet.Cells[currentRow, 14].SetStyle(redWordsYellowBackground);
+
+            currentRow++;
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+
+            currentRow++;
+            // ACTIVIDADES ADMINISTRATIVAS
+            worksheet.Cells[currentRow, 11].PutValue("ACTIVIDADES ADMINISTRATIVAS");
+            range = worksheet.Cells.CreateRange(currentRow, 11, 1, 4);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 4).Merge();
+
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("Recepción, acopio, almacenamiento de materiales y recorrido en obra");
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).SetStyle(defaultStyle);
+            worksheet.Cells[currentRow, 14].PutValue("8");
+            worksheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder);
+
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("Traslado de personal (redondo y solo foraneas)");
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).SetStyle(defaultStyle);
+            worksheet.Cells[currentRow, 14].Formula = "=O4*8";
+            worksheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder);
+
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("Horas de instalación");
+            range = worksheet.Cells.CreateRange(currentRow, 11, 1, 3);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells[currentRow, 14].Formula = "=SUM(O101:O102)";
+            worksheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder);
+
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("Jornadas de trabajo");
+            range = worksheet.Cells.CreateRange(currentRow, 11, 1, 3);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).Merge();
+            worksheet.Cells.CreateRange(currentRow, 0, 1, 10).SetStyle(redWordsBlackBorder);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells[currentRow, 14].Formula = "=O103/8";
+            worksheet.Cells[currentRow, 14].SetStyle(redWordsYellowBackground);
+
+            currentRow++;
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("HORAS TOTALES");
+            range = worksheet.Cells.CreateRange(currentRow, 11, 1, 3);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells[currentRow, 14].Formula = "=SUM(O91,O97,O103)";
+            worksheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder);
+
+            currentRow++;
+            worksheet.Cells[currentRow, 11].PutValue("JORNADAS DE TRABAJO");
+            range = worksheet.Cells.CreateRange(currentRow, 11, 1, 3);
+            range.SetStyle(greenBackground);
+            worksheet.Cells.CreateRange(currentRow, 11, 1, 3).Merge();
+            worksheet.Cells[currentRow, 14].Formula = "=SUM(O92,O98,O104)";
+            worksheet.Cells[currentRow, 14].SetStyle(redWordsYellowBackground);
+        }
+        private static int GetElementCount(string kit) 
+        {
+            int count = 0;
+            switch (kit)
+            {
+                //DUCTS
+                case "B603118": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.A2).FirstOrDefault().Count; break;
+                case "B603121": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B2).FirstOrDefault().Count; break;
+                case "B603120": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B3).FirstOrDefault().Count; break;
+                case "B101114": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B4).FirstOrDefault().Count; break;
+                case "B102017": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.C4).FirstOrDefault().Count; break;
+                case "B603115": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.S4).FirstOrDefault().Count; break;
+                case "B872615": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B4F).FirstOrDefault().Count; break;
+                case "B872614": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B3F).FirstOrDefault().Count; break;
+                case "B872613": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B2F).FirstOrDefault().Count; break;
+                //COMPONENTS
+                case "B602103": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Guillotine).FirstOrDefault().Count; break;
+                case "B603001": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Sprinkler).FirstOrDefault().Count; break;
+                case "B601001": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.DisinfectionSystem).FirstOrDefault().Count; break;
+                case "B701190": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Chimney).FirstOrDefault().Count; break;
+                case "B1010241": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.XN).FirstOrDefault().Count; break;
+                case "B101130": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.XNF).FirstOrDefault().Count; break;
+                case "B301061": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Gate).FirstOrDefault().Count; break;
+                
+
+            }
+            return count;
+        }
+
+    }
+}

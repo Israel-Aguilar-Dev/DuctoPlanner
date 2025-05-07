@@ -16,11 +16,14 @@ namespace Calculo_ductos_winUi_3.Models
         public bool NeedGate { get; set; }
         public bool NeedChimney { get; set; }
         public decimal FloorHeight { get; set; }
+        public string Description => GetDescription();
+        public string NeedGateString => GetNeedGate();
+        public string NeedChimmeyString => GetNeedChimmey();
         public void SetFloorType(int selection)
         {
             switch (selection)
             {
-                case 0: Type = Floor.TypeFloor.discharge; break;
+                case 0: Type = Floor.TypeFloor.discharge; NeedGate = false; break;
                 case 1: Type = Floor.TypeFloor.common; break;
                 case 2: Type = Floor.TypeFloor.last; break;
             }
@@ -37,5 +40,13 @@ namespace Calculo_ductos_winUi_3.Models
             }
             return description;
         }
+        public string GetNeedGate()
+        {
+            return NeedGate ? "Si" : "No";
+        }
+        public string GetNeedChimmey()
+        {
+            return Type == Floor.TypeFloor.last ? NeedChimney ? "Chimenea" : "Cuello de ganso" : "-";
+        } 
     }
 }
