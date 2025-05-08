@@ -42,7 +42,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
         public async Task Export(string filePath)
         {
             this.ExportToExcel(filePath);
-
+            this.FinishExport(filePath);
             
 
             // Aquí usamos un MemoryStream para hacer la escritura realmente async

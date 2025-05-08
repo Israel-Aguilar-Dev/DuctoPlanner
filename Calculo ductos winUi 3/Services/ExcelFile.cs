@@ -1,17 +1,18 @@
 ﻿using Aspose.Cells;
+using Aspose.Cells.Drawing;
 using Calculo_ductos.Params;
 using Calculo_ductos_winUi_3.Models;
 using Calculo_ductos_winUi_3.ViewModels;
-using DocumentFormat.OpenXml.Office.CustomUI;
-using DocumentFormat.OpenXml.Vml.Office;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using supporExcel = ClosedXML;
 
 namespace Calculo_ductos_winUi_3.Services
 {
@@ -29,29 +30,49 @@ namespace Calculo_ductos_winUi_3.Services
         private static Style defaultStyle = new Style();
         private static Style redWordsBlackBorder = new Style();
         private static Style redWordsYellowBackground = new Style();
+        private static int _widthCoulmnA = 13;
         #endregion
 
-        private static StateViewModel _state;
+        private static StateViewModel _state; 
         public static async Task ExportToExcel(this StateViewModel state, string filePath = null) {
             _state = state;
             using var workbook = new Workbook();
             //var worksheet = workbook.Worksheets.Add("DUCTO 1");
             var worksheet = workbook.Worksheets[0];
+            
             worksheet.Name = "DUCTO 1";
             await CreateTemplateSheet(worksheet);
             workbook.Save(filePath, SaveFormat.Xlsx);
+
+        }
+        public static async Task FinishExport(this StateViewModel state, string filePath = null) 
+        {
+            if (filePath != null) 
+            {
+                using (var workbook = new supporExcel.Excel.XLWorkbook(filePath) )
+                {
+                    // Eliminar la hoja llamada "Hoja2"
+                    workbook.Worksheet("Evaluation Warning").Delete();
+
+                    // Guardar los cambios
+                    workbook.SaveAs(filePath);
+                }
+            }
         }
         public static async Task CreateTemplateSheet(Worksheet worksheet)
         {
             // Alineación horizontal centrada a toda la hoja
-            Style defaultStyle = worksheet.Cells.Rows[0].GetStyle();
-            defaultStyle.HorizontalAlignment = TextAlignmentType.Center;
-            worksheet.Cells.ApplyStyle(defaultStyle, new StyleFlag { HorizontalAlignment = true });
+            Style styleCenter = worksheet.Cells.Rows[0].GetStyle();
+            styleCenter.HorizontalAlignment = TextAlignmentType.Center;
+            styleCenter.IsTextWrapped = true;
+            worksheet.Cells.SetColumnWidth(0, _widthCoulmnA);
+            worksheet.Cells.ApplyStyle(styleCenter, new StyleFlag { HorizontalAlignment = true, WrapText = true });
+
 
             SetStyles(ref worksheet);
             // Encabezados
             WriteHeaders(worksheet, out int currentRow);
-
+            InsertPicture(worksheet);
             // Cargar datos del JSON
             KitCollection dataTemplate = await LoadKitsFromJsonAsync();
 
@@ -95,7 +116,8 @@ namespace Calculo_ductos_winUi_3.Services
             WriteFooters(worksheet, ref currentRow);
 
             // Ajustar ancho de columnas
-            worksheet.AutoFitColumns();
+            worksheet.AutoFitColumns(1,14);
+            worksheet.AutoFitRows();
         }
 
         private static void SetStyles(ref Worksheet worksheet)
@@ -336,9 +358,9 @@ namespace Calculo_ductos_winUi_3.Services
             // Información adicional
             worksheet.Cells[1, 13].PutValue("UBICACIÓN");
             worksheet.Cells[2, 13].PutValue("CDMX Y ZM");
-            worksheet.Cells[2, 13].SetStyle(defaultStyle);
+            worksheet.Cells[2, 13].SetStyle(defaultStyle, new StyleFlag { WrapText = true});
             worksheet.Cells[3, 13].PutValue("FORÁNEO");
-            worksheet.Cells[3, 13].SetStyle(defaultStyle);
+            worksheet.Cells[3, 13].SetStyle(defaultStyle, new StyleFlag { WrapText = true });
             worksheet.Cells[2, 14].PutValue("0");
             worksheet.Cells[3, 14].PutValue("1");
             worksheet.Cells[4, 13].PutValue("TIEMPOS DE EJECUCIÓN");
@@ -564,6 +586,37 @@ namespace Calculo_ductos_winUi_3.Services
 
             }
             return count;
+        }
+        private static void InsertPicture(Worksheet worksheet)
+        {
+            var resourceName = "Calculo_ductos_winUi_3.Assets.LogoVertical.png";
+            var assembly = Assembly.GetExecutingAssembly();
+            using Stream? imageStream = assembly.GetManifestResourceStream(resourceName);
+            if (imageStream == null)
+                throw new Exception("No se pudo cargar el recurso incrustado.");
+
+            // Insertar imagen en A2
+            int pictureIndex = worksheet.Pictures.Add(1, 0, imageStream);
+            var picture = worksheet.Pictures[pictureIndex];
+
+            // Establecer la fila y columna de inicio
+            picture.UpperLeftRow = 1;    // Fila 2
+            picture.UpperLeftColumn = 0; // Columna A
+
+            // Calcular el alto total de las filas 2 a 5
+            double totalHeight = 0;
+            for (int i = 1; i <= 4; i++)
+                totalHeight += worksheet.Cells.GetRowHeightPixel(i);
+
+            
+            int columnWidthInPixels = worksheet.Cells.GetColumnWidthPixel(0);
+            // Calcular el ancho total de la columna A (solo una columna en este caso)
+            //double totalWidth = _widthCoulmnA;
+
+            // Asignar dimensiones
+            picture.Width = (int)columnWidthInPixels;
+            picture.Height = (int)totalHeight;
+            picture.Placement = PlacementType.Move;
         }
 
     }

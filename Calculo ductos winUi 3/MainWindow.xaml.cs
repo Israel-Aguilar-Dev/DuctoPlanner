@@ -98,7 +98,7 @@ namespace Calculo_ductos_winUi_3
             if (path != null)
             {
                 // Aquí ya tienes la ruta y nombre del archivo
-                await StateApp.ExportToExcel(path);
+                await StateApp.Export(path);
             }
             
         }

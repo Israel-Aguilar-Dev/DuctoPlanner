@@ -29,7 +29,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
             _floorList = new ObservableCollection<FloorDescription>();
             _floorDescription = new FloorDescription
             {
-                Uuid = Guid.NewGuid(),
+                //Uuid = Guid.NewGuid(),
                 Type = Floor.TypeFloor.discharge,
                 FloorCount = 0,
                 NeedGate = false,
@@ -176,7 +176,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
         {
             _floorList.Add(new FloorDescription
             {
-                Uuid = _floorDescription.Uuid,
+                Uuid = Guid.NewGuid(),
                 FloorCount = _floorDescription.FloorCount,
                 NeedGate = _floorDescription.NeedGate,
                 NeedChimney = _floorDescription.NeedChimney,

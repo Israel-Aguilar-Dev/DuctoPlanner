@@ -15,11 +15,13 @@
     <Content Remove="Assets\Ducts.json" />
     <Content Remove="Assets\IconoVertical-VERDE.png" />
     <Content Remove="Assets\logovertical.jpg" />
+    <Content Remove="Assets\LogoVertical.png" />
     <Content Remove="Assets\torre.png" />
     <Content Remove="Assets\torre2.png" />
     <Content Remove="Assets\Vertical.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\LogoVertical.png" />
     <None Remove="Views\CalculateDuctsView.xaml" />
   </ItemGroup>
 
@@ -31,13 +33,16 @@
     <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Content Include="Icono Vertical - VERDE.ico" />
+    <Content Include="Icono Vertical - VERDE.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\Ducts.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Assets\LogoVertical.png" />
   </ItemGroup>
 
   <ItemGroup>

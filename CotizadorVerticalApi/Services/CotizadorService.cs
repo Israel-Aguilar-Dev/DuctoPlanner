@@ -23,16 +23,43 @@ namespace CotizadorVerticalApi.Services
             return response;
         }
         public Response ObtenerCotizaciones() 
-        { 
+        {
+            Response response = new Response();
+            try
+            {
 
+            }
+            catch (Exception ex)
+            {
+                response.Message = "No se pudo recuperar las cotizaciones";
+            }
+            return response;
         }
         public Response CrearCotizacion()
         {
+            Response response = new Response();
+            try
+            {
 
+            }
+            catch (Exception ex)
+            {
+                response.Message = "No se pudo crear la cotizacion";
+            }
+            return response;
         }
         public Response ActualizarCotizacion()
         {
-            
+            Response response = new Response();
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                response.Message = "No se pudo actualizar la cotizacion";
+            }
+            return response;
         }
 
 
