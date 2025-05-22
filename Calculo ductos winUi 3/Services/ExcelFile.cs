@@ -565,15 +565,15 @@ namespace Calculo_ductos_winUi_3.Services
             switch (kit)
             {
                 //DUCTS
-                case "B603118": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.A2).FirstOrDefault().Count; break;
-                case "B603121": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B2).FirstOrDefault().Count; break;
-                case "B603120": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B3).FirstOrDefault().Count; break;
-                case "B101114": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B4).FirstOrDefault().Count; break;
-                case "B102017": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.C4).FirstOrDefault().Count; break;
-                case "B603115": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.S4).FirstOrDefault().Count; break;
-                case "B872615": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B4F).FirstOrDefault().Count; break;
-                case "B872614": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B3F).FirstOrDefault().Count; break;
-                case "B872613": count = _state.DuctsVM.DucList.Where(duct => duct.Type == Duct.TypeDuct.B2F).FirstOrDefault().Count; break;
+                case "B603118": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.A2).FirstOrDefault().Count; break;
+                case "B603121": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B2).FirstOrDefault().Count; break;
+                case "B603120": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B3).FirstOrDefault().Count; break;
+                case "B101114": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B4).FirstOrDefault().Count; break;
+                case "B102017": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.C4).FirstOrDefault().Count; break;
+                case "B603115": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.S4).FirstOrDefault().Count; break;
+                case "B872615": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B4F).FirstOrDefault().Count; break;
+                case "B872614": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B3F).FirstOrDefault().Count; break;
+                case "B872613": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B2F).FirstOrDefault().Count; break;
                 //COMPONENTS
                 case "B602103": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Guillotine).FirstOrDefault().Count; break;
                 case "B603001": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Sprinkler).FirstOrDefault().Count; break;

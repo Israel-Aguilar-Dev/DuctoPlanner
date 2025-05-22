@@ -12,7 +12,7 @@ namespace Calculo_ductos_winUi_3.Services
 {
     public static class Mapper
     {
-        public static ObservableCollection<DuctModel> MapDuctsFromDictionary(this Dictionary<Duct.TypeDuct, int> ducts)
+        public static ObservableCollection<DuctModel> MapDuctsFromDictionary(this Dictionary<DuctPiece.TypeDuct, int> ducts)
         {
             return new ObservableCollection<DuctModel>(
                 ducts.Select(kvp => new DuctModel
@@ -52,7 +52,7 @@ namespace Calculo_ductos_winUi_3.Services
                 }));
         }
 
-        public static Dictionary<Duct.TypeDuct, int> MapDuctsToDictionary(this ObservableCollection<DuctModel> ducts)
+        public static Dictionary<DuctPiece.TypeDuct, int> MapDuctsToDictionary(this ObservableCollection<DuctModel> ducts)
         {
             return ducts
                 .GroupBy(duct => duct.Type)

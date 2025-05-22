@@ -14,6 +14,7 @@ namespace Calculo_ductos_winUi_3.Models
         public Guid Uuid { get; set; }
         public int FloorCount { get; set; }
         public bool NeedGate { get; set; }
+        public int DoorTypeId { get; set; }
         public bool NeedChimney { get; set; }
         public decimal FloorHeight { get; set; }
         public string Description => GetDescription();

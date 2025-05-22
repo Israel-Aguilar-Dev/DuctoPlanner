@@ -10,7 +10,7 @@ namespace Calculo_ductos_winUi_3.Models
     public class FloorDuctDetailModel
     {
         public string FloorName { get; set; }
-        public Duct.TypeDuct DuctType { get; set; }
+        public DuctPiece.TypeDuct DuctType { get; set; }
         public int Count { get; set; }
 
     }

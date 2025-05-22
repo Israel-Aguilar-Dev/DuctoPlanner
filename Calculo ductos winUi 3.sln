@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ducto Planner", "Ducto Plan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CotizadorVerticalApi", "CotizadorVerticalApi\CotizadorVerticalApi.csproj", "{EC928082-2E8B-4430-A7E4-248E828212DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CotizadorApiVertical", "CotizadorApiVertical\CotizadorApiVertical.csproj", "{6961CBE0-7640-46EE-8980-9B1D23182512}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -109,6 +111,18 @@ Global
 		{EC928082-2E8B-4430-A7E4-248E828212DE}.Release|x64.Build.0 = Release|Any CPU
 		{EC928082-2E8B-4430-A7E4-248E828212DE}.Release|x86.ActiveCfg = Release|Any CPU
 		{EC928082-2E8B-4430-A7E4-248E828212DE}.Release|x86.Build.0 = Release|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Debug|x64.Build.0 = Debug|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Debug|x86.Build.0 = Debug|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Release|ARM64.Build.0 = Release|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Release|x64.ActiveCfg = Release|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Release|x64.Build.0 = Release|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Release|x86.ActiveCfg = Release|Any CPU
+		{6961CBE0-7640-46EE-8980-9B1D23182512}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

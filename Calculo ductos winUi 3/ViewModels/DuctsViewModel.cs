@@ -9,7 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Calculo_ductos.Params;
+using Calculo_ductos.Params;    
 using CommunityToolkit.Mvvm.Input;
 using DuctsLib = Calculo_ductos.Facade;
 namespace Calculo_ductos_winUi_3.ViewModels
@@ -50,7 +50,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
         {
             string json = floors.ToJsonString();
             
-            Dictionary<Duct.TypeDuct,int> ducts = DuctsLib.CalculateDucts(json);
+            Dictionary<DuctPiece.TypeDuct,int> ducts = DuctsLib.CalculateDucts(json);
             List<Floor> ductsDetail = DuctsLib.CalculateDuctsByFloor(json);
 
             DucList = ducts.MapDuctsFromDictionary();

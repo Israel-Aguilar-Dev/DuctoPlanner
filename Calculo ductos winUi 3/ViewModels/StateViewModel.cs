@@ -17,14 +17,17 @@ namespace Calculo_ductos_winUi_3.ViewModels
 {
     public class StateViewModel 
     {
+
         public FloorDescriptionViewModel FloorVM { get; }
         public DuctsViewModel DuctsVM { get; }
         public ComponentsViewModel ComponentsVM { get; }
+        public CompleteDuctViewModel CompleteDuctVm { get; }
         public StateViewModel()
         {
             FloorVM = new FloorDescriptionViewModel();
             DuctsVM = new DuctsViewModel();
             ComponentsVM = new ComponentsViewModel();
+            CompleteDuctVm = new CompleteDuctViewModel();
         }
 
         public void CalculateDucts(object sender, RoutedEventArgs e)
@@ -37,10 +40,22 @@ namespace Calculo_ductos_winUi_3.ViewModels
             };
 
             ComponentsVM.CalculateComponentsCommand.Execute(args);
+            var itemsToRemove = DuctsVM.DuctDetailList.Where(duct => duct.Count == 0).ToList();
+            foreach (var item in itemsToRemove)
+            {
+                DuctsVM.DuctDetailList.Remove(item);
+            }
+            var ductsToRemove = DuctsVM.DucList.Where(duct => duct.Count == 0).ToList();
+            foreach (var item in ductsToRemove)
+            {
+                DuctsVM.DucList.Remove(item);
+            }
         }
 
         public async Task Export(string filePath)
         {
+            
+            
             this.ExportToExcel(filePath);
             this.FinishExport(filePath);
             

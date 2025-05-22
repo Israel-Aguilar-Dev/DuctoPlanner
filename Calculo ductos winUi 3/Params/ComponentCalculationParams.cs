@@ -12,6 +12,6 @@ namespace Calculo_ductos_winUi_3.Params
     public class ComponentCalculationParams
     {
         public ObservableCollection<FloorDescription> Floors { get; set; }
-        public Dictionary<Duct.TypeDuct, int> Ducts { get; set; }
+        public Dictionary<DuctPiece.TypeDuct, int> Ducts { get; set; }
     }
 }

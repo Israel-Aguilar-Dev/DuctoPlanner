@@ -13,10 +13,10 @@ namespace CotizadorVerticalApi.Controllers
         //    _logger = logger;
         //}
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
+        public IActionResult Index()
+        {
+            return Ok("Cotizador Vertical Api");
+        }
 
         //public IActionResult Privacy()
         //{

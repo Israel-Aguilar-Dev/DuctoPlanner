@@ -107,9 +107,9 @@ namespace Calculo_ductos_winUi_3
             var savePicker = new FileSavePicker();
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
-
+            
             savePicker.FileTypeChoices.Add("Excel Workbook", new List<string>() { ".xlsx" });
-            savePicker.SuggestedFileName = $"DESPIECE Y RENDIMIENTOS DUCTO DE BASURA 24 GALV {DateTime.Today.ToString()}";
+            savePicker.SuggestedFileName = $"DESPIECE Y RENDIMIENTOS DUCTO DE {GetPurposeString()} 24 {GetSheetString()} {DateTime.Today.ToString()}";
 
             var file = await savePicker.PickSaveFileAsync();
 
@@ -125,8 +125,14 @@ namespace Calculo_ductos_winUi_3
 
             return null;
         }
-
-
+        private string GetPurposeString() 
+        {
+            return _stateVieModel.CompleteDuctVm.PurposeId == 0 ? "ROPA" : "BASURA";
+        }
+        private string GetSheetString()
+        {
+            return _stateVieModel.CompleteDuctVm.SheetTypeId == 0 ? "INOX" : "GALV";
+        }
     }
     public class NavLink
     {

@@ -67,16 +67,25 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Calculo ductos">
-      <HintPath>..\..\Calculo de ductos v1\Calculo ductos\bin\Debug\net8.0\Calculo ductos.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="Views\CalculateDuctsView - Copia.xaml">
+    <Page Update="Views\CalculateDuctsBillOfMaterials.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CalculateDuctsResumeDuctsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DuctView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\FloorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\CalculateDuctsView.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Models\FloorDuctDetailModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Calculo de ductos v1\Calculo ductos\Calculo ductos.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Assets\IconoVertical-VERDE.png">
