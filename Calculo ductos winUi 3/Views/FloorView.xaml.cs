@@ -42,6 +42,8 @@ namespace Calculo_ductos_winUi_3.Views
 
         private void CbxTipo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            lblDischargeType.Visibility = cbxTipo.SelectedIndex == 0 ? Visibility.Visible : Visibility.Collapsed;
+
             cbxChimenea.Visibility = cbxTipo.SelectedIndex == 2 ? Visibility.Visible : Visibility.Collapsed;
             lblChimenea.Visibility = cbxTipo.SelectedIndex == 2 ? Visibility.Visible : Visibility.Collapsed;
 

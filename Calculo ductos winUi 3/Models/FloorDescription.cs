@@ -10,7 +10,9 @@ namespace Calculo_ductos_winUi_3.Models
 {
     public class FloorDescription
     {
+        public CatalogRowModel TypeDoor { get; set; }
         public Floor.TypeFloor Type { get; set; }
+        public Floor.TypeDischarge Discharge { get; set; }
         public Guid Uuid { get; set; }
         public int FloorCount { get; set; }
         public bool NeedGate { get; set; }
@@ -20,6 +22,8 @@ namespace Calculo_ductos_winUi_3.Models
         public string Description => GetDescription();
         public string NeedGateString => GetNeedGate();
         public string NeedChimmeyString => GetNeedChimmey();
+        public string DischargeString => GetDischargeString();
+        public string DoorTypeString => GetDoorTypeString();
         public void SetFloorType(int selection)
         {
             switch (selection)
@@ -29,7 +33,15 @@ namespace Calculo_ductos_winUi_3.Models
                 case 2: Type = Floor.TypeFloor.last; break;
             }
         }
-        public string GetDescription()
+        public void SetFloorTypeDischarge(int selection)
+        {
+            switch (selection)
+            {
+                case 0: Discharge = Floor.TypeDischarge.guilloutine;break;
+                case 1: Discharge = Floor.TypeDischarge.discharge;break;
+            }
+        }
+        private string GetDescription()
         {
             string description = "";
             switch (Type)
@@ -41,13 +53,19 @@ namespace Calculo_ductos_winUi_3.Models
             }
             return description;
         }
-        public string GetNeedGate()
+        private string GetNeedGate()
         {
             return NeedGate ? "Si" : "No";
         }
-        public string GetNeedChimmey()
+        private string GetNeedChimmey()
         {
             return Type == Floor.TypeFloor.last ? NeedChimney ? "Chimenea" : "Cuello de ganso" : "-";
-        } 
+        }
+        private string GetDischargeString (){
+            return Type == Floor.TypeFloor.discharge ? Discharge == Floor.TypeDischarge.guilloutine ? "Guillotina" : "Descargador" : "-";
+        }
+        private string GetDoorTypeString() {
+            return Type != Floor.TypeFloor.discharge ? NeedGate ? TypeDoor.Description: "-" : "-";
+        }
     }
 }

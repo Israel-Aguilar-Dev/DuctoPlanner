@@ -12,6 +12,8 @@ using System.Windows.Input;
 using Calculo_ductos.Params;    
 using CommunityToolkit.Mvvm.Input;
 using DuctsLib = Calculo_ductos.Facade;
+using Calculo_ductos.Utils;
+using DocumentFormat.OpenXml.Drawing.Charts;
 namespace Calculo_ductos_winUi_3.ViewModels
 {
     
@@ -20,11 +22,13 @@ namespace Calculo_ductos_winUi_3.ViewModels
         #region Fields
         private ObservableCollection<DuctModel> _ductList;
         private ObservableCollection<FloorDuctDetailModel> _ductDetailList;
+        private Duct _completeDuct;
         #endregion
         public DuctsViewModel()
         {
             _ductList = new ObservableCollection<DuctModel>();
             _ductDetailList = new ObservableCollection<FloorDuctDetailModel>();
+            _completeDuct = new Duct();
             CalculateDuctsCommand = new RelayCommand<ObservableCollection<FloorDescription>>(CalculateDucts);
         }
 
@@ -46,15 +50,37 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
+        public Duct CompleteDuct {
+            get => _completeDuct;
+            set {
+                _completeDuct = value;
+                OnPropertyChanged();
+            }
+        }
         private void CalculateDucts(ObservableCollection<FloorDescription> floors)
         {
             string json = floors.ToJsonString();
             
-            Dictionary<DuctPiece.TypeDuct,int> ducts = DuctsLib.CalculateDucts(json);
-            List<Floor> ductsDetail = DuctsLib.CalculateDuctsByFloor(json);
-
-            DucList = ducts.MapDuctsFromDictionary();
-            DuctDetailList = ductsDetail.MapToFloorDuctDetails();
+            //Dictionary<DuctPiece.TypeDuct,int> ducts = DuctsLib.CalculateDucts(json);
+            //List<Floor> ductsDetail = DuctsLib.CalculateDuctsByFloor(json);
+            Duct completeDuct = DuctsLib.CalculateDuctsByFloor(json);
+            CompleteDuct = completeDuct;
+            DucList = completeDuct.floors.SumDuctPieces().MapDuctsFromList();
+            var list = completeDuct.floors.MapToFloorDuctDetails();
+            string? lastFloor = null;
+            foreach (var duct in list)
+            {
+                duct.IsNewFloor = duct.FloorName != lastFloor;
+                lastFloor = duct.FloorName;
+            }
+            DuctDetailList = list;
+            //DuctDetailList = completeDuct.floors.MapToFloorDuctDetails();
+            //string? lastFloor = null;
+            //foreach (var duct in DuctDetailList)
+            //{
+            //    duct.IsNewFloor = duct.FloorName != lastFloor;
+            //    lastFloor = duct.FloorName;
+            //}
 
 
         }

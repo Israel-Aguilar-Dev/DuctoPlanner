@@ -40,29 +40,33 @@
                 </Grid.RowDefinitions>
                 <Grid x:Name="Titles" Margin="0,0,0,5" Grid.Row="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                     </Grid.RowDefinitions>
-                    <TextBlock Tag="0" Grid.Column="0" Padding="6" Margin="10" TextAlignment="Center">Tipo de nivel</TextBlock>
-                    <TextBlock Tag="0" Grid.Column="1" Padding="6" Margin="10" TextAlignment="Center">Cantidad de niveles</TextBlock>
-                    <TextBlock Tag="0" Grid.Column="2" Padding="6" Margin="10" TextAlignment="Center">Altura</TextBlock>
-                    <TextBlock Tag="0" Grid.Column="3" Padding="6" Margin="10" TextAlignment="Center">Necesita puerta</TextBlock>
-                    <TextBlock Tag="0" Grid.Column="4" Padding="6" Margin="10" TextAlignment="Center">Tipo de ventilación</TextBlock>
-                    <TextBlock Tag="0" Grid.Column="5" Padding="6" Margin="10" TextAlignment="Center">Eliminar</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="0" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Tipo de nivel</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="1" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Número de niveles</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="2" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Altura</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="3" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Necesita puerta</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="4" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Tipo de ventilación</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="5" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Tipo de descarga</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="6" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Tipo de puerta</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="7" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Eliminar</TextBlock>
                     <Path 
                     Tag="0"
                     Stroke="Gray"
                     StrokeThickness="0.5"
                     Data="M 0,0 L 1,0" 
-                    Grid.ColumnSpan="6"
-                    Margin="36,0,36,0"
+                    Grid.ColumnSpan="7"
+                    Margin="16,0,16,0"
                     Grid.Row="0"
                     Stretch="Fill" 
                     VerticalAlignment="Bottom"/>
@@ -74,20 +78,24 @@
                             <DataTemplate x:DataType="model:FloorDescription">
                                 <Grid >
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
-                                        <ColumnDefinition></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock Grid.Column="0" Text="{x:Bind Description}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <TextBlock Grid.Column="1" Text="{x:Bind FloorCount}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <TextBlock Grid.Column="2" Text="{x:Bind FloorHeight}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <TextBlock Grid.Column="3" Text="{x:Bind NeedGateString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <TextBlock Grid.Column="4" Text="{x:Bind NeedChimmeyString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <Button Grid.Column="5"
+                                    <TextBlock Grid.Column="0" TextWrapping="Wrap" Text="{x:Bind Description}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="{x:Bind FloorCount}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="{x:Bind FloorHeight}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="3" TextWrapping="Wrap" Text="{x:Bind NeedGateString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="4" TextWrapping="Wrap" Text="{x:Bind NeedChimmeyString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="5" TextWrapping="Wrap" Text="{x:Bind DischargeString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="6" TextWrapping="Wrap" Text="{x:Bind DoorTypeString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <Button Grid.Column="7"
                                     Content="Eliminar"
                                     VerticalAlignment="Center" HorizontalAlignment="Center"
                                     Command="{Binding DataContext.FloorVM.RemoveFloorCommand, ElementName=Root}"
@@ -97,8 +105,8 @@
                                     Stroke="Gray"
                                     StrokeThickness="0.5"
                                     Data="M 0,0 L 1,0" 
-                                    Grid.ColumnSpan="6"
-                                    Margin="36,0,36,0"
+                                    Grid.ColumnSpan="7"
+                                    Margin="16,0,16,0"
                                     Grid.Row="0"
                                     Stretch="Fill" 
                                     VerticalAlignment="Bottom"

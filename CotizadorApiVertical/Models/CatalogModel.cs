@@ -13,5 +13,6 @@ namespace CotizadorApiVertical.Models
         public int Id { get; set; } = 0;
         public string Description { get; set; } = string.Empty;
         public string Class { get; set; } = "sin clase";
+        public string IdSyteLine { get; set; } = "n/a";
     }
 }

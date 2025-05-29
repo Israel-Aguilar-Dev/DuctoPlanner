@@ -5,9 +5,11 @@ using Calculo_ductos_winUi_3.Models;
 using Calculo_ductos_winUi_3.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
@@ -35,29 +37,49 @@ namespace Calculo_ductos_winUi_3.Services
 
         private static StateViewModel _state; 
         public static async Task ExportToExcel(this StateViewModel state, string filePath = null) {
-            _state = state;
-            using var workbook = new Workbook();
-            //var worksheet = workbook.Worksheets.Add("DUCTO 1");
-            var worksheet = workbook.Worksheets[0];
+            try
+            {
+                _state = state;
+                using var workbook = new Workbook();
+                //var worksheet = workbook.Worksheets.Add("DUCTO 1");
+                var worksheet = workbook.Worksheets[0];
+
+                worksheet.Name = "DUCTO 1";
+                await CreateTemplateSheet(worksheet);
+                workbook.Save(filePath, SaveFormat.Xlsx);
+            }
+            catch (Exception ex)
+            {
+
+                var message = ex.Message;
+                Console.WriteLine(message); 
+            }
             
-            worksheet.Name = "DUCTO 1";
-            await CreateTemplateSheet(worksheet);
-            workbook.Save(filePath, SaveFormat.Xlsx);
 
         }
-        public static async Task FinishExport(this StateViewModel state, string filePath = null) 
+        public static async Task FinishExport(this StateViewModel state, string filePath = null)
         {
-            if (filePath != null) 
+            try
             {
-                using (var workbook = new supporExcel.Excel.XLWorkbook(filePath) )
+                if (filePath != null)
                 {
-                    // Eliminar la hoja llamada "Hoja2"
-                    workbook.Worksheet("Evaluation Warning").Delete();
+                    using (var workbook = new supporExcel.Excel.XLWorkbook(filePath))
+                    {
+                        // Eliminar la hoja llamada "Hoja2"
+                        workbook.Worksheet("Evaluation Warning").Delete();
 
-                    // Guardar los cambios
-                    workbook.SaveAs(filePath);
+                        // Guardar los cambios
+                        workbook.SaveAs(filePath);
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+
+                var message = ex.Message;
+                Console.WriteLine(message);
+            }
+            
         }
         public static async Task CreateTemplateSheet(Worksheet worksheet)
         {
@@ -101,16 +123,24 @@ namespace Calculo_ductos_winUi_3.Services
             range.ApplyStyle(style, flag);
 
             currentRow++;
+            //basura
+            if (_state.CompleteDuctVm.PurposeId == 1)
+            {
+                // Escribir más listas
+                WriteKitList(dataTemplate.Guillotine, worksheet, ref currentRow, TextAlignmentType.Left);
+                currentRow++;
 
-            // Escribir más listas
-            WriteKitList(dataTemplate.Guillotine, worksheet, ref currentRow, TextAlignmentType.Left);
-            currentRow++;
+                WriteKitList(dataTemplate.Container, worksheet, ref currentRow, TextAlignmentType.Left);
+                currentRow++;
 
-            WriteKitList(dataTemplate.Container, worksheet, ref currentRow, TextAlignmentType.Left);
-            currentRow++;
-
-            WriteKitList(dataTemplate.General, worksheet, ref currentRow, TextAlignmentType.Left);
-            currentRow++;
+                WriteKitList(dataTemplate.General, worksheet, ref currentRow, TextAlignmentType.Left);
+                currentRow++;
+            }
+            //ropa
+            else {
+                WriteKitList(dataTemplate.Clothes, worksheet, ref currentRow, TextAlignmentType.Left);
+                currentRow++;
+            }
 
             // Pie de página
             WriteFooters(worksheet, ref currentRow);
@@ -562,29 +592,75 @@ namespace Calculo_ductos_winUi_3.Services
         private static int GetElementCount(string kit) 
         {
             int count = 0;
-            switch (kit)
+            try
             {
-                //DUCTS
-                case "B603118": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.A2).FirstOrDefault().Count; break;
-                case "B603121": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B2).FirstOrDefault().Count; break;
-                case "B603120": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B3).FirstOrDefault().Count; break;
-                case "B101114": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B4).FirstOrDefault().Count; break;
-                case "B102017": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.C4).FirstOrDefault().Count; break;
-                case "B603115": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.S4).FirstOrDefault().Count; break;
-                case "B872615": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B4F).FirstOrDefault().Count; break;
-                case "B872614": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B3F).FirstOrDefault().Count; break;
-                case "B872613": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B2F).FirstOrDefault().Count; break;
-                //COMPONENTS
-                case "B602103": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Guillotine).FirstOrDefault().Count; break;
-                case "B603001": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Sprinkler).FirstOrDefault().Count; break;
-                case "B601001": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.DisinfectionSystem).FirstOrDefault().Count; break;
-                case "B701190": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Chimney).FirstOrDefault().Count; break;
-                case "B1010241": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.XN).FirstOrDefault().Count; break;
-                case "B101130": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.XNF).FirstOrDefault().Count; break;
-                case "B301061": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Gate).FirstOrDefault().Count; break;
-                
+                switch (kit)
+                {
+                    //DUCTS
+                    case "B603118": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.A2).FirstOrDefault().Count; break;
+                    case "B603121": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B2).FirstOrDefault().Count; break;
+                    case "B603120": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B3).FirstOrDefault().Count; break;
+                    case "B101114": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B4).FirstOrDefault().Count; break;
+                    case "B603115": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.S4).FirstOrDefault().Count; break;
+                    case "B872615": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B4F).FirstOrDefault().Count; break;
+                    case "B872614": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B3F).FirstOrDefault().Count; break;
+                    case "B872613": count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.B2F).FirstOrDefault().Count; break;
+                    //COMPONENTS
+                    case "B603001": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Sprinkler).FirstOrDefault().Count; break;
+                    case "B601001": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.DisinfectionSystem).FirstOrDefault().Count; break;
+                    case "B1010241": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.XN).FirstOrDefault().Count; break;
+                    case "B101130": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.XNF).FirstOrDefault().Count; break;
+                    case "B701190": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Chimney).FirstOrDefault().Count; break;
+                    case "B101118": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.TVA).FirstOrDefault().Count; break;
+                    case "B602103": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Guillotine).FirstOrDefault().Count; break;
+                    case "B602002": count = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Discharge).FirstOrDefault().Count; break;
 
+
+                }
+                var gatesCount = _state.ComponentsVM.ComponentList.Where(component => component.Type == Component.TypeComponent.Gate).FirstOrDefault().Count;
+                var c4Count = _state.DuctsVM.DucList.Where(duct => duct.Type == DuctPiece.TypeDuct.C4).FirstOrDefault().Count;
+                //Default para ropa
+                if (_state.CompleteDuctVm.PurposeId == 0)
+                {
+                    
+                    switch (kit) 
+                    {
+                        //ropa c4
+                        case "B101111": count = c4Count; break;
+                        ////puerta UL derecha
+                        case "B301057": 
+                        ////puerta UL izquierda 
+                        case "B301055": 
+                        ////puerta Inoxidable derecha
+                        case "B301080": 
+                        ////puerta Inoxidable izquierda
+                        case "B301079": count = GetDoorCount(kit); break;
+
+                    }
+                }
+                //Default para basura
+                else 
+                {
+                    switch (kit)
+                    {
+                        //basura c4
+                        case "B101110": count = c4Count; break;
+                        ////puerta Pintada
+                        case "B301061":
+                        ////puerta Inoxidable
+                        case "B301064": 
+                        ////puerta UL
+                        case "B301033": count = GetDoorCount(kit); break;
+
+                    }
+                }
+                
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+            
             return count;
         }
         private static void InsertPicture(Worksheet worksheet)
@@ -617,6 +693,22 @@ namespace Calculo_ductos_winUi_3.Services
             picture.Width = (int)columnWidthInPixels;
             picture.Height = (int)totalHeight;
             picture.Placement = PlacementType.Move;
+        }
+        private static int GetDoorCount(string kit)
+        {
+            var count = 0;
+            try
+            {
+                count = _state.FloorVM.FloorList
+                    .Where(floor => floor.TypeDoor.IdSyteLine == kit && floor.NeedGate && floor.Type!=Floor.TypeFloor.discharge)
+                    .Sum(floor => floor.FloorCount);
+            }
+            catch (Exception ex)
+            {
+
+                Trace.TraceError(ex.Message);
+            }
+            return count;
         }
 
     }

@@ -35,7 +35,8 @@ namespace Calculo_ductos_winUi_3
         public App()
         {
             this.InitializeComponent();
-            
+            System.Diagnostics.Trace.Listeners.Add(new System.Diagnostics.DefaultTraceListener());
+
         }
 
         public StateViewModel ViewModel { get; } = new StateViewModel();

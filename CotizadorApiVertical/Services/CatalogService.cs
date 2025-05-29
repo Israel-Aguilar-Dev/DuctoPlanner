@@ -34,7 +34,7 @@ namespace CotizadorApiVertical.Services
                     },
                     new CatalogModel{
                         Name = "DoorTypeCatalog",
-                        Data = doorTypeCatalog.Select(p => new CatalogRowModel { Id = p.TipoPuertaId, Description = p.Descripcion, Class = p.Clase }).ToList()
+                        Data = doorTypeCatalog.Select(p => new CatalogRowModel { Id = p.TipoPuertaId, Description = p.Descripcion, Class = p.Clase, IdSyteLine = p.ItemIdSyteLine }).ToList()
                     },
                     new CatalogModel{
                         Name = "SheetTypeCatalog",

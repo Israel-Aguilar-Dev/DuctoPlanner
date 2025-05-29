@@ -29,6 +29,7 @@ namespace Calculo_ductos_winUi_3.Models
         public int Id { get; set; }
         public string Description { get; set; }
         public string Class { get; set; }
+        public string IdSyteLine { get; set; }  
     }
 
 }

@@ -28,7 +28,8 @@ namespace Calculo_ductos_winUi_3.Services
                             Height = floorDescription.FloorHeight,
                             NeedGate = floorDescription.NeedGate,
                             Type = floorDescription.Type,
-                            NeedChimmey = floorDescription.NeedChimney
+                            NeedChimmey = floorDescription.NeedChimney,
+                            Discharge = floorDescription.Discharge
                         });
                         counter++;
                     }
@@ -42,7 +43,8 @@ namespace Calculo_ductos_winUi_3.Services
                                 Height = floorDescription.FloorHeight,
                                 NeedGate = floorDescription.NeedGate,
                                 Type = floorDescription.Type,
-                                NeedChimmey = floorDescription.NeedChimney
+                                NeedChimmey = floorDescription.NeedChimney,
+                                Discharge = floorDescription.Discharge
                             });
                             counter++;
                         }

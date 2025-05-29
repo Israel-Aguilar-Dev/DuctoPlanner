@@ -12,13 +12,13 @@ namespace Calculo_ductos_winUi_3.Services
 {
     public static class Mapper
     {
-        public static ObservableCollection<DuctModel> MapDuctsFromDictionary(this Dictionary<DuctPiece.TypeDuct, int> ducts)
+        public static ObservableCollection<DuctModel> MapDuctsFromList(this List<DuctPiece> ducts)
         {
             return new ObservableCollection<DuctModel>(
                 ducts.Select(kvp => new DuctModel
                 {
-                    Type = kvp.Key,
-                    Count = kvp.Value
+                    Type = kvp.Type,
+                    Count = kvp.Count
                 }));
         }
         public static ObservableCollection<FloorDuctDetailModel> MapToFloorDuctDetails(this List<Floor> floors)
@@ -32,8 +32,8 @@ namespace Calculo_ductos_winUi_3.Services
                     result.Add(new FloorDuctDetailModel
                     {
                         FloorName = floor.Name,
-                        DuctType = duct.Key,
-                        Count = duct.Value
+                        DuctType = duct.Type,
+                        Count = duct.Count
                     });
                 }
             }

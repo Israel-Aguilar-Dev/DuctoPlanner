@@ -17,6 +17,7 @@ using Microsoft.UI.Composition;
 using System.Numerics;
 using Calculo_ductos_winUi_3.ViewModels;
 using Microsoft.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Data;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -50,4 +51,5 @@ namespace Calculo_ductos_winUi_3.Views
 
 
     }
+   
 }

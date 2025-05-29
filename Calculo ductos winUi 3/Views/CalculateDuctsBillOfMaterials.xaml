@@ -68,7 +68,8 @@
                     HorizontalAlignment="Right"
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
-                    Margin="0,16,36,0" 
+                    Margin="0,8,36,0" 
+                        BorderThickness="0"
                     Background="white"
                     Click="FlipCard">
                         <!--Detalles-->
@@ -148,7 +149,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock 
                     Text="Ductos por piso" 
-                    Margin="36,16,36,0" 
+                    Margin="36,16,36,8" 
                     HorizontalAlignment="Center"
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
@@ -158,7 +159,7 @@
                     HorizontalAlignment="Right"
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
-                    Margin="0,16,36,0" 
+                    Margin="0,8,36,0" 
                     VerticalContentAlignment="Top"
                     BorderThickness="0"
                     Background="white"
@@ -180,22 +181,22 @@
                         CornerRadius="8"
                         Grid.Row="0">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
-                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition></RowDefinition>
                             </Grid.RowDefinitions>
-                            <TextBlock Tag="0" Grid.Column="0" Padding="6" Margin="6" TextAlignment="Center">Piso</TextBlock>
-                            <TextBlock Tag="0" Grid.Column="1" Padding="6" Margin="6" TextAlignment="Center">Tipo de ducto</TextBlock>
-                            <TextBlock Tag="0" Grid.Column="2" Padding="6" Margin="6" TextAlignment="Center">Cantidad</TextBlock>
+                            <TextBlock Tag="0" Grid.Column="0" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center">Piso</TextBlock>
+                            <TextBlock Tag="0" Grid.Column="1" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center">Tipo de ducto</TextBlock>
+                            <TextBlock Tag="0" Grid.Column="2" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center">Cantidad</TextBlock>
                             <Path 
                             Stroke="Gray"
                             StrokeThickness="0.5"
                             Data="M 0,0 L 1,0" 
                             Grid.ColumnSpan="3"
-                            Margin="36,0,36,0"
+                            Margin="16,0,16,0"
                             Stretch="Fill" 
                             VerticalAlignment="Bottom"/>
                         </Grid>
@@ -208,22 +209,22 @@
                                     <DataTemplate x:DataType="model:FloorDuctDetailModel">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
-                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                                <ColumnDefinition Width="3*"></ColumnDefinition>
+                                                <ColumnDefinition Width="2*"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Tag="0" Grid.Column="0" Padding="6" Margin="6" TextAlignment="Center" Text="{x:Bind FloorName}"></TextBlock>
                                             <TextBlock Tag="0" Grid.Column="1" Padding="6" Margin="6" TextAlignment="Center" Text="{x:Bind DuctType}"></TextBlock>
                                             <TextBlock Tag="0" Grid.Column="2" Padding="6" Margin="6" TextAlignment="Center" Text="{x:Bind Count}"></TextBlock>
                                             <Path 
-                                            Stroke="Gray"
-                                            StrokeThickness="0.5"
-                                            Data="M 0,0 L 1,0" 
-                                            Grid.ColumnSpan="3"
-                                            Margin="36,0,36,0"
-                                            Stretch="Fill" 
-                                            VerticalAlignment="Bottom"
-                                            StrokeDashArray="8,12"/>
+                                                Stroke="{x:Bind StrokeBrush}"
+                                                StrokeThickness="0.5"
+                                                Data="M 0,0 L 1,0" 
+                                                Grid.ColumnSpan="3"
+                                                Margin="36,0,36,0"
+                                                Stretch="Fill" 
+                                                VerticalAlignment="Bottom"
+                                                StrokeDashArray="8,12"/>
                                         </Grid>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -249,7 +250,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock 
                 Text="Componentes" 
-                Margin="36,16,36,0" 
+                Margin="36,16,36,8" 
                 HorizontalAlignment="Center"
                 Grid.Row="0"
                 Grid.ColumnSpan="2"
@@ -267,8 +268,8 @@
                     CornerRadius="8"
                     Grid.Row="0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition></ColumnDefinition>
-                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -280,7 +281,7 @@
                         StrokeThickness="0.5"
                         Data="M 0,0 L 1,0" 
                         Grid.ColumnSpan="2"
-                        Margin="36,0,36,0"
+                        Margin="16,0,16,0"
                         Stretch="Fill" 
                         VerticalAlignment="Bottom"/>
                     </Grid>
@@ -293,11 +294,11 @@
                                 <DataTemplate x:DataType="model:ComponentModel">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Tag="0" Grid.Column="0" Padding="6" Margin="6" TextAlignment="Center" Text="{x:Bind Name}"></TextBlock>
-                                        <TextBlock Tag="0" Grid.Column="1" Padding="6" Margin="6" TextAlignment="Center" Text="{x:Bind Count}"></TextBlock>
+                                        <TextBlock Tag="0" Grid.Column="0" Padding="6" Margin="6" TextWrapping="Wrap" TextAlignment="Center" Text="{x:Bind Name}"></TextBlock>
+                                        <TextBlock Tag="0" Grid.Column="1" Padding="6" Margin="6" TextWrapping="Wrap" TextAlignment="Center" Text="{x:Bind Count}"></TextBlock>
                                         <Path 
                                         Stroke="Gray"
                                         StrokeThickness="0.5"

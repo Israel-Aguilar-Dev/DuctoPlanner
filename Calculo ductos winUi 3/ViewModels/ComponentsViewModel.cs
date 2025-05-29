@@ -23,7 +23,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
         public ComponentsViewModel()
         {
             _componentList = new ObservableCollection<ComponentModel>();
-            CalculateComponentsCommand = new RelayCommand<ComponentCalculationParams>(CalculateComponents);
+            CalculateComponentsCommand = new RelayCommand<Duct>(CalculateComponents);
 
         }
         public ObservableCollection<ComponentModel> ComponentList
@@ -35,9 +35,9 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
-        private void CalculateComponents(ComponentCalculationParams args) 
+        private void CalculateComponents(Duct args)
         {
-            List<Calculo_ductos.Params.Component> components= DuctsLib.CalculateComponents(args.Floors.Sum(floor => floor.FloorCount), args.Ducts, NeedChimmey(args.Floors));
+            List<Calculo_ductos.Params.Component> components = args.Components;
             ComponentList = components.MapComponents();
         }
         public ICommand CalculateComponentsCommand { get; }

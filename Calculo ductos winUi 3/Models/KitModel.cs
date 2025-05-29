@@ -19,5 +19,6 @@ namespace Calculo_ductos_winUi_3.Models
         public List<KitModel> Guillotine { get; set; } = new List<KitModel>();
         public List<KitModel> Container { get; set; } = new List<KitModel>();
         public List<KitModel> General { get; set; } = new List<KitModel>();
+        public List<KitModel> Clothes { get; set; } = new List<KitModel>();
     }
 }

@@ -94,14 +94,14 @@
                             <ComboBoxItem>Ventilacion</ComboBoxItem>
                         </ComboBox>
                     </StackPanel>
-                    <StackPanel 
+                <StackPanel x:Name="lblCompuerta"
                         Orientation="Vertical" 
                         Grid.Column="0" 
                         Grid.Row="7" 
                         Grid.ColumnSpan="2"
                         Margin="8"
                         Height="Auto">
-                        <TextBlock x:Name="lblCompuerta" Margin="0,0,0,8">Necesitan puerta</TextBlock>
+                        <TextBlock  Margin="0,0,0,8">Necesitan puerta</TextBlock>
                         <ComboBox x:Name="cbxCompuerta" 
                             SelectedIndex="{x:Bind stateApp.FloorVM.NeedGateIndex, Mode=TwoWay}"
                             SelectionChanged="CbxCompuerta_SelectionChanged">
@@ -109,7 +109,7 @@
                             <ComboBoxItem>No</ComboBoxItem>
                         </ComboBox>
                     </StackPanel>
-                    <StackPanel 
+                <StackPanel x:Name="lblTipoPuerta"
                         Orientation="Vertical" 
                         Grid.Column="0" 
                         Grid.Row="8" 
@@ -117,15 +117,15 @@
                         Margin="10"
                         Height="Auto">      
 
-                        <TextBlock x:Name="lblTipoPuerta" Margin="0,0,0,8">Tipo Puerta</TextBlock>
+                        <TextBlock  Margin="0,0,0,8">Tipo Puerta</TextBlock>
 
-                        <ComboBox x:Name="cbxTipoPuerta">
-                            <ComboBoxItem>Puerta UL</ComboBoxItem>
-                            <ComboBoxItem >Puerta Pintada</ComboBoxItem>
-                            <ComboBoxItem >Puerta Inoxidable</ComboBoxItem>
-                        </ComboBox>
+                    <ComboBox x:Name="cbxTipoPuerta" 
+                                  ItemsSource="{x:Bind stateApp.FloorVM.AvailableDoorTypes, Mode=OneWay}"
+                                  SelectedItem="{x:Bind stateApp.FloorVM.TypeDoorSelected, Mode=TwoWay}" 
+                                  DisplayMemberPath="Description">
+                    </ComboBox>
                     </StackPanel>
-                    <StackPanel 
+                <StackPanel x:Name="lblChimenea"
                         Orientation="Vertical" 
                         Grid.Column="0" 
                         Grid.Row="9" 
@@ -133,7 +133,7 @@
                         Margin="10"
                         Height="Auto">
                         <!--<TextBlock x:Name="lblChimenea">Necesita chimenea</TextBlock>-->
-                        <TextBlock x:Name="lblChimenea" Margin="0,0,0,8">Tipo de ventilación</TextBlock>
+                        <TextBlock  Margin="0,0,0,8">Tipo de ventilación</TextBlock>
                         <!--<ComboBox x:Name="cbxChimenea">
                             <ComboBoxItem>Si</ComboBoxItem>
                             <ComboBoxItem >No</ComboBoxItem>
@@ -144,10 +144,22 @@
                             <ComboBoxItem >Cuello de ganso</ComboBoxItem>
                         </ComboBox>
                     </StackPanel>
+                <StackPanel x:Name="lblDischargeType"
+                    Orientation="Vertical" 
+                    Grid.Column="0" 
+                    Grid.Row="10" 
+                    Grid.ColumnSpan="2"
+                    Margin="10"
+                    Height="Auto">
+                    <TextBlock  Margin="0,0,0,8">Tipo de descargador</TextBlock>
+                    <ComboBox x:Name="cbxDischargeType" SelectedIndex="{x:Bind stateApp.FloorVM.TypeDischargeIndex, Mode=TwoWay}">
+                        <ComboBoxItem>Guillotina</ComboBoxItem>
+                        <ComboBoxItem >Descargador</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
 
 
-
-                </Grid>
+            </Grid>
             </ScrollViewer>
 
         <StackPanel 

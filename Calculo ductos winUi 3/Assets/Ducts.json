@@ -236,10 +236,10 @@
         "InstalationTime": 1.5
       },
       {
-        "Kit":"B101130",
-        "Description":"XN-FINAL 24\"",
-        "Count":0,
-        "InstalationTime":1
+        "Kit": "B101130",
+        "Description": "XN-FINAL 24\"",
+        "Count": 0,
+        "InstalationTime": 1
       },
       {
         "Kit": "B701047",
@@ -356,31 +356,31 @@
         "Kit": "B103014",
         "Description": "Aislamiento Acústico",
         "Count": 0,
-        "InstalationTime":0
+        "InstalationTime": 0
       },
       {
         "Kit": "B601032",
         "Description": "Disp. Antiimpacto 24\" Cal 12 (mayo a 10 niveles)",
         "Count": 0,
-        "InstalationTime":0
+        "InstalationTime": 0
       },
       {
         "Kit": "B903068",
         "Description": "Dispositivo Anti impactos 24\" CAL 16 (menos de 10 niveles)",
         "Count": 0,
-        "InstalationTime":0
+        "InstalationTime": 0
       },
       {
         "Kit": "B601034",
         "Description": "Base p/ Dispositivo de PTR 2\" X 2\"",
         "Count": 0,
-        "InstalationTime":0
+        "InstalationTime": 0
       },
       {
         "Kit": "B601035",
         "Description": "Soporte p/Diagonal de PTR 2\" X 2\"",
         "Count": 0,
-        "InstalationTime":0
+        "InstalationTime": 0
       }
 
     ],
@@ -471,7 +471,130 @@
         "Count": 0,
         "InstalationTime": 0
       }
-    ] 
+    ],
+    "Clothes": [
+      {
+        "Kit": "B602002",
+        "Description": "Descargador de Ropa Sucia con guillotina tipo H de 24\"",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B603001",
+        "Description": "Aspersor ensamble",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B601001",
+        "Description": "Sistema de desinfeccion",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B601002",
+        "Description": "Sistema automatico de desinfeccion",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B403150",
+        "Description": "Canalizacion/Nivel Sistema Automatico de lavado",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301056",
+        "Description": "P-RS 18x18 s/cerradura, apertura der.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301044",
+        "Description": "P-RS 18x18\" s/cerradura, apertura izq.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301055",
+        "Description": "P-RS 18x18\" c/cerradura, apertura izq.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301057",
+        "Description": "P-RS 18x18\" c/cerradura, apertura der.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301079",
+        "Description": "PUERTA BASICA 18X18\" INOX 441 A/ IZQ",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301080",
+        "Description": "PUERTA BASICA 18X18\" INOX 441 A/DER",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301030",
+        "Description": "P-RS 21x21 s/cerradura, apertura der.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301032",
+        "Description": "P-RS 18x18cerradura elec. bisagra infer",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B603004",
+        "Description": "Cable de señal p/separador",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B4020320",
+        "Description": "Master Switch Control de Puertas",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B4020321",
+        "Description": "Heat Detector - N.C.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B4020322",
+        "Description": "Smoke detector - 24VDC E.I.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301046",
+        "Description": "P-RS 21x21 s/cerradura, apertura izq.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B103014",
+        "Description": "Aislamiento Acústico",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "SRVGRAL",
+        "Description": "Servicio General",
+        "Count": 0,
+        "InstalationTime": 0
+      }
+    ]
+
 
   }
 ]

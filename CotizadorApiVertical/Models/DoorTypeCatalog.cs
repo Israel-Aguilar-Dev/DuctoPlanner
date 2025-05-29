@@ -10,6 +10,7 @@
         public int TipoPuertaId { get; set; }
         public string Descripcion { get; set; }
         public string Clase { get; set; }
+        public string ItemIdSyteLine { get; set; }
     }
     public class FloorTypeCatalog
     {

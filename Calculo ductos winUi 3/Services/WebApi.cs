@@ -3,68 +3,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Calculo_ductos_winUi_3.Models;
+using System;
+using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
+using System.Threading.Tasks;
+using Windows.Media.Protection.PlayReady;
 
 namespace Calculo_ductos_winUi_3.Services
-{
-    using Calculo_ductos_winUi_3.Models;
-    using System;
-    using System.Net.Http;
-    using System.Text;
-    using System.Text.Json;
-    using System.Threading.Tasks;
-
-    namespace TuProyecto.Servicios
+{ 
+    public class WebApi
     {
-        public class WebApi
+        HttpClient _httpClient;
+        private readonly string _baseUrl;
+
+        public WebApi(string baseUrl)
         {
-            private readonly HttpClient _httpClient;
-            private readonly string _baseUrl;
+            _baseUrl = baseUrl.TrimEnd('/');
+            _httpClient = new HttpClient();
+        }
 
-            public WebApi(string baseUrl)
-            {
-                _baseUrl = baseUrl.TrimEnd('/');
-                _httpClient = new HttpClient();
-            }
+        //public async Task<T> GetAsync<T>(string endpoint)
+        //{
+        //    var response = await _httpClient.GetAsync($"{_baseUrl}/{endpoint}");
+        //    response.EnsureSuccessStatusCode();
 
-            //public async Task<T> GetAsync<T>(string endpoint)
-            //{
-            //    var response = await _httpClient.GetAsync($"{_baseUrl}/{endpoint}");
-            //    response.EnsureSuccessStatusCode();
+        //    var json = await response.Content.ReadAsStringAsync();
+        //    return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+        //}
+        public async Task<T> GetAsync<T>(string endpoint)
+        {
+            //var response = await _httpClient.GetAsync($"{_baseUrl}/{endpoint}");
+            //response.EnsureSuccessStatusCode();
+            var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/{endpoint}");
+            _httpClient.Timeout = TimeSpan.FromSeconds(10);
+            var response = await _httpClient.SendAsync(request);
+            
+            response.EnsureSuccessStatusCode();
+            
+            var json = await response.Content.ReadAsStringAsync();
+            
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
+            var result = JsonConvert.DeserializeObject<Response<ResultData<List<object>>>>(json);
+            var responseWrapper = JsonConvert.DeserializeObject<Response<ResultData<T>>>(json);
+            
+            // Deserialize into the wrapper structure
+            //var responseWrapper = JsonSerializer.<Response<ResultData<T>>>(json);
 
-            //    var json = await response.Content.ReadAsStringAsync();
-            //    return JsonSerializer.Deserialize<T>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            //}
-            public async Task<T> GetAsync<T>(string endpoint)
-            {
-                var response = await _httpClient.GetAsync($"{_baseUrl}/{endpoint}");
-                response.EnsureSuccessStatusCode();
+            if (responseWrapper == null || responseWrapper.Result == null)
+                throw new Exception("Respuesta inválida del servidor.");
 
-                var json = await response.Content.ReadAsStringAsync();
+            return responseWrapper.Result.Data;
+        }
 
-                // Deserialize into the wrapper structure
-                var responseWrapper = JsonSerializer.Deserialize<Response<ResultData<T>>>(json, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+        public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest data)
+        {
+            var jsonData = JsonConvert.SerializeObject(data);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
 
-                if (responseWrapper == null || responseWrapper.Result == null)
-                    throw new Exception("Respuesta inválida del servidor.");
+            var response = await _httpClient.PostAsync($"{_baseUrl}/{endpoint}", content);
+            response.EnsureSuccessStatusCode();
 
-                return responseWrapper.Result.Data;
-            }
-
-            public async Task<TResponse> PostAsync<TRequest, TResponse>(string endpoint, TRequest data)
-            {
-                var jsonData = JsonSerializer.Serialize(data);
-                var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-                var response = await _httpClient.PostAsync($"{_baseUrl}/{endpoint}", content);
-                response.EnsureSuccessStatusCode();
-
-                var responseJson = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<TResponse>(responseJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-            }
+            var responseJson = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TResponse>(responseJson);
         }
     }
+    
 
 }

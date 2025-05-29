@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Calculo_ductos_winUi_3.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,11 +16,13 @@ namespace Calculo_ductos_winUi_3.ViewModels
         private string _ExecutiveName;
         private string _PT;
         private int _SheetTypeId;
-
-        public CompleteDuctViewModel() { 
-            _PurposeId = 1;
-            _ExecutiveName = string.Empty;
-            _SheetTypeId = 0;
+        //private int _DischargeTypeId;
+        
+        
+        public CompleteDuctViewModel() {
+            PurposeId = 1;
+            ExecutiveName = string.Empty;
+            SheetTypeId = 0;
         }
         public int PurposeId 
         {
@@ -53,6 +57,17 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
+        //public int DischargeTypeId
+        //{
+        //    get => _DischargeTypeId;
+        //    set
+        //    {
+        //        _DischargeTypeId = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
+        
+
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
