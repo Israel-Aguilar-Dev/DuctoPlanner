@@ -1,0 +1,600 @@
+﻿[
+  {
+    "Ducts": [
+      {
+        "Kit": "B603118",
+        "Description": "A2-24 Faldon de Ajuste (2 Pies) cal.18",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B603121",
+        "Description": "B2-24 Ducto Recto (2 Pies) cal.20",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B603120",
+        "Description": "B3-24 Ducto  Recto (3 Pies) cal.20",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B101114",
+        "Description": "B4-24 Ducto Recto (4 Pies)  cal.20",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B603115",
+        "Description": "S4.24  Receptor ciego cal.18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B101110",
+        "Description": "C4-24 Receptor p/pta15x18 cal.18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B101111",
+        "Description": "C4-24/Receptor p/pta18x18 cal.18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B102016",
+        "Description": "C4-24/Receptor p/pta18x21 cal. 18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B102017",
+        "Description": "C4-24/Receptor p/pta 21x21 cal. 18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B101016",
+        "Description": "GARGANTA  PARA EMPOTRAR  A MURO",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B101017",
+        "Description": "GARGANTA PARA EMPOTRAR A MURO18 x18 INOX",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B101113",
+        "Description": "U4-24/15x18 cal.18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B102018",
+        "Description": "U4-24/18x18 cal.-18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B102019",
+        "Description": "U4-24/18x21 cal.-18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B102020",
+        "Description": "U4-24/21x21 cal.-18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B101115",
+        "Description": "TVA-24 Tapa de Ventilaciòn Abierta con salida de 6\"  cal.18",
+        "Count": 0,
+        "InstalationTime": 3
+      },
+      {
+        "Kit": "B101118",
+        "Description": "TVA-24 Tapa de Ventilaciòn Abierta con salida de 8\"  cal.18",
+        "Count": 0,
+        "InstalationTime": 3
+      },
+      {
+        "Kit": "B102024",
+        "Description": "TVC-24 Tapa de Ventilación Ciega  cal.18",
+        "Count": 0,
+        "InstalationTime": 3
+      },
+      {
+        "Kit": "B701190",
+        "Description": "CH-24 CAL-18 Chimenea Básica",
+        "Count": 0,
+        "InstalationTime": 3
+      },
+      {
+        "Kit": "B872629",
+        "Description": "DD-24 Ducto Descarga Diagonal cal.16 para 30°",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B872630",
+        "Description": "DD-24 Ducto Descarga Diagonal cal.12 para 30°",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B101105",
+        "Description": "DD-24 Ducto Descarga Diagonal cal.16 para 45°",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B102007",
+        "Description": "DD-24 Ducto Descarga Diagonal cal.12 para 45°",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B872608",
+        "Description": "B2-24 Ducto Recto (2 Pies) cal.12",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B872624",
+        "Description": "B3-24 Ducto  Recto (3 Pies) cal.12",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B903030",
+        "Description": "B4  24\" Cal 12 Galvanizado",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B801530",
+        "Description": "Extensión de garganta sobre diseño",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B872596",
+        "Description": "Marco Inox 15X18\" Monolitic",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B101116",
+        "Description": "ME/15x18 cal. 18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B101117",
+        "Description": "ME/18x18 cal. 18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B801522",
+        "Description": "ME/18x21 cal. 18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B801523",
+        "Description": "ME/21x21 cal. 18",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B872599",
+        "Description": "Soporte circular de 24” sobre diseño",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B101024",
+        "Description": "XN-24 Soporte Cruceta ",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B1010241",
+        "Description": "XN-24\" Fe 3/16 soporte normal + 30",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B101124",
+        "Description": "XE-24 Soporte Especial",
+        "Count": 0,
+        "InstalationTime": 1.5
+      },
+      {
+        "Kit": "B101127",
+        "Description": "XD-24 soporte SOBRE DISEÑO ",
+        "Count": 0,
+        "InstalationTime": 1.5
+      },
+      {
+        "Kit": "B101125",
+        "Description": "XE-24\" Fe 3/16 soporte  variable",
+        "Count": 0,
+        "InstalationTime": 1.5
+      },
+      {
+        "Kit": "B2010005",
+        "Description": "Soporte de Media Luna",
+        "Count": 0,
+        "InstalationTime": 1.5
+      },
+      {
+        "Kit": "B101130",
+        "Description": "XN-FINAL 24\"",
+        "Count": 0,
+        "InstalationTime": 1
+      },
+      {
+        "Kit": "B701047",
+        "Description": "MOL-24\" cal-12 Molde p/pasos losa (escatillon)",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B101140 ",
+        "Description": "Ensamble Unión para ductos (orejas de ángulo con perforaciones de 3/8)",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B872613",
+        "Description": "B2-24 Ducto  Recto (2 pies) cal-20 FINAL ",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B872614",
+        "Description": "B3-24 Ducto  Recto (3 Pies) cal.20 FINAL ",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B872615",
+        "Description": "B4-24 Ducto  Recto (4 Pies)  cal.20 FINAL ",
+        "Count": 0,
+        "InstalationTime": 0.5
+      }
+
+    ],
+    "Guillotine": [
+      {
+        "Kit": "B602103",
+        "Description": "Guillotina estandar 24\"",
+        "Count": 0,
+        "InstalationTime": 2
+      },
+      {
+        "Kit": "B872461",
+        "Description": "Guillotina 24\" Acero Inoxidable",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B603001",
+        "Description": "Aspersor ensamble",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B601001",
+        "Description": "Sistema de desinfeccion",
+        "Count": 0,
+        "InstalationTime": 2
+      },
+      {
+        "Kit": "B601002",
+        "Description": "Sistema automatico de desinfeccion",
+        "Count": 0,
+        "InstalationTime": 2
+      },
+      {
+        "Kit": "B403150",
+        "Description": "Canalizacion/Nivel Sistema Automatico de lavado ",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301033",
+        "Description": "Puerta de basura 15x18 c/manija tipo \"T\" c/ cerradura",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B301061",
+        "Description": "PUERTA BASICA 15X18\" COLOR PLATA",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B301062",
+        "Description": "PUERTA BASICA 15X18\" COLOR BLANCO MATE",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B301063",
+        "Description": "PUERTA BASICA 15X18\" COLOR GRIS OXFORD",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B301064",
+        "Description": "PUERTA BASICA  15X18\" ACERO INOX 430",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B301071",
+        "Description": "DOOR 15X18 BH E.I. L.V. PULL HANDLE",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B301032 ",
+        "Description": "P-RS 18x18cerradura elec. bisagra infer",
+        "Count": 0,
+        "InstalationTime": 0.5
+      },
+      {
+        "Kit": "B103014",
+        "Description": "Aislamiento Acústico",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B601032",
+        "Description": "Disp. Antiimpacto 24\" Cal 12 (mayo a 10 niveles)",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B903068",
+        "Description": "Dispositivo Anti impactos 24\" CAL 16 (menos de 10 niveles)",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B601034",
+        "Description": "Base p/ Dispositivo de PTR 2\" X 2\"",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B601035",
+        "Description": "Soporte p/Diagonal de PTR 2\" X 2\"",
+        "Count": 0,
+        "InstalationTime": 0
+      }
+
+    ],
+    "Container": [
+      {
+        "Kit": "B50200054",
+        "Description": "Contenedor de Capacidad 770L",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B50200053",
+        "Description": "Contenedor de Capacidad 1100L",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B8702433",
+        "Description": "Contenedor Volquete 500",
+        "Count": 0,
+        "InstalationTime": 0
+      }
+    ],
+    "General": [
+      {
+        "Kit": "B603004",
+        "Description": "Cable de señal p/separador",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B4020320",
+        "Description": "Master Switch Control de Puertas",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B4020321",
+        "Description": "Heat Detector - N.C.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B4020322",
+        "Description": "Smoke detector - 24VDC E.I.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B801017",
+        "Description": "Compactador de Basura 350-C5",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B801019",
+        "Description": "Compactador Modelo 400-C5",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B3020302",
+        "Description": "Recycle System Bi-sorter",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B101152",
+        "Description": "Ramaleo Hidraulico PCI/Aspersores",
+        "Count": 0,
+        "InstalationTime": 0.3
+      },
+      {
+        "Kit": "B4050106",
+        "Description": "Bomba Presurizadora",
+        "Count": 0,
+        "InstalationTime": 3
+      },
+      {
+        "Kit": "B4050109",
+        "Description": "Bomba Presurizadora 1 HP",
+        "Count": 0,
+        "InstalationTime": 3
+      },
+      {
+        "Kit": "SRVGRAL",
+        "Description": "Servicio General",
+        "Count": 0,
+        "InstalationTime": 0
+      }
+    ],
+    "Clothes": [
+      {
+        "Kit": "B602002",
+        "Description": "Descargador de Ropa Sucia con guillotina tipo H de 24\"",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B603001",
+        "Description": "Aspersor ensamble",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B601001",
+        "Description": "Sistema de desinfeccion",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B601002",
+        "Description": "Sistema automatico de desinfeccion",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B403150",
+        "Description": "Canalizacion/Nivel Sistema Automatico de lavado",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301056",
+        "Description": "P-RS 18x18 s/cerradura, apertura der.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301044",
+        "Description": "P-RS 18x18\" s/cerradura, apertura izq.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301055",
+        "Description": "P-RS 18x18\" c/cerradura, apertura izq.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301057",
+        "Description": "P-RS 18x18\" c/cerradura, apertura der.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301079",
+        "Description": "PUERTA BASICA 18X18\" INOX 441 A/ IZQ",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301080",
+        "Description": "PUERTA BASICA 18X18\" INOX 441 A/DER",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301030",
+        "Description": "P-RS 21x21 s/cerradura, apertura der.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301032",
+        "Description": "P-RS 18x18cerradura elec. bisagra infer",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B603004",
+        "Description": "Cable de señal p/separador",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B4020320",
+        "Description": "Master Switch Control de Puertas",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B4020321",
+        "Description": "Heat Detector - N.C.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B4020322",
+        "Description": "Smoke detector - 24VDC E.I.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B301046",
+        "Description": "P-RS 21x21 s/cerradura, apertura izq.",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "B103014",
+        "Description": "Aislamiento Acústico",
+        "Count": 0,
+        "InstalationTime": 0
+      },
+      {
+        "Kit": "SRVGRAL",
+        "Description": "Servicio General",
+        "Count": 0,
+        "InstalationTime": 0
+      }
+    ]
+
+
+  }
+]

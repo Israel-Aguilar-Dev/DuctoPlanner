@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Calculo_ductos_winUi_3.ViewModels;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -34,8 +35,11 @@ namespace Calculo_ductos_winUi_3
         public App()
         {
             this.InitializeComponent();
+            System.Diagnostics.Trace.Listeners.Add(new System.Diagnostics.DefaultTraceListener());
 
         }
+
+        public StateViewModel ViewModel { get; } = new StateViewModel();
 
         /// <summary>
         /// Invoked when the application is launched.

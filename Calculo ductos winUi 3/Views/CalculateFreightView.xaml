@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Calculo_ductos_winUi_3.Views.CalculateFreightView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Calculo_ductos_winUi_3.Views"
+    xmlns:models="using:Calculo_ductos_winUi_3.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid CornerRadius="8">
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            --><!-- 1 parte --><!--
+            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="3*"/>
+            --><!-- 3 partes --><!--
+        </Grid.ColumnDefinitions>-->
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                Text="Fletes" 
+                Style="{StaticResource TitleTextBlockStyle}"
+                Padding="36,40,36,0"
+                />
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="36,36,36,36">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <!--<RowDefinition Height="*"/>-->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <!-- Botones para deslizar -->
+            <StackPanel x:Name="ScrollButtons" Grid.Column="1"
+                Orientation="Horizontal" 
+                HorizontalAlignment="Center" 
+                Visibility="Collapsed"
+                Margin="0,0,0,16"
+                Spacing="120">
+                <Button Click="ScrollLeft_Click" Margin="5" Padding="9">
+                    <FontIcon Glyph="&#xE72B;" />
+                </Button>
+                <Button Click="ScrollRight_Click" Margin="5" Padding="9">
+                    <FontIcon Glyph="&#xE72A;" />
+                </Button>
+            </StackPanel>
+            <Grid x:Name="DataCard" Grid.RowSpan="2"
+                  CornerRadius="8"
+                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                  Margin="0,16,16,0">
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid x:Name="txtEntity" 
+                              Grid.Row="0"
+                              Margin="32">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Margin="0,0,0,8">Estado</TextBlock>
+                            <ComboBox x:Name="cbxEntities" Grid.Row="1"
+                                Width="200"
+                                ItemsSource="{x:Bind stateApp.FreightVM.AvailableStates, Mode=OneWay}"
+                                SelectedItem="{x:Bind stateApp.FreightVM.SelectedState, Mode=TwoWay}" 
+                                DisplayMemberPath="Name">
+                            </ComboBox>
+                        </Grid>
+                        <Grid x:Name="txtMunicipality"  
+                              Grid.Row="1"
+                              Margin="32">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Margin="0,0,0,8">Municipio</TextBlock>
+                            <ComboBox x:Name="cbxMunicipalities" Grid.Row="1"
+                                Width="200"
+                                ItemsSource="{x:Bind stateApp.FreightVM.AvailableMunicipalities, Mode=OneWay}"
+                                SelectedItem="{x:Bind stateApp.FreightVM.SelectedMunicipality, Mode=TwoWay}" 
+                                DisplayMemberPath="Name">
+                            </ComboBox>
+                        </Grid>
+                        <Grid x:Name="txtLocality"
+                              Grid.Row="2"
+                              Margin="32">
+                               
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Margin="0,0,0,8">Ciudad</TextBlock>
+                            <ComboBox x:Name="cbxLocalities" Grid.Row="1"
+                                Width="200"
+                                ItemsSource="{x:Bind stateApp.FreightVM.AvailableLocalities, Mode=OneWay}"
+                                SelectedItem="{x:Bind stateApp.FreightVM.SelectedLocality, Mode=TwoWay}" 
+                                DisplayMemberPath="Name">        
+                            </ComboBox>
+                        </Grid>
+                        <Button x:Name="btnCalculateFreight" Grid.Row="3"
+                                Margin="32" 
+                                Click="CalculateFreight_Click">Calcular Flete</Button>
+                    </Grid>
+                    
+                </ScrollViewer>
+            </Grid>
+
+            <!-- Carrusel -->
+            <ScrollViewer x:Name="CarouselScrollViewer"
+                  Grid.Row="2"
+                  Grid.Column="1"
+                  CornerRadius="8"
+                  Margin="16,16,0,0"
+                  HorizontalScrollMode="Enabled"
+                  Visibility="Collapsed"
+                  HorizontalScrollBarVisibility="Hidden"
+                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                  VerticalScrollMode="Disabled"
+                  VerticalScrollBarVisibility="Disabled"
+                  ZoomMode="Disabled">
+                <!--<ItemsRepeater ItemsSource="{x:Bind stateApp.FreightVM.FreightServices, Mode=OneWay}">
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="models:FreightModel">
+                            <RadioButton IsChecked="{x:Bind IsSelected, Mode=TwoWay}"
+                                 GroupName="FreightSelection"
+                                 >
+                                <Grid Width="250" Height="200" Margin="10"
+                                      Background="White" CornerRadius="8"
+                                      BorderBrush="Gray" BorderThickness="1">
+                                    <Grid>
+                                        --><!-- Imagen superior derecha --><!--
+                                        <Image Source="{x:Bind ImagePath}" 
+                                       Width="40" Height="40"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Top"
+                                       Margin="5"/>
+
+                                        <StackPanel Margin="10">
+                                            <TextBlock Text="{x:Bind TruckName}" 
+                                               FontSize="20" 
+                                               FontWeight="Bold" 
+                                               Margin="0,0,0,10"/>
+
+                                            <TextBlock Text="{x:Bind EntityName}" />
+                                            <TextBlock Text="{x:Bind LocalityName}" />
+                                            <TextBlock Text="{x:Bind Price}" />
+                                            <TextBlock Text="{x:Bind EstimatedTimeArrival}" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Grid>
+                            </RadioButton>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                    <ItemsRepeater.Layout>
+                        <StackLayout Orientation="Horizontal"/>
+                    </ItemsRepeater.Layout>
+                </ItemsRepeater>-->
+                <Grid Width="350" Height="420" Margin="10"
+                      Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}" CornerRadius="8"
+                      BorderBrush="#094170" BorderThickness="1">
+                    <Grid>
+                        <!-- Imagen superior derecha -->
+                        <Image Source="{x:Bind stateApp.FreightVM.Freight.ImagePath,Mode=OneWay}" 
+                           Width="250" Height="150"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Top"
+                           Margin="5"/>
+
+                        <Grid Margin="10,60">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="3*"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Grid.Row="0"
+                               Text="{x:Bind stateApp.FreightVM.Freight.TruckDescription,Mode=OneWay}" 
+                               FontSize="20" 
+                               FontWeight="Bold" 
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,30"/>
+
+                            <TextBlock Text="Estado:" 
+                                       Grid.Column="0" 
+                                       Grid.Row="1"
+                                       Margin="8,8,8,8"/>
+                            <TextBlock Text="Ciudad:" 
+                                       Grid.Column="0" 
+                                       Grid.Row="2" 
+                                       Margin="8,8,8,8"/>
+                            <TextBlock Text="Costo:" 
+                                       Grid.Column="0" 
+                                       Grid.Row="3" 
+                                       Margin="8,8,8,8"/>
+                            <TextBlock Text="Costo de maniobras:" 
+                                       Grid.Column="0" 
+                                       Grid.Row="4" 
+                                       Margin="8,8,8,8" 
+                                       TextWrapping="Wrap"/>
+                            <TextBlock Text="Costo Total:" 
+                                       Grid.Column="0" 
+                                       Grid.Row="5" 
+                                       Margin="8,8,8,8"/>
+                            <!--<TextBlock Grid.Column="1" Grid.Row="1"
+                                       Margin="0,0,30,0" 
+                                       Text="{x:Bind stateApp.FreightVM.Freight.EntityName}" />
+                            <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap"
+                                       Text="{x:Bind stateApp.FreightVM.Freight.LocalityName}" />
+                            <TextBlock Grid.Column="1" Grid.Row="3"
+                                       Text="{x:Bind stateApp.FreightVM.Freight.Price}" />-->
+                            <TextBlock Grid.Column="1" Grid.Row="1"
+                                        Margin="8,8,8,8" 
+                                        Text="{x:Bind stateApp.FreightVM.Freight.EntityName,Mode=OneWay}" />
+                            <TextBlock Grid.Column="1" Grid.Row="2" TextWrapping="Wrap"
+                                       Margin="8,8,8,8"
+                                        Text="{x:Bind stateApp.FreightVM.Freight.LocalityName,Mode=OneWay}" />
+                            <TextBlock Grid.Column="1" Grid.Row="3" Margin="8,8,8,8"
+                                       Text="{x:Bind stateApp.FreightVM.Freight.Price,Mode=OneWay}" />
+                            <TextBlock Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" 
+                                       Margin="8,8,8,8"
+                                       Text="{x:Bind stateApp.FreightVM.Freight.HandlingCost,Mode=OneWay}" 
+                                       />
+                            <TextBlock Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" 
+                                       Margin="8,8,8,8"
+                                       Text="{x:Bind stateApp.FreightVM.Freight.TotalPrice,Mode=OneWay}" 
+                                       />               
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+
+    </Grid>
+</Page>

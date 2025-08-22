@@ -9,15 +9,15 @@
 
   <Identity
     Name="61587c70-af48-46ef-89ed-d30c75195ff9"
-    Publisher="CN=IAGUILAR"
-    Version="1.0.0.0" />
+    Publisher="CN=Motion Corp, O=Motion Corp, C=MX"
+    Version="1.0.1.0" />
 
   <mp:PhoneIdentity PhoneProductId="61587c70-af48-46ef-89ed-d30c75195ff9" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Calculo ductos</DisplayName>
     <PublisherDisplayName>IAGUILAR</PublisherDisplayName>
-    <Logo>Assets\Vertical.png</Logo>
+    <Logo>Assets\IconoVertical-VERDE.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -37,10 +37,10 @@
         DisplayName="Calculo ductos winUi 3"
         Description="Calculo ductos winUi 3"
         BackgroundColor="transparent"
-        Square150x150Logo="Assets\Vertical.png"
-        Square44x44Logo="Assets\Vertical.png">
-        <uap:DefaultTile Wide310x150Logo="Assets\Vertical.png" />
-        <uap:SplashScreen Image="Assets\Vertical.png" />
+        Square150x150Logo="Assets\IconoVertical-VERDE.png"
+        Square44x44Logo="Assets\IconoVertical-VERDE.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\IconoVertical-VERDE.png" />
+        <uap:SplashScreen Image="Assets\IconoVertical-VERDE.png" />
       </uap:VisualElements>
     </Application>
   </Applications>

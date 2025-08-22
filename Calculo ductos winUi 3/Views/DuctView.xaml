@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Calculo_ductos_winUi_3.Views.DuctView"
+    x:Name="Root"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Calculo_ductos_winUi_3.Views"
+    xmlns:localState="using:Calculo_ductos_winUi_3.ViewModels"
+    xmlns:model="using:Calculo_ductos_winUi_3.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <!--<Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#AACA48"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="#AACA48"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Foreground" Value="#AACA48"/>
+        </Style>-->
+        
+    </Page.Resources>
+    
+    
+        <Grid 
+            Grid.Row="1" 
+            Grid.Column="0" CornerRadius="8" 
+            Margin="36,16,16,36"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                <Grid
+                    x:Name="DataCard"
+                    Height="Auto"
+                    VerticalAlignment="Top"
+                    Margin="16,16,16,36"
+                    CornerRadius="8" 
+                   
+                    >       
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="0" 
+                        Grid.ColumnSpan="2"
+                        Margin="8"
+                        Height="Auto">      
+                        <TextBlock x:Name="lblNombreEjecutivo" Margin="0,0,0,8" >Nombre de Ejecutivo</TextBlock>
+                        <TextBox 
+                            x:Name="txtNombreEjecutivo" 
+                            Text="{x:Bind stateApp.CompleteDuctVm.ExecutiveName, Mode=TwoWay}"
+                            Height="30"></TextBox>
+                    </StackPanel>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="1" 
+                        Grid.ColumnSpan="2"
+                        Margin="8"
+                        Height="Auto">          
+                        <TextBlock x:Name="lblPT" Margin="0,0,0,8" >PT</TextBlock>
+                        <TextBox 
+                            x:Name="txtPT" 
+                            Text="{x:Bind stateApp.CompleteDuctVm.PT, Mode=TwoWay}"
+                            Height="30"></TextBox>      
+                    </StackPanel>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="2" 
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Height="Auto">
+                        
+                        <TextBlock x:Name="lblProposito" Margin="0,0,0,8"
+                                   >Propósito del ducto</TextBlock>
+                        
+                        <ComboBox x:Name="cbxProposito"
+                                   SelectedIndex="{x:Bind stateApp.CompleteDuctVm.PurposeId, Mode=TwoWay}">
+                            <ComboBoxItem>Ropa</ComboBoxItem>
+                            <ComboBoxItem >Basura</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="3" 
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Height="Auto">      
+
+                        <TextBlock x:Name="lblTipoLamina" Margin="0,0,0,8">Tipo de lámina</TextBlock>
+
+                    <ComboBox x:Name="cbxTipoLamina" SelectedIndex="{x:Bind stateApp.CompleteDuctVm.SheetTypeId, Mode=TwoWay}">
+                            <ComboBoxItem>Acero Inoxidable</ComboBoxItem>
+                            <ComboBoxItem >Galvanizada</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="4" 
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Height="Auto">
+
+                        <TextBlock x:Name="lblNecesitaAspersor" Margin="0,0,0,8">Necesita Aspersor</TextBlock>
+
+                        <ComboBox x:Name="cbxNecesitaAspersor" SelectedIndex="{x:Bind stateApp.CompleteDuctVm.NeedSprinklerValue, Mode=TwoWay}">
+                            <ComboBoxItem>Si</ComboBoxItem>
+                            <ComboBoxItem >No</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="5" 
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Height="Auto">
+
+                        <TextBlock x:Name="lblNecesitaSDD" Margin="0,0,0,8">Necesita Sistema de desinfección</TextBlock>
+
+                        <ComboBox x:Name="cbxNecesitaSDD" SelectedIndex="{x:Bind stateApp.CompleteDuctVm.NeedDesinfetionSystemValue, Mode=TwoWay}">
+                            <ComboBoxItem>Si</ComboBoxItem>
+                            <ComboBoxItem >No</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+            </Grid>
+            </ScrollViewer>
+
+        </Grid>
+       
+</Page>
