@@ -15,7 +15,7 @@
         <Grid 
             Grid.Row="1" 
             Grid.Column="0" CornerRadius="8" Margin="36,16,16,36"
-            Background="white">
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -28,7 +28,6 @@
                     VerticalAlignment="Top"
                     Margin="16,16,16,36"
                     CornerRadius="8" 
-                    Background="White"
                     >       
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -152,12 +151,26 @@
                     Margin="10"
                     Height="Auto">
                     <TextBlock  Margin="0,0,0,8">Tipo de descargador</TextBlock>
-                    <ComboBox x:Name="cbxDischargeType" SelectedIndex="{x:Bind stateApp.FloorVM.TypeDischargeIndex, Mode=TwoWay}">
+                    <ComboBox x:Name="cbxDischargeType" 
+                              SelectedIndex="{x:Bind stateApp.FloorVM.TypeDischargeIndex, Mode=TwoWay}" 
+                              SelectionChanged="CbxDischargeType_SelectionCahnged">
                         <ComboBoxItem>Guillotina</ComboBoxItem>
                         <ComboBoxItem >Descargador</ComboBoxItem>
                     </ComboBox>
                 </StackPanel>
-
+                <StackPanel x:Name="lblNeedAntiImpact"
+                    Orientation="Vertical" 
+                    Grid.Column="0" 
+                    Grid.Row="11" 
+                    Grid.ColumnSpan="2"
+                    Margin="10"
+                    Height="Auto">      
+                    <TextBlock  Margin="0,0,0,8" TextWrapping="Wrap">Necesita dispositivo anti-impactos</TextBlock>
+                    <ComboBox x:Name="cbxNeedAntiImpact" SelectedIndex="{x:Bind stateApp.FloorVM.NeedAntiImpactIndex, Mode=TwoWay}">
+                        <ComboBoxItem>Si</ComboBoxItem>
+                        <ComboBoxItem >No</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
 
             </Grid>
             </ScrollViewer>
@@ -170,7 +183,7 @@
             Height="Auto">
             <Button x:Name="btnAgregar" Margin="0,0,12,0" Command="{x:Bind stateApp.FloorVM.AddFloorCommand}">Agregar</Button>
             <!--<Button x:Name="prueba" Click="FlipCard" Margin="0,0,8,0">prueba</Button>-->
-            <Button x:Name="btnCalcular" Click="{x:Bind stateApp.CalculateDucts}" Margin="12,0,0,0">Calcular</Button>
+            <Button x:Name="btnCalcular" Click="CalculateDucts_Click" Margin="12,0,0,0">Calcular</Button>
         </StackPanel>
     </Grid>
         

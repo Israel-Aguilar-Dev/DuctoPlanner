@@ -168,20 +168,25 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
+    <Compile Include="Controllers\FreightController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuoterController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\CatalogRepository.cs" />
+    <Compile Include="Data\FreightRepository.cs" />
     <Compile Include="Data\QuoteRepository.cs" />
     <Compile Include="Facades\ICatalogFacade.cs" />
+    <Compile Include="Facades\IFreightFacade.cs" />
     <Compile Include="Facades\IQuoterFacade.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\ICatalogRepository.cs" />
+    <Compile Include="Interfaces\IFreightRepository.cs" />
     <Compile Include="Interfaces\IQuoteRepository.cs" />
     <Compile Include="Models\CatalogModel.cs" />
     <Compile Include="Models\DoorTypeCatalog.cs" />
+    <Compile Include="Models\FreigthModel.cs" />
     <Compile Include="Models\QuoteDetailModel.cs" />
     <Compile Include="Models\QuoteInsertionResultModel.cs" />
     <Compile Include="Models\QuoteModel.cs" />
@@ -189,6 +194,7 @@
     <Compile Include="Params\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CatalogService.cs" />
+    <Compile Include="Services\FreightService.cs" />
     <Compile Include="Services\QuoterService.cs" />
   </ItemGroup>
   <ItemGroup>

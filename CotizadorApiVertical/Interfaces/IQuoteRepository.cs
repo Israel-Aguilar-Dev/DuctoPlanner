@@ -1,14 +1,16 @@
 ﻿using CotizadorApiVertical.Models;
 using CotizadorApiVertical.Params;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace CotizadorApiVertical.Interfaces
 {
     public interface IQuoteRepository
     {
-        QuoteInsertionResultModel InsertQuote(QuoteParam quote);
+        QuoteInsertionResultModel InsertQuote(SqlConnection connection, SqlTransaction transaction, QuoteParam quote);
+        void InsertLevels(SqlConnection connection, SqlTransaction transaction, QuoteParam quote);
         IEnumerable<QuoteModel> GetLastQuotes();
-        QuoteDetailModel GetQuoteById(int id);
+        IEnumerable<QuoteDetailModel> GetQuoteById(int id);
 
     }
 }

@@ -29,7 +29,12 @@ namespace Calculo_ductos_winUi_3.ViewModels
             _ductList = new ObservableCollection<DuctModel>();
             _ductDetailList = new ObservableCollection<FloorDuctDetailModel>();
             _completeDuct = new Duct();
-            CalculateDuctsCommand = new RelayCommand<ObservableCollection<FloorDescription>>(CalculateDucts);
+            CalculateDuctsCommand = new RelayCommand<string>(CalculateDucts);
+        }
+        public void New() {
+            DucList.Clear();
+            DuctDetailList.Clear();
+            CompleteDuct = new Duct();
         }
 
         public ObservableCollection<DuctModel> DucList
@@ -57,9 +62,9 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
-        private void CalculateDucts(ObservableCollection<FloorDescription> floors)
+        private void CalculateDucts(string json)
         {
-            string json = floors.ToJsonString();
+            //string json = state.ToJsonString();
             
             //Dictionary<DuctPiece.TypeDuct,int> ducts = DuctsLib.CalculateDucts(json);
             //List<Floor> ductsDetail = DuctsLib.CalculateDuctsByFloor(json);

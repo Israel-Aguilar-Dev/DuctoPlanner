@@ -26,28 +26,27 @@ namespace CotizadorApiVertical.Services
                 var doorTypeCatalog = _catalogRepository.GetDoorTypeCatalog();
                 var sheetTypeCatalog = _catalogRepository.GetSheetTypeCatalog();
                 var floorTypeCatalog = _catalogRepository.GetFloorTypeCatalog();
-                List<CatalogModel> catalogs = new List<CatalogModel>
+                var truckTypeCatalog = _catalogRepository.GetTruckTypeCatalog();
+                var EntityCatalog = _catalogRepository.GetEntityCatalog();
+                var MunicipalityCatalog = _catalogRepository.GetMunicipalityCatalog();
+                var LocalityCatalog = _catalogRepository.GetLocalityCatalog();
+                CatalogModelList catalogs = new CatalogModelList
                 {
-                    new CatalogModel{ 
-                        Name = "PurposeCatalog",
-                        Data = purposeCatalog.Select(p => new CatalogRowModel { Id = p.PropositoId, Description = p.Descripcion }).ToList()
-                    },
-                    new CatalogModel{
-                        Name = "DoorTypeCatalog",
-                        Data = doorTypeCatalog.Select(p => new CatalogRowModel { Id = p.TipoPuertaId, Description = p.Descripcion, Class = p.Clase, IdSyteLine = p.ItemIdSyteLine }).ToList()
-                    },
-                    new CatalogModel{
-                        Name = "SheetTypeCatalog",
-                        Data = sheetTypeCatalog.Select(p => new CatalogRowModel { Id = p.TipoLaminaId, Description = p.Descripcion }).ToList()
-                    },
-                    new CatalogModel{
-                        Name = "FloorTypeCatalog",
-                        Data = floorTypeCatalog.Select(p => new CatalogRowModel { Id = p.TipoNivelId, Description = p.Descripcion }).ToList()
-                    },
+                    PurposeCatalog = purposeCatalog.Select(p => new CatalogRowModel { Id = p.PropositoId, Description = p.Descripcion }).ToList(),
+                    DoorTypeCatalog = doorTypeCatalog.Select(p => new CatalogRowModel { Id = p.TipoPuertaId, Description = p.Descripcion, Class = p.Clase, IdSyteLine = p.ItemIdSyteLine }).ToList(),
+                    SheetTypeCatalog = sheetTypeCatalog.Select(p => new CatalogRowModel { Id = p.TipoLaminaId, Description = p.Descripcion }).ToList(),
+                    FloorTypeCatalog = floorTypeCatalog.Select(p => new CatalogRowModel { Id = p.TipoNivelId, Description = p.Descripcion }).ToList(),
+                    TruckTypeCatalog = truckTypeCatalog.Select(p => new CatalogRowTruckTypeModel { Id = p.TipoCamionId, Description = p.Descripcion, Name = p.Clase, MinCapacity = p.CapacidadMinima, MaxCapacity = p.CapacidadMaxima, HandlingCost = p.CostoManiobra}).ToList(),
+                    Entities = EntityCatalog.Select(p => new CatalogRowEntityModel { Id = p.EntidadId, Name = p.Nombre}).ToList(),
+                    Municipalities = MunicipalityCatalog.Select(p => new CatalogRowEntityModel { Id = p.MunicipioId, ParentId = p.EntidadId, Name = p.Nombre}).ToList(),
+                    Localities = LocalityCatalog.Select(p => new CatalogRowEntityModel { Id = p.LocalidadId, ParentId = p.MunicipioId, Name = p.Nombre}).ToList(),
+                    
                 };
                 response.Data = catalogs;
+                response.StatusCode = 200;
+                response.Message = "Éxito";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 response.StatusCode = 500;

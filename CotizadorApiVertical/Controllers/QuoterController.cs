@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace CotizadorApiVertical.Controllers
 {
-    [Route("api/quoter")]
+    [RoutePrefix("api/quoter")]
     public class QuoterController : ApiController
     {
         private IQuoterFacade _service;
@@ -23,6 +23,7 @@ namespace CotizadorApiVertical.Controllers
 
         // GET: api/<Cotizador>
         [HttpGet]
+        [Route("")]
         public IHttpActionResult Get()
         {
             return Ok(_service.GetLastQuotes());
@@ -31,6 +32,7 @@ namespace CotizadorApiVertical.Controllers
         // GET api/<Cotizador>/5
         //[HttpGet("{id}")]
         [HttpGet]
+        [Route("{id:int}")]
         public IHttpActionResult Get(int id)
         {
             return Ok(_service.GetQuoteById(id));
@@ -38,6 +40,7 @@ namespace CotizadorApiVertical.Controllers
 
         // POST api/<Cotizador>
         [HttpPost]
+        [Route("")]
         public IHttpActionResult Post([FromBody] QuoteParam quote)
         {
             return Ok(_service.InsertQuote(quote));

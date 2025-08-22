@@ -43,6 +43,7 @@ namespace Calculo_ductos_winUi_3.Views
         private void CbxTipo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lblDischargeType.Visibility = cbxTipo.SelectedIndex == 0 ? Visibility.Visible : Visibility.Collapsed;
+            lblNeedAntiImpact.Visibility = cbxTipo.SelectedIndex == 0  ? Visibility.Visible : Visibility.Collapsed;
 
             cbxChimenea.Visibility = cbxTipo.SelectedIndex == 2 ? Visibility.Visible : Visibility.Collapsed;
             lblChimenea.Visibility = cbxTipo.SelectedIndex == 2 ? Visibility.Visible : Visibility.Collapsed;
@@ -59,6 +60,14 @@ namespace Calculo_ductos_winUi_3.Views
             lblTipoPuerta.Visibility = cbxCompuerta.SelectedIndex == 1 ? Visibility.Collapsed : Visibility.Visible;
         }
 
+        private void CbxDischargeType_SelectionCahnged(object sender, SelectionChangedEventArgs e)
+        {
+            lblNeedAntiImpact.Visibility = cbxTipo.SelectedIndex == 0 && cbxDischargeType.SelectedIndex == 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+        public async void CalculateDucts_Click(object sender, RoutedEventArgs e)
+        {
+            await stateApp.CalculateDucts(sender, e);
+        }
 
 
     }

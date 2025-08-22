@@ -67,6 +67,10 @@ namespace Calculo_ductos_winUi_3.Services
                     {
                         // Eliminar la hoja llamada "Hoja2"
                         workbook.Worksheet("Evaluation Warning").Delete();
+                        //Obtener la primera hoja
+                        var ductSheet = workbook.Worksheet("DUCTO 1");
+                        // Proteger la hoja con contraseña
+                        ductSheet.Protect("proyectosVertical2025");
 
                         // Guardar los cambios
                         workbook.SaveAs(filePath);
@@ -401,36 +405,37 @@ namespace Calculo_ductos_winUi_3.Services
         }
         private static void WriteKitList(List<KitModel> list, Worksheet sheet, ref int currentRow, TextAlignmentType alignmentType = TextAlignmentType.Center)
         {
-            //Style yellowBackground = sheet.Workbook.CreateStyle();
-            //yellowBackground.ForegroundColor = ColorTranslator.FromHtml("#FFF2CC");
-            //yellowBackground.Pattern = BackgroundType.Solid;
-            //yellowBackground.Font.IsBold = true;
-            //yellowBackground.HorizontalAlignment = TextAlignmentType.Center;
+          
             TextAlignmentType alignmentTypeB = TextAlignmentType.Center;
             foreach (KitModel item in list)
             {
-                sheet.Cells[currentRow, 0].PutValue(item.Kit);          // Columna A
-                sheet.Cells[currentRow, 0].SetStyle(defaultStyle);          // Columna A
-                sheet.Cells[currentRow, 1].PutValue(item.Description);  // Columna B
-                sheet.Cells[currentRow, 1].SetStyle(defaultStyle);          // Columna A
-                sheet.Cells.Merge(currentRow, 1, 1, 7);                  // Bx:Hx
-                defaultStyle.HorizontalAlignment = alignmentType;
-                sheet.Cells.CreateRange(currentRow, 1, 1, 7).SetStyle(defaultStyle);                  // Bx:Hx
+                var kitCount = GetElementCount(item.Kit);
+                if (kitCount > 0)
+                {
+                    sheet.Cells[currentRow, 0].PutValue(item.Kit);          // Columna A
+                    sheet.Cells[currentRow, 0].SetStyle(defaultStyle);          // Columna A
+                    sheet.Cells[currentRow, 1].PutValue(item.Description);  // Columna B
+                    sheet.Cells[currentRow, 1].SetStyle(defaultStyle);          // Columna A
+                    sheet.Cells.Merge(currentRow, 1, 1, 7);                  // Bx:Hx
+                    defaultStyle.HorizontalAlignment = alignmentType;
+                    sheet.Cells.CreateRange(currentRow, 1, 1, 7).SetStyle(defaultStyle);                  // Bx:Hx
 
-                defaultStyle.HorizontalAlignment = alignmentTypeB;
+                    defaultStyle.HorizontalAlignment = alignmentTypeB;
 
-                //sheet.Cells[currentRow, 8].PutValue(item.Count);        // Columna I
-                sheet.Cells[currentRow, 8].PutValue(GetElementCount(item.Kit));        // Columna I
-                sheet.Cells[currentRow, 8].SetStyle(defaultStyle);          // Columna A
-                sheet.Cells[currentRow, 9].Formula = $"=I{currentRow + 1}"; // Jx
-                sheet.Cells[currentRow, 9].SetStyle(defaultStyle);          // Columna A
+                    //sheet.Cells[currentRow, 8].PutValue(item.Count);        // Columna I
+                    //sheet.Cells[currentRow, 8].PutValue(GetElementCount(item.Kit));        // Columna I
+                    sheet.Cells[currentRow, 8].PutValue(kitCount);        // Columna I
+                    sheet.Cells[currentRow, 8].SetStyle(defaultStyle);          // Columna A
+                    sheet.Cells[currentRow, 9].Formula = $"=I{currentRow + 1}"; // Jx
+                    sheet.Cells[currentRow, 9].SetStyle(defaultStyle);          // Columna A
 
-                sheet.Cells[currentRow, 13].PutValue(item.InstalationTime); // N
-                sheet.Cells[currentRow, 13].SetStyle(defaultStyle);          // Columna A
-                sheet.Cells[currentRow, 14].Formula = $"=J{currentRow + 1}*N{currentRow + 1}"; // O
-                sheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder); // O
+                    sheet.Cells[currentRow, 13].PutValue(item.InstalationTime); // N
+                    sheet.Cells[currentRow, 13].SetStyle(defaultStyle);          // Columna A
+                    sheet.Cells[currentRow, 14].Formula = $"=J{currentRow + 1}*N{currentRow + 1}"; // O
+                    sheet.Cells[currentRow, 14].SetStyle(yellowBackgroundBorder); // O
 
-                currentRow++;
+                    currentRow++;
+                }
             }
         }
         private static void WriteFooters(Worksheet worksheet, ref int currentRow)
@@ -658,7 +663,7 @@ namespace Calculo_ductos_winUi_3.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
+                //Debug.WriteLine(ex.Message);
             }
             
             return count;

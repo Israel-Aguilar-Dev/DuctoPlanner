@@ -13,7 +13,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\Ducts.json" />
-    <Content Remove="Assets\IconoVertical-VERDE.png" />
+    <Content Remove="Assets\favicon.ico" />
     <Content Remove="Assets\logovertical.jpg" />
     <Content Remove="Assets\LogoVertical.png" />
     <Content Remove="Assets\torre.png" />
@@ -21,8 +21,27 @@
     <Content Remove="Assets\Vertical.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Assets\3MTonM.png" />
+    <None Remove="Assets\5TonM.png" />
+    <None Remove="Assets\camioneta2.PNG" />
+    <None Remove="Assets\Construction.png" />
+    <None Remove="Assets\ducto.png" />
+    <None Remove="Assets\IconoVertical-VERDE.png" />
     <None Remove="Assets\LogoVertical.png" />
+    <None Remove="Assets\maletin.PNG" />
+    <None Remove="Assets\MO.png" />
+    <None Remove="Assets\MudanceroM.png" />
+    <None Remove="Assets\NissanM.png" />
+    <None Remove="Assets\Rabon.png" />
+    <None Remove="Assets\RabonM.png" />
+    <None Remove="Assets\Torton.png" />
+    <None Remove="Assets\TortonM.png" />
+    <None Remove="Assets\Trailer.png" />
+    <None Remove="Assets\Trailer48M.png" />
+    <None Remove="Assets\Trailer53M.png" />
     <None Remove="Views\CalculateDuctsView.xaml" />
+    <None Remove="Views\CalculateIndirects.xaml" />
+    <None Remove="Views\CalculateManPower.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -98,9 +117,76 @@
     <ProjectReference Include="..\..\Calculo de ductos v1\Calculo ductos\Calculo ductos.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Assets\IconoVertical-VERDE.png">
+    <Content Update="Assets\5TonM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\camioneta2.PNG">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
+    <Content Update="Assets\Construction.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\ducto.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\IconoVertical-VERDE.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\maletin.PNG">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\MudanceroM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\NissanM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Rabon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\RabonM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\TortonM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Trailer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Assets\IconoVertical-VERDE.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Torton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Trailer48M.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Assets\Trailer53M.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Page Update="Views\CalculateIndirects.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CalculateManPower.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CalculateFreightView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Content Update="Assets\MO.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Assets\3MTonM.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <!--

@@ -20,6 +20,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
         private int _typeDuctIndex;
         private int _needChimmeyIndex;
         private int _needGateIndex;
+        private int _needAntiImpactIndex;
         private int _typeDischargeIndex;
         private int _typeDoorIndex;
         //private CatalogRowModel _TypeDoorSelected;
@@ -39,6 +40,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 FloorCount = 0,
                 NeedGate = false,
                 NeedChimney = false,
+                NeedAntiImpact = false,
                 FloorHeight = 0m,
                 DoorTypeId = 0
             };
@@ -51,12 +53,44 @@ namespace Calculo_ductos_winUi_3.ViewModels
             AddFloorCommand = new RelayCommand(AddFloor);
             RemoveFloorCommand = new RelayCommand<Guid>(RemoveFloor);
         }
+        public void New() {
+            FloorList = new ObservableCollection<FloorDescription>();
+            _floorDescription = new FloorDescription
+            {
+                //Uuid = Guid.NewGuid(),
+                Type = Floor.TypeFloor.discharge,
+                Discharge = Floor.TypeDischarge.guilloutine,
+                FloorCount = 0,
+                NeedGate = false,
+                NeedChimney = false,
+                NeedAntiImpact = false,
+                FloorHeight = 0m,
+                DoorTypeId = 0
+            };
+            _typeDuctIndex = 0;
+            _typeDoorIndex = 0;
+            OnPropertyChanged(nameof(TypeDoorSelected));
+            OnPropertyChanged(nameof(Type));
+            OnPropertyChanged(nameof(Discharge));
+            OnPropertyChanged(nameof(FloorCountText));
+            OnPropertyChanged(nameof(TypeDuctIndex));
+            OnPropertyChanged(nameof(TypeDischargeIndex));
+            OnPropertyChanged(nameof(NeedGateIndex));
+            OnPropertyChanged(nameof(NeedChimmeyIndex));
+            OnPropertyChanged(nameof(NeedAntiImpactIndex));
+            OnPropertyChanged(nameof(NeedGate));
+            OnPropertyChanged(nameof(NeedChimney));
+            OnPropertyChanged(nameof(FloorHeightText));
+            OnPropertyChanged(nameof(Description));
+
+        }
 
         #endregion
 
         #region Properties
         public ObservableCollection<CatalogRowModel> AllDoorType { get; set; }
         public ObservableCollection<CatalogRowModel> AvailableDoorTypes { get; set; } = new();
+       
         public ObservableCollection<FloorDescription> FloorList
         {
             get => _floorList;
@@ -91,7 +125,6 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 }
             }
         }
-
         public Floor.TypeDischarge Discharge
 
         {
@@ -105,9 +138,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 }
             }
         }
-
         public Guid Uuid => _floorDescription.Uuid;
-
         public string FloorCountText
         {
             get => _floorDescription.FloorCount.ToString();
@@ -120,7 +151,6 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 }
             }
         }
-
         public int TypeDuctIndex
         {
             get => _typeDuctIndex;
@@ -128,6 +158,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
             {
                 _typeDuctIndex = value;
                 _floorDescription.SetFloorType(value);
+                NeedGateIndex = _floorDescription.NeedGate ? 0 : 1;
                 OnPropertyChanged();
             }
         }
@@ -141,7 +172,6 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public int NeedGateIndex
         {
             get => _floorDescription.NeedGate ? 0 : 1;
@@ -152,7 +182,6 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public int NeedChimmeyIndex
         {
             get => _floorDescription.NeedChimney ? 0 : 1;
@@ -163,7 +192,16 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
-
+        public int NeedAntiImpactIndex
+        {
+            get => _floorDescription.NeedAntiImpact ? 0 : 1;
+            set
+            {
+                _needAntiImpactIndex = value;
+                _floorDescription.NeedAntiImpact = TypeDuctIndex == 0 && TypeDischargeIndex == 0 ? value == 0 : false;
+                OnPropertyChanged();
+            }
+        }
         public bool NeedGate
         {
             get => _floorDescription.NeedGate;
@@ -176,7 +214,6 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 }
             }
         }
-
         public bool NeedChimney
         {
             get => _floorDescription.NeedChimney;
@@ -189,7 +226,18 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 }
             }
         }
-
+        public bool NeedAntiImpact
+        {
+            get => _floorDescription.NeedAntiImpact;
+            set
+            {
+                if (_floorDescription.NeedAntiImpact != value)
+                {
+                    _floorDescription.NeedAntiImpact = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
         public string FloorHeightText
         {
             get => _floorDescription.FloorHeight.ToString();
@@ -202,7 +250,6 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 }
             }
         }
-
         public string Description => _floorDescription.Description;
         
 
@@ -228,11 +275,13 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 FloorCount = _floorDescription.FloorCount,
                 NeedGate = _floorDescription.NeedGate,
                 NeedChimney = _floorDescription.NeedChimney,
+                NeedAntiImpact = _floorDescription.NeedAntiImpact,
                 FloorHeight = _floorDescription.FloorHeight,
                 Type = _floorDescription.Type,
                 Discharge = _floorDescription.Discharge,
                 TypeDoor = _floorDescription.TypeDoor
             });
+            OnPropertyChanged();
         }
 
         public void RemoveFloor(Guid floorUuid)

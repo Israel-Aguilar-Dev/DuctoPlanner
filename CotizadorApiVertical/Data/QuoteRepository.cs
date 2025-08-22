@@ -7,6 +7,7 @@ using CotizadorApiVertical.Params;
 using System.Collections.Generic;
 using System.Linq;
 using System.Configuration;
+using System.Web.UI.WebControls;
 
 namespace CotizadorVerticalApi.Data
 {
@@ -19,45 +20,115 @@ namespace CotizadorVerticalApi.Data
             _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
 
-        public QuoteInsertionResultModel InsertQuote(QuoteParam quote)
+        //public QuoteInsertionResultModel InsertQuote(QuoteParam quote)
+        //{
+        //    using (var connection = new SqlConnection(_connectionString))
+        //    {
+        //        var parameters = new DynamicParameters();
+        //        parameters.Add("@PT", quote.PT);
+        //        parameters.Add("@NombreEjecutivo", quote.NombreEjecutivo);
+        //        parameters.Add("@Diametro", quote.Diametro);
+        //        parameters.Add("@PropositoId", quote.PropositoId);
+        //        parameters.Add("@TipoLaminaId", quote.TipoLaminaId);
+        //        parameters.Add("@SiteRef", quote.SiteRef);
+
+        //        //connection.Execute("Insertar_Cotizacion", parameters, commandType: CommandType.StoredProcedure);
+
+        //        //return parameters.Get<int>("@QuoteId");
+        //        var quoteResult = connection.Query<QuoteInsertionResultModel>("Insertar_Cotizacion", parameters, commandType: CommandType.StoredProcedure).ToList().FirstOrDefault();
+
+
+
+        //        return quoteResult;
+        //    };
+
+
+        //}
+        //public void InsertLevels(QuoteParam quote) {
+        //    using (var connection = new SqlConnection(_connectionString))
+        //    {
+        //        foreach (var level in quote.Niveles)
+        //        {
+        //            var parameters = new DynamicParameters();
+        //            parameters.Add("@Altura", level.Altura);
+        //            parameters.Add("@Cantidad", level.Cantidad);
+        //            parameters.Add("@NecesitaPuerta", level.NecesitaPuerta);
+        //            parameters.Add("@CotizacionId", quote.CotizacionId);
+        //            parameters.Add("@TipoNivelId", level.TipoNivelId);
+        //            parameters.Add("@NecesitaChimenea", level.NecesitaChimenea);
+        //            parameters.Add("@TipoPuertaId", level.TipoPuertaId);
+        //            parameters.Add("@TipoDescargaId", level.TipoDescargaId);
+        //            connection.Query<QuoteInsertionResultModel>("Insertar_Nivel", parameters, commandType: CommandType.StoredProcedure);
+
+        //        }
+        //    }
+        //}
+        public QuoteInsertionResultModel InsertQuote(SqlConnection connection, SqlTransaction transaction, QuoteParam quote)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            var parameters = new DynamicParameters();
+            parameters.Add("@PT", quote.PT);
+            parameters.Add("@NombreEjecutivo", quote.NombreEjecutivo);
+            parameters.Add("@Diametro", quote.Diametro);
+            parameters.Add("@PropositoId", quote.PropositoId);
+            parameters.Add("@TipoLaminaId", quote.TipoLaminaId);
+            parameters.Add("@SiteRef", quote.SiteRef);
+            parameters.Add("@NecesitaAspersor", quote.NecesitaAspersor);
+            parameters.Add("@NecesitaSistemaDD", quote.NecesitaSistemaDD);
+
+            var quoteResult = connection.Query<QuoteInsertionResultModel>(
+                "Insertar_Cotizacion",
+                parameters,
+                transaction: transaction,
+                commandType: CommandType.StoredProcedure
+            ).FirstOrDefault();
+
+            return quoteResult;
+        }
+
+        public void InsertLevels(SqlConnection connection, SqlTransaction transaction, QuoteParam quote)
+        {
+            foreach (var level in quote.Niveles)
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("@PT", quote.PT);
-                parameters.Add("@NombreEjecutivo", quote.NombreEjecutivo);
-                parameters.Add("@Diametro", quote.Diametro);
-                parameters.Add("@PropositoId", quote.PropositoId);
-                parameters.Add("@TipoLaminaId", quote.TipoLaminaId);
-                parameters.Add("@SiteRef", quote.SiteRef);
+                parameters.Add("@Altura", level.Altura);
+                parameters.Add("@Cantidad", level.Cantidad);
+                parameters.Add("@NecesitaPuerta", level.NecesitaPuerta);
+                parameters.Add("@CotizacionId", quote.CotizacionId);
+                parameters.Add("@TipoNivelId", level.TipoNivelId);
+                parameters.Add("@NecesitaChimenea", level.NecesitaChimenea);
+                parameters.Add("@TipoPuertaId", level.TipoPuertaId);
+                parameters.Add("@TipoDescargaId", level.TipoDescargaId);
+                parameters.Add("@NecesitaAntiImpacto", level.NecesitaAntiImpactos);
 
-                //connection.Execute("Insertar_Cotizacion", parameters, commandType: CommandType.StoredProcedure);
-
-                //return parameters.Get<int>("@QuoteId");
-
-                return connection.Query<QuoteInsertionResultModel>("Insertar_Cotizacion", parameters, commandType: CommandType.StoredProcedure).ToList().FirstOrDefault();
-            };
-
-            
+                connection.Execute(
+                    "Insertar_Nivel",
+                    parameters,
+                    transaction: transaction,
+                    commandType: CommandType.StoredProcedure
+                );
+            }
         }
 
         public IEnumerable<QuoteModel> GetLastQuotes()
         {
             using (var connection = new SqlConnection(_connectionString))
             {
+                
                 return connection.Query<QuoteModel>("Obtener_Ultimas_Cotizaciones", commandType: CommandType.StoredProcedure);
+
             };
             
         }
 
-        public QuoteDetailModel GetQuoteById(int id)
+        public IEnumerable<QuoteDetailModel> GetQuoteById(int id)
         {
             using (var connection = new SqlConnection(_connectionString)) 
             {
-                return connection.QuerySingleOrDefault<QuoteDetailModel>(
-                "Obtener_Cotizacion",
-                new { CotizacionId = id },
-                commandType: CommandType.StoredProcedure);
+                var parameters = new DynamicParameters();
+                parameters.Add("@CotizacionId", id);
+
+                return connection.Query<QuoteDetailModel>("Obtener_Cotizacion", parameters, commandType: CommandType.StoredProcedure).ToList();
+
             } ;
             
         }

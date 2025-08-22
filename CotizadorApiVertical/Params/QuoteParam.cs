@@ -7,11 +7,29 @@ namespace CotizadorApiVertical.Params
 {
     public class QuoteParam
     {
+        public int CotizacionId { get; set; } = 0;
         public string PT { get; set; } = string.Empty;
         public string NombreEjecutivo { get; set; } = "NO ASIGNADO";
         public string Diametro { get; set; } = "24\"";
         public int PropositoId { get; set; } = 0;
         public int TipoLaminaId { get; set; } = 0;
+        public int TipoPuertaId { get; set; } = 0;
         public string SiteRef { get; set; } = "VERS";
+        public bool NecesitaAspersor { get; set; } = false;
+        public bool NecesitaSistemaDD { get; set; } = false;
+        
+        public List<LevelParam> Niveles { get; set; }
+    }
+    public class LevelParam 
+    {
+        public int TipoNivelId { get; set; } = 0;
+        public int Cantidad { get; set; } = 0;
+        public decimal Altura { get; set; } = 0;
+        public bool NecesitaPuerta { get; set; } = false;
+        public bool NecesitaChimenea { get; set; }= false;
+        public bool NecesitaAntiImpactos { get; set; } = false;
+        public int TipoPuertaId { get; set; } = 0;
+        public int TipoDescargaId { get; set; } = 0;
+
     }
 }

@@ -29,7 +29,7 @@
             Grid.Row="1" 
             Grid.Column="0" CornerRadius="8" 
             Margin="36,16,16,36"
-            Background="white">
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -41,7 +41,7 @@
                     VerticalAlignment="Top"
                     Margin="16,16,16,36"
                     CornerRadius="8" 
-                    Background="White"
+                   
                     >       
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition></ColumnDefinition>
@@ -121,8 +121,37 @@
                             <ComboBoxItem >Galvanizada</ComboBoxItem>
                         </ComboBox>
                     </StackPanel>
-                    
-                </Grid>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="4" 
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Height="Auto">
+
+                        <TextBlock x:Name="lblNecesitaAspersor" Margin="0,0,0,8">Necesita Aspersor</TextBlock>
+
+                        <ComboBox x:Name="cbxNecesitaAspersor" SelectedIndex="{x:Bind stateApp.CompleteDuctVm.NeedSprinklerValue, Mode=TwoWay}">
+                            <ComboBoxItem>Si</ComboBoxItem>
+                            <ComboBoxItem >No</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="5" 
+                        Grid.ColumnSpan="2"
+                        Margin="10"
+                        Height="Auto">
+
+                        <TextBlock x:Name="lblNecesitaSDD" Margin="0,0,0,8">Necesita Sistema de desinfección</TextBlock>
+
+                        <ComboBox x:Name="cbxNecesitaSDD" SelectedIndex="{x:Bind stateApp.CompleteDuctVm.NeedDesinfetionSystemValue, Mode=TwoWay}">
+                            <ComboBoxItem>Si</ComboBoxItem>
+                            <ComboBoxItem >No</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+            </Grid>
             </ScrollViewer>
 
         </Grid>

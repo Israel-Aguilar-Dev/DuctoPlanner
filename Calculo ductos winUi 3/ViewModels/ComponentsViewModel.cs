@@ -35,6 +35,9 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
+        public void New() { 
+            ComponentList.Clear();
+        }
         private void CalculateComponents(Duct args)
         {
             List<Calculo_ductos.Params.Component> components = args.Components;

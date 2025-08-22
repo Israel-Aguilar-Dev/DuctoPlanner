@@ -18,19 +18,26 @@ namespace Calculo_ductos_winUi_3.Models
         public bool NeedGate { get; set; }
         public int DoorTypeId { get; set; }
         public bool NeedChimney { get; set; }
+        public bool NeedAntiImpact { get; set; }
         public decimal FloorHeight { get; set; }
         public string Description => GetDescription();
         public string NeedGateString => GetNeedGate();
         public string NeedChimmeyString => GetNeedChimmey();
         public string DischargeString => GetDischargeString();
         public string DoorTypeString => GetDoorTypeString();
+        public string NeedAntiImpactString => GetNeedAntiImpact();
         public void SetFloorType(int selection)
         {
             switch (selection)
             {
-                case 0: Type = Floor.TypeFloor.discharge; NeedGate = false; break;
-                case 1: Type = Floor.TypeFloor.common; break;
-                case 2: Type = Floor.TypeFloor.last; break;
+                case 0: Type = Floor.TypeFloor.discharge; 
+                        NeedGate = false;
+                        NeedChimney = false; break;
+                case 1: Type = Floor.TypeFloor.common; 
+                        NeedAntiImpact = false; 
+                        NeedChimney = false; break;
+                case 2: Type = Floor.TypeFloor.last; 
+                        NeedAntiImpact = false; break;
             }
         }
         public void SetFloorTypeDischarge(int selection)
@@ -56,6 +63,10 @@ namespace Calculo_ductos_winUi_3.Models
         private string GetNeedGate()
         {
             return NeedGate ? "Si" : "No";
+        }
+        private string GetNeedAntiImpact()
+        {
+            return NeedAntiImpact ? "Si" : "No";
         }
         private string GetNeedChimmey()
         {

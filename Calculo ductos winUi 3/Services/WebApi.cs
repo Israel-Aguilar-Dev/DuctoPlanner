@@ -22,6 +22,7 @@ namespace Calculo_ductos_winUi_3.Services
         {
             _baseUrl = baseUrl.TrimEnd('/');
             _httpClient = new HttpClient();
+            _httpClient.Timeout = TimeSpan.FromSeconds(100);
         }
 
         //public async Task<T> GetAsync<T>(string endpoint)
@@ -37,7 +38,7 @@ namespace Calculo_ductos_winUi_3.Services
             //var response = await _httpClient.GetAsync($"{_baseUrl}/{endpoint}");
             //response.EnsureSuccessStatusCode();
             var request = new HttpRequestMessage(HttpMethod.Get, $"{_baseUrl}/{endpoint}");
-            _httpClient.Timeout = TimeSpan.FromSeconds(10);
+            
             var response = await _httpClient.SendAsync(request);
             
             response.EnsureSuccessStatusCode();
@@ -45,7 +46,6 @@ namespace Calculo_ductos_winUi_3.Services
             var json = await response.Content.ReadAsStringAsync();
             
             Console.WriteLine(await response.Content.ReadAsStringAsync());
-            var result = JsonConvert.DeserializeObject<Response<ResultData<List<object>>>>(json);
             var responseWrapper = JsonConvert.DeserializeObject<Response<ResultData<T>>>(json);
             
             // Deserialize into the wrapper structure
@@ -64,9 +64,11 @@ namespace Calculo_ductos_winUi_3.Services
 
             var response = await _httpClient.PostAsync($"{_baseUrl}/{endpoint}", content);
             response.EnsureSuccessStatusCode();
-
             var responseJson = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<TResponse>(responseJson);
+            var responseWrapper = JsonConvert.DeserializeObject<Response<ResultData<TResponse>>>(responseJson);
+
+            //return JsonConvert.DeserializeObject<TResponse>(responseJson);
+            return responseWrapper.Result.Data;
         }
     }
     

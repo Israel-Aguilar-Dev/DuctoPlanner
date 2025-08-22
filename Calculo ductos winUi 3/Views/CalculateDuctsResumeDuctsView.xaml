@@ -33,7 +33,7 @@
             <Grid 
             CornerRadius="8"
             Margin="16,16,36,36"
-            Background="White" >
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
@@ -46,6 +46,7 @@
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="2*"></ColumnDefinition>
                         <ColumnDefinition Width="3*"></ColumnDefinition>
                         <ColumnDefinition Width="2*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
@@ -56,16 +57,17 @@
                     <TextBlock Tag="0" Grid.Column="1" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Número de niveles</TextBlock>
                     <TextBlock Tag="0" Grid.Column="2" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Altura</TextBlock>
                     <TextBlock Tag="0" Grid.Column="3" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Necesita puerta</TextBlock>
-                    <TextBlock Tag="0" Grid.Column="4" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Tipo de ventilación</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="4" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Tipo de puerta</TextBlock>
                     <TextBlock Tag="0" Grid.Column="5" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Tipo de descarga</TextBlock>
-                    <TextBlock Tag="0" Grid.Column="6" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Tipo de puerta</TextBlock>
-                    <TextBlock Tag="0" Grid.Column="7" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Eliminar</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="6" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Necesita antiimpactos</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="7" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Tipo de ventilación</TextBlock>
+                    <TextBlock Tag="0" Grid.Column="8" TextWrapping="Wrap" Padding="6" Margin="10" TextAlignment="Center" VerticalAlignment="Center">Eliminar</TextBlock>
                     <Path 
                     Tag="0"
                     Stroke="Gray"
                     StrokeThickness="0.5"
                     Data="M 0,0 L 1,0" 
-                    Grid.ColumnSpan="7"
+                    Grid.ColumnSpan="9"
                     Margin="16,0,16,0"
                     Grid.Row="0"
                     Stretch="Fill" 
@@ -84,6 +86,7 @@
                                         <ColumnDefinition Width="2*"></ColumnDefinition>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
+                                        <ColumnDefinition Width="2*"></ColumnDefinition>
                                         <ColumnDefinition Width="3*"></ColumnDefinition>
                                         <ColumnDefinition Width="2*"></ColumnDefinition>
                                     </Grid.ColumnDefinitions>
@@ -92,10 +95,11 @@
                                     <TextBlock Grid.Column="1" TextWrapping="Wrap" Text="{x:Bind FloorCount}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     <TextBlock Grid.Column="2" TextWrapping="Wrap" Text="{x:Bind FloorHeight}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     <TextBlock Grid.Column="3" TextWrapping="Wrap" Text="{x:Bind NeedGateString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <TextBlock Grid.Column="4" TextWrapping="Wrap" Text="{x:Bind NeedChimmeyString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="4" TextWrapping="Wrap" Text="{x:Bind DoorTypeString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     <TextBlock Grid.Column="5" TextWrapping="Wrap" Text="{x:Bind DischargeString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <TextBlock Grid.Column="6" TextWrapping="Wrap" Text="{x:Bind DoorTypeString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <Button Grid.Column="7"
+                                    <TextBlock Grid.Column="6" TextWrapping="Wrap" Text="{x:Bind NeedAntiImpactString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <TextBlock Grid.Column="7" TextWrapping="Wrap" Text="{x:Bind NeedChimmeyString}" TextAlignment="Center" Padding="10" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <Button Grid.Column="8"
                                     Content="Eliminar"
                                     VerticalAlignment="Center" HorizontalAlignment="Center"
                                     Command="{Binding DataContext.FloorVM.RemoveFloorCommand, ElementName=Root}"

@@ -48,5 +48,33 @@ namespace CotizadorApiVertical.Data
                 return connection.Query<SheetTypeCatalog>("Obtener_Catalogo_Lamina", commandType: CommandType.StoredProcedure);
             }
         }
+        public IEnumerable<TruckTypeCatalog> GetTruckTypeCatalog()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<TruckTypeCatalog>("Obtener_Catalogo_Camiones", commandType: CommandType.StoredProcedure);
+            }
+        }
+        public IEnumerable<EntityCatalog> GetEntityCatalog()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<EntityCatalog>("Obtener_Catalogo_Entidades", commandType: CommandType.StoredProcedure);
+            }
+        }
+        public IEnumerable<MunicipalityCatalog> GetMunicipalityCatalog()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<MunicipalityCatalog>("Obtener_Catalogo_Municipios", commandType: CommandType.StoredProcedure);
+            }
+        }
+        public IEnumerable<LocalityCatalog> GetLocalityCatalog()
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                return connection.Query<LocalityCatalog>("Obtener_Catalogo_Localidades", commandType: CommandType.StoredProcedure);
+            }
+        }
     }
 }

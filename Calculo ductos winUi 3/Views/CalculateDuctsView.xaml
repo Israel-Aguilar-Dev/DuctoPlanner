@@ -33,12 +33,23 @@
             <RowDefinition Height="80"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock 
-            Text="Ducto Planner" 
-            Style="{StaticResource TitleTextBlockStyle}"
-            Padding="36,40,36,0"
-            Grid.Row="0"
-            Grid.ColumnSpan="2"/>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                Text="Despiece" 
+                Style="{StaticResource TitleTextBlockStyle}"
+                Padding="36,40,36,0"
+                />
+            <TextBlock Grid.Column="1"
+                Text="{x:Bind stateApp.CompleteDuctVm.QuoteVersionDescription, Mode=OneWay}" 
+                Style="{StaticResource SubtitleTextBlockStyle}"
+                Padding="36,40,36,0"
+                />
+        </Grid>
+        
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
@@ -48,7 +59,7 @@
                  Grid.Row="0" 
                  SelectionChanged="SelectorLeftSubPage_SelectionChanged" 
                  Margin="36,36,36,0"
-                 Background="White"
+                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                  CornerRadius="8">
                 <SelectorBarItem x:Name="SelectorBarDuct" Text="Ducto" IsSelected="True"  />
                 <SelectorBarItem x:Name="SelectorBarFloor" Text="Descripcion Nivel"  />
@@ -64,7 +75,7 @@
                          Grid.Row="0" 
                          SelectionChanged="SelectorSubPage_SelectionChanged" 
                          Margin="16,36,16,0"
-                         Background="White"
+                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                          CornerRadius="8">
                 <SelectorBarItem x:Name="SelectorBarResumeDucts" Text="Resumen de ductos" IsSelected="True" Icon="AllApps" />
                 <SelectorBarItem x:Name="SelectorBarBillOfParts" Text="Despiece" Icon="ViewAll" />
