@@ -1,6 +1,7 @@
 ﻿using Calculo_ductos.Params;
 using Calculo_ductos_winUi_3.Models;
 using Calculo_ductos_winUi_3.Services;
+using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
             ComponentsVM.CalculateComponentsCommand.Execute(DuctsVM.CompleteDuct);
 
             RemoveEmptyPieces();
+            DiferenceFloors();
 
             await HideLoader("Calculo terminado.");
         }
@@ -102,6 +104,20 @@ namespace Calculo_ductos_winUi_3.ViewModels
             foreach (var item in componentsToRemove)
             {
                 ComponentsVM.ComponentList.Remove(item);
+            }
+        }
+        private void DiferenceFloors()
+        {
+            //string? lastFloor = null;
+            var count = DuctsVM.DuctDetailList.Count - 2;
+            for ( int i = 0;  i <= count; i++)
+            {
+                var duct = DuctsVM.DuctDetailList[i];
+                var ductNext = DuctsVM.DuctDetailList[i+1];
+                duct.IsNewFloor = duct.FloorName != ductNext.FloorName;
+                if (i == count)
+                    ductNext.IsNewFloor = true;
+                //lastFloor = duct.FloorName;
             }
         }
         public async Task CalculateFreigth(object sender, RoutedEventArgs e) 
@@ -195,6 +211,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
                     DuctsVM.CalculateDuctsCommand.Execute(this.ToJsonString());
                     ComponentsVM.CalculateComponentsCommand.Execute(DuctsVM.CompleteDuct);
                     RemoveEmptyPieces();
+                    DiferenceFloors();
                 }
             }
             catch (Exception ex)

@@ -72,12 +72,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
             CompleteDuct = completeDuct;
             DucList = completeDuct.floors.SumDuctPieces().MapDuctsFromList();
             var list = completeDuct.floors.MapToFloorDuctDetails();
-            string? lastFloor = null;
-            foreach (var duct in list)
-            {
-                duct.IsNewFloor = duct.FloorName != lastFloor;
-                lastFloor = duct.FloorName;
-            }
+            
             DuctDetailList = list;
             //DuctDetailList = completeDuct.floors.MapToFloorDuctDetails();
             //string? lastFloor = null;
