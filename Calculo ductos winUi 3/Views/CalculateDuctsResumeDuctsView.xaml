@@ -109,7 +109,7 @@
                                     Stroke="Gray"
                                     StrokeThickness="0.5"
                                     Data="M 0,0 L 1,0" 
-                                    Grid.ColumnSpan="7"
+                                    Grid.ColumnSpan="9"
                                     Margin="16,0,16,0"
                                     Grid.Row="0"
                                     Stretch="Fill" 

@@ -25,21 +25,25 @@ namespace Calculo_ductos_winUi_3.Models
                 {
                     _isNewFloor = value;
                     OnPropertyChanged();
-                    //OnPropertyChanged(nameof(StrokeBrush));
-                    //OnPropertyChanged(nameof(StrokeThickness));
+                    OnPropertyChanged(nameof(StrokeBrush));
+                    OnPropertyChanged(nameof(StrokeThickness));
                 }
             }
         }
         public SolidColorBrush StrokeBrush => GetBursh();
-
         public double StrokeThickness => GetStroke();
+        public DoubleCollection StrokeDashArray => GetStrokeDashArray();
         public SolidColorBrush GetBursh() {
            return IsNewFloor ? 
-                new SolidColorBrush(Microsoft.UI.Colors.Black) : 
+                new SolidColorBrush(Microsoft.UI.Colors.LightCyan) : 
                 new SolidColorBrush(Microsoft.UI.Colors.Gray);
         }
         public double GetStroke() {
             return IsNewFloor ? 1.0 : 0.5;
+        }
+        public DoubleCollection GetStrokeDashArray()
+        {
+            return IsNewFloor ? new DoubleCollection { 1, 0 } : new DoubleCollection { 8, 12 };
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = null)
