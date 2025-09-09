@@ -69,15 +69,24 @@ namespace Calculo_ductos_winUi_3.ViewModels
 
         public async Task CalculateDucts(object sender, RoutedEventArgs e)
         {
-            await ShowLoader("Calculando despiece...");
+            try
+            {
+                await ShowLoader("Calculando despiece...");
 
-            DuctsVM.CalculateDuctsCommand.Execute(this.ToJsonString());
-            ComponentsVM.CalculateComponentsCommand.Execute(DuctsVM.CompleteDuct);
+                DuctsVM.CalculateDuctsCommand.Execute(this.ToJsonString());
+                ComponentsVM.CalculateComponentsCommand.Execute(DuctsVM.CompleteDuct);
 
-            RemoveEmptyPieces();
-            DiferenceFloors();
+                RemoveEmptyPieces();
+                DiferenceFloors();
 
-            await HideLoader("Calculo terminado.");
+                await HideLoader("Calculo terminado.");
+
+            }
+            catch (Exception ex)
+            {
+
+                await HideLoader(ex.Message,18000);
+            }
         }
         private void RemoveEmptyPieces() 
         {
