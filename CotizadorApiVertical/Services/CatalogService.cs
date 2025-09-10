@@ -7,11 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using log4net.Config;
 namespace CotizadorApiVertical.Services
 {
     public class CatalogService : ICatalogFacade
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly ICatalogRepository _catalogRepository;
         public CatalogService() 
         {
@@ -22,6 +23,7 @@ namespace CotizadorApiVertical.Services
             Response response = new Response();
             try
             {
+                log.Info("========== Dentro de GetCatalogs ==========");
                 var purposeCatalog = _catalogRepository.GetPurposeCatalog();
                 var doorTypeCatalog = _catalogRepository.GetDoorTypeCatalog();
                 var sheetTypeCatalog = _catalogRepository.GetSheetTypeCatalog();
@@ -45,12 +47,14 @@ namespace CotizadorApiVertical.Services
                 response.Data = catalogs;
                 response.StatusCode = 200;
                 response.Message = "Éxito";
+                log.Info("Se consulto con exito los catalogos");
             }
             catch (Exception ex)
             {
 
                 response.StatusCode = 500;
                 response.Message = "Ocurrio un error al obtener los catalogos";
+                log.Error(ex.Message);
             }
             return response;
         }

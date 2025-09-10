@@ -3,6 +3,7 @@ using CotizadorApiVertical.Facades;
 using CotizadorApiVertical.Interfaces;
 using CotizadorApiVertical.Params;
 using CotizadorVerticalApi.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,6 +15,7 @@ namespace CotizadorVerticalApi.Services
 {
     public class QuoterService : IQuoterFacade
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IQuoteRepository _quoteRepository;
 
         public QuoterService() 
@@ -85,36 +87,50 @@ namespace CotizadorVerticalApi.Services
         }
         public async Task<Response> InsertQuote(QuoteParam quote)
         {
+            log.Info("========== Dentro de InsertQuote ==========");
             var response = new Response();
-
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            try
             {
-                await connection.OpenAsync();
-                using (var transaction = connection.BeginTransaction())
+                var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                //log.Debug($"Coneccion usada: {connectionString}");
+                using (var connection = new SqlConnection(connectionString))
                 {
-                    try
+                    await connection.OpenAsync();
+                    using (var transaction = connection.BeginTransaction())
                     {
-                        var quoteResult = _quoteRepository.InsertQuote(connection, transaction, quote);
-                        quote.CotizacionId = quoteResult.CotizacionId;
+                        try
+                        {
+                            log.Debug($"Quote: {JsonConvert.SerializeObject(quote)}");
+                            var quoteResult = _quoteRepository.InsertQuote(connection, transaction, quote);
+                            quote.CotizacionId = quoteResult.CotizacionId;
 
-                        _quoteRepository.InsertLevels(connection, transaction, quote);
+                            _quoteRepository.InsertLevels(connection, transaction, quote);
 
-                        transaction.Commit();
+                            transaction.Commit();
 
-                        response.Data = new { Id = quoteResult.CotizacionId, Version = quoteResult.NumeroVersion };
-                        response.StatusCode = 200;
-                        response.Message = "Éxito";
-                    }
-                    catch (Exception ex)
-                    {
-                        var message = ex.Message;
-                        transaction.Rollback();
-                        response.StatusCode = 500;
-                        response.Message = "No se pudo guardar la cotización";
+                            response.Data = new { Id = quoteResult.CotizacionId, Version = quoteResult.NumeroVersion };
+                            response.StatusCode = 200;
+                            response.Message = "Éxito";
+                            log.Info("Se guardo con exito");
+                            log.Debug($"Parametros: {JsonConvert.SerializeObject(response.Data)}");
+                        }
+                        catch (Exception ex)
+                        {
+                            var message = ex.Message;
+                            log.Error(message);
+                            transaction.Rollback();
+                            response.StatusCode = 500;
+                            response.Message = "No se pudo guardar la cotización";
+                        }
                     }
                 }
-            }
 
+            }
+            catch (Exception ex)
+            {
+
+                log.Error($"Ocurrio un error: {ex.Message}");
+            }
             return response;
         }
 

@@ -12,6 +12,7 @@ namespace CotizadorApiVertical.Services
 {
     public class FreightService : IFreightFacade
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IFreightRepository _freightRepository;
         public FreightService()
         {
