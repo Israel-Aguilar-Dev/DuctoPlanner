@@ -11,8 +11,12 @@ namespace CotizadorApiVertical
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         protected void Application_Start()
         {
+            log4net.Config.XmlConfigurator.Configure();
+            log.Info(">>> Aplicación iniciada <<<");
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
