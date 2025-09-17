@@ -139,7 +139,6 @@
                   CornerRadius="8"
                   Margin="16,16,0,0"
                   HorizontalScrollMode="Enabled"
-                  Visibility="Collapsed"
                   HorizontalScrollBarVisibility="Hidden"
                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                   VerticalScrollMode="Disabled"

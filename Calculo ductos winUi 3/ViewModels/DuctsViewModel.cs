@@ -62,6 +62,12 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
+        public int FloorCount
+        {
+            get {
+                return CompleteDuct.floors.Count;
+            }
+        }
         private void CalculateDucts(string json)
         {
             

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CotizadorApiVertical.Params;
+using System;
+using System.Collections.Generic;
 
 namespace CotizadorApiVertical.Models
 {
@@ -26,6 +28,8 @@ namespace CotizadorApiVertical.Models
         public bool NecesitaAspersor { get; set; } = false;
         public bool NecesitaSistemaDD { get; set; } = false;
         public bool NecesitaAntiImpacto { get; set; } = false;
-
+        public int LocalidadId { get; set; } = 0;
+        public int MunicipioId { get; set; } = 0;
+        public int EntidadId { get; set; } = 0;
     }
 }

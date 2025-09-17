@@ -48,4 +48,22 @@
         public int MunicipioId { get; set; }
         public string Nombre { get; set; }
     }
+    public class ResourceCatalog 
+    {
+        public int RecursoId { get; set; }
+        public string Descripcion { get; set; }
+        public decimal SalarioPorJornada { get; set; }
+    }
+    public class ResourceTypeCatalog
+    {
+        public int TipoRecursoId { get; set; }
+        public string Descripcion { get;set; }
+    }
+    public class RentabilitiesCatalog
+    {
+        public int RentabilidadMOId { get; set; }
+        public decimal Rentabilidad { get; set; }
+        public string Descripcion { get; set; }
+    }
+
 }

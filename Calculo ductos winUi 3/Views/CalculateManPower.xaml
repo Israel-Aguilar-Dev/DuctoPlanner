@@ -37,17 +37,15 @@
             <Grid 
                 Grid.Row="1" 
                 Grid.Column="0" CornerRadius="8" 
-                Margin="36,16,16,36"
+                Margin="36,32,16,36"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="Auto"></RowDefinition>
                 </Grid.RowDefinitions>
-                <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Row="0">
+                
                     <Grid
                         x:Name="DataCard"
-                        Height="Auto"
-                        VerticalAlignment="Top"
                         Margin="16,16,16,36"
                         CornerRadius="8" 
            
@@ -57,104 +55,105 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                            <RowDefinition Height="Auto"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <StackPanel 
-                Orientation="Vertical" 
-                Grid.Column="0" 
-                Grid.Row="0" 
-                Grid.ColumnSpan="2"
-                Margin="8"
-                Height="Auto">
-                            <TextBlock x:Name="lblRecurso" Margin="0,0,0,8" >Recurso</TextBlock>
-                            <TextBox 
-                    x:Name="txtRe" 
-                    Text="Ducto"
-                    Height="30"></TextBox>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="1" 
+                        Grid.ColumnSpan="2"
+                        Padding="0,8,0,0"
+                        Margin="8"
+                        Height="Auto">  
+                        <TextBlock x:Name="lblRecurso" Margin="0,0,0,8" >Recurso</TextBlock>
+                        <ComboBox x:Name="cbxRecurso"
+                            ItemsSource="{x:Bind stateApp.ManPowerVM.AvailableResources, Mode=OneWay}"
+                            SelectedItem="{x:Bind stateApp.ManPowerVM.Resource, Mode=TwoWay}" 
+                            DisplayMemberPath="Description">
+                        </ComboBox>
                         </StackPanel>
                         <StackPanel 
-                Orientation="Vertical" 
-                Grid.Column="0" 
-                Grid.Row="2" 
-                Grid.ColumnSpan="2"
-                Margin="10"
-                Height="Auto">
+                            Orientation="Vertical" 
+                            Grid.Column="0" 
+                            Grid.Row="2" 
+                            Grid.ColumnSpan="2"
+                            Padding="0,8,0,0"
+                            Margin="10"
+                            Height="Auto">      
 
-                            <TextBlock x:Name="lblProposito" Margin="0,0,0,8"
-                           >Propósito del ducto</TextBlock>
+                            <TextBlock x:Name="lblTipoRecurso" Margin="0,0,0,8">Tipo de recurso</TextBlock>
 
-                            <ComboBox x:Name="cbxProposito"
-                           SelectedIndex="0">
-                                <ComboBoxItem>Ropa</ComboBoxItem>
-                                <ComboBoxItem >Basura</ComboBoxItem>
+                            <ComboBox x:Name="cbxTipoRecurso"
+                                ItemsSource="{x:Bind stateApp.ManPowerVM.AvailableResourceTypes, Mode=OneWay}"
+                                SelectedItem="{x:Bind stateApp.ManPowerVM.ResourceType, Mode=TwoWay}" 
+                                DisplayMemberPath="Description">
                             </ComboBox>
                         </StackPanel>
-                        <StackPanel 
-                Orientation="Vertical" 
-                Grid.Column="0" 
-                Grid.Row="3" 
-                Grid.ColumnSpan="2"
-                Margin="10"
-                Height="Auto">
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="3" 
+                        Grid.ColumnSpan="2"
+                        Padding="0,8,0,0"
+                        Margin="10"
+                        Height="Auto">
 
-                            <TextBlock x:Name="lblTipoLamina" Margin="0,0,0,8">Tipo de lámina</TextBlock>
+                            <TextBlock x:Name="lblRentabilidad" Margin="0,0,0,8">Rentabilidad</TextBlock>
 
-                            <ComboBox x:Name="cbxTipoLamina" SelectedIndex="0">
-                                <ComboBoxItem>Acero Inoxidable</ComboBoxItem>
-                                <ComboBoxItem >Galvanizada</ComboBoxItem>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel 
-                Orientation="Vertical" 
-                Grid.Column="0" 
-                Grid.Row="4" 
-                Grid.ColumnSpan="2"
-                Margin="10"
-                Height="Auto">
+                            <ComboBox x:Name="cbxRentabilidad"
+                            ItemsSource="{x:Bind stateApp.ManPowerVM.AvailableRentabilities, Mode=OneWay}"
+                            SelectedItem="{x:Bind stateApp.ManPowerVM.SelectedRentability, Mode=TwoWay}" 
+                            DisplayMemberPath="Description">
+                        </ComboBox>
+                    </StackPanel>
 
-                            <TextBlock x:Name="lblNecesitaAspersor" Margin="0,0,0,8">Necesita Aspersor</TextBlock>
+                    <StackPanel 
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center"
+                            Grid.Column="0" 
+                            Grid.Row="4" 
+                            Grid.ColumnSpan="2"
+                            Margin="10"
+                            Height="Auto">
 
-                            <ComboBox x:Name="cbxNecesitaAspersor" SelectedIndex="0">
-                                <ComboBoxItem>Si</ComboBoxItem>
-                                <ComboBoxItem >No</ComboBoxItem>
-                            </ComboBox>
-                        </StackPanel>
-                        <StackPanel 
-                Orientation="Vertical" 
-                Grid.Column="0" 
-                Grid.Row="5" 
-                Grid.ColumnSpan="2"
-                Margin="10"
-                Height="Auto">
+                            <Button x:Name="btnAgregarMP" Margin="8" 
+                                    Command="{x:Bind stateApp.ManPowerVM.AddResourceCommand}">Agregar</Button>
+                        <Button x:Name="btnCalcularMP" Click="CalculateManPower_Click" Margin="8">Calcular</Button>
 
-                            <TextBlock x:Name="lblNecesitaSDD" Margin="0,0,0,8">Necesita Sistema de desinfección</TextBlock>
-
-                            <ComboBox x:Name="cbxNecesitaSDD" SelectedIndex="0">
-                                <ComboBoxItem>Si</ComboBoxItem>
-                                <ComboBoxItem >No</ComboBoxItem>
-                            </ComboBox>
                         </StackPanel>
                     </Grid>
-                </ScrollViewer>
+                
 
             </Grid>
         </Grid>
         <Grid x:Name="RightGrid"
               Grid.Column="1"
               Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <SelectorBar x:Name="SelectorSubPage" 
+             Grid.Row="0" 
+             SelectionChanged="SelectorSubPage_SelectionChanged" 
+             Margin="16,36,16,0"
+             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+             CornerRadius="8">
+                <SelectorBarItem x:Name="SelectorBarResumeMO" Text="Mano de obra" IsSelected="True" Icon="AllApps" />
+                <SelectorBarItem x:Name="SelectorBarDetailMO" Text="Detalle" Icon="ViewAll" />
+            </SelectorBar>
+            <Frame 
+                x:Name="contentsubPage"
+                Grid.Row="1" 
+                CornerRadius="8"
+                Margin="16,16,32,32"
+                >
+
+            </Frame>
         </Grid>
     </Grid>
 </Page>

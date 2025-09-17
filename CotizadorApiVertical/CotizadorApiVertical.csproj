@@ -186,6 +186,8 @@
     </Compile>
     <Compile Include="Interfaces\ICatalogRepository.cs" />
     <Compile Include="Interfaces\IFreightRepository.cs" />
+    <Compile Include="Interfaces\IIndirectsRepository.cs" />
+    <Compile Include="Interfaces\IManPowerRepository.cs" />
     <Compile Include="Interfaces\IQuoteRepository.cs" />
     <Compile Include="Models\CatalogModel.cs" />
     <Compile Include="Models\DoorTypeCatalog.cs" />

@@ -144,8 +144,6 @@ namespace Calculo_ductos_winUi_3.ViewModels
         {
             var truck = GetTruckNeeded(ductList);
             await LoadFreight(SelectedLocality.Id,truck);
-
-
         }
         public void FilterLocalities(int stateId)
         {

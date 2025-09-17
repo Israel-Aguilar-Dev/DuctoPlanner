@@ -18,6 +18,9 @@ namespace CotizadorApiVertical.Models
         public List<CatalogRowEntityModel> Entities { get; set; }
         public List<CatalogRowEntityModel> Municipalities { get; set; }
         public List<CatalogRowEntityModel> Localities { get; set; }
+        public List<CatalogResourceModel> Resources { get; set; }
+        public List<CatalogResourceTypeModel> ResourceTypes { get; set; }
+        public List<CatalogRentabilityModel> Rentabilities { get; set; }
 
     }
     public class CatalogRowModel
@@ -49,5 +52,22 @@ namespace CotizadorApiVertical.Models
         public int MaxCapacity { get; set; } = 0;
         public decimal HandlingCost { get; set; } = 0;
 
+    }
+    public class CatalogResourceModel
+    {
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public decimal SalaryPerWorkday { get; set; }
+    }
+    public class CatalogResourceTypeModel
+    {
+        public int Id { get; set; }
+        public string Description { get; set; }
+    }
+    public class CatalogRentabilityModel
+    {
+        public int Id { get; set; }
+        public decimal Rentability { get; set; }
+        public string Description { get; set; }
     }
 }

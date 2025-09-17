@@ -62,6 +62,9 @@ namespace CotizadorVerticalApi.Services
                     NecesitaAspersor = detail.FirstOrDefault().NecesitaAspersor,
                     NecesitaSistemaDD = detail.FirstOrDefault().NecesitaSistemaDD,
                     NumeroVersion = detail.FirstOrDefault().NumeroVersion,
+                    EntidadId = detail.FirstOrDefault().EntidadId,
+                    MunicipioId = detail.FirstOrDefault().MunicipioId,
+                    LocalidadId = detail.FirstOrDefault().LocalidadId,
                     Niveles = detail.Select(d=> new {
                         TipoNivelId = d.TipoNivelId,
                         Cantidad = d.Cantidad,
@@ -134,25 +137,6 @@ namespace CotizadorVerticalApi.Services
             return response;
         }
 
-        //public async Task<Response> InsertQuote(QuoteParam quote)
-        //{
-        //    Response response = new Response();
-        //    try
-        //    {
-        //        var quoteResult = _quoteRepository.InsertQuote(quote);
-        //        quote.CotizacionId = quoteResult.CotizacionId;
-        //        _quoteRepository.InsertLevels(quote);
-        //        response.Data = quoteResult;
-        //        response.StatusCode = 200;
-        //        response.Message = "Éxito";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.StatusCode = 500;
-        //        response.Message = "No se pudo guardar la cotizacion";
-
-        //    }
-        //    return response;
-        //}
+       
     }
 }
