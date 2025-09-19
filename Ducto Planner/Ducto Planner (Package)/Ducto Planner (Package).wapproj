@@ -45,7 +45,7 @@
     <PackageCertificateThumbprint>91A00ABF03DE06A491135BA40745B7564058C536</PackageCertificateThumbprint>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxPackageDir>\\SRV10-SL\Cotizadores\Vertical\Aplicacion</AppxPackageDir>
+    <AppxPackageDir>C:\Publicaciones\Cotizadores\Vertical\Aplicacion</AppxPackageDir>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundlePlatforms>x64</AppxBundlePlatforms>
     <AppInstallerUri>http://192.168.10.228:8092/CotizadorVertical/</AppInstallerUri>

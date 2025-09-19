@@ -71,7 +71,6 @@ namespace Calculo_ductos_winUi_3.Services
                         var ductSheet = workbook.Worksheet("DUCTO 1");
                         // Proteger la hoja con contraseña
                         ductSheet.Protect("proyectosVertical2025");
-
                         // Guardar los cambios
                         workbook.SaveAs(filePath);
                     }
