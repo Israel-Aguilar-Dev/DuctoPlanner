@@ -18,6 +18,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
     {
         #region Fields
         private readonly string _baseUrl = "http://192.168.10.228:8092/CotizadorApiVertical/Api/";
+        //private readonly string _baseUrl = "http://localhost:8081/CotizadorApiVertical/Api/";
         private List<CatalogRowModel> PurposeCatalog;
         private List<CatalogRowModel> DoorTypeCatalog;
         private List<CatalogRowModel> SheetTypeCatalog;
@@ -26,6 +27,9 @@ namespace Calculo_ductos_winUi_3.ViewModels
         private List<CatalogRowEntityModel> MunicipalityCatalog;
         private List<CatalogRowEntityModel> LocalityCatalog;
         private List<CatalogRowTruckTypeModel> TruckTypeCatalog;
+        private List<CatalogResourceModel> ResourceCatalog;
+        private List<CatalogResourceTypeModel> ResourceTypeCatalog;
+        private List<CatalogRentabilityModel> Rentabilities;
 
         private WebApi Client;
         private readonly BusyService _Busy;
@@ -48,6 +52,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 }
             };
             FreightVM = new CalculateFreightViewModel(Client);
+            ManPowerVM = new ManPowerViewModel();
         }
 
         #endregion
@@ -61,6 +66,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
         public ComponentsViewModel ComponentsVM { get; }
         public CompleteDuctViewModel CompleteDuctVm { get; }
         public CalculateFreightViewModel FreightVM { get; }
+        public ManPowerViewModel ManPowerVM { get; } 
         public string AppVersion => GetAppVersion();
         
 
@@ -69,15 +75,24 @@ namespace Calculo_ductos_winUi_3.ViewModels
 
         public async Task CalculateDucts(object sender, RoutedEventArgs e)
         {
-            await ShowLoader("Calculando despiece...");
+            try
+            {
+                await ShowLoader("Calculando despiece...");
 
-            DuctsVM.CalculateDuctsCommand.Execute(this.ToJsonString());
-            ComponentsVM.CalculateComponentsCommand.Execute(DuctsVM.CompleteDuct);
+                DuctsVM.CalculateDuctsCommand.Execute(this.ToJsonString());
+                ComponentsVM.CalculateComponentsCommand.Execute(DuctsVM.CompleteDuct);
 
-            RemoveEmptyPieces();
-            DiferenceFloors();
+                RemoveEmptyPieces();
+                DiferenceFloors();
 
-            await HideLoader("Calculo terminado.");
+                await HideLoader("Calculo terminado.");
+
+            }
+            catch (Exception ex)
+            {
+
+                await HideLoader(ex.Message,18000);
+            }
         }
         private void RemoveEmptyPieces() 
         {
@@ -124,9 +139,14 @@ namespace Calculo_ductos_winUi_3.ViewModels
         {
             await ShowLoader("Cargando información...");
             await FreightVM.CalculateFreight(DuctsVM.DucList.ToList());
+            ManPowerVM.CalculateWorkDays(DuctsVM.CompleteDuct, FreightVM.SelectedState);
             await HideLoader("Informacion cargada", 500);
         }
-        public void CalculateManPower() { }
+        public async Task CalculateManPower(object sender, RoutedEventArgs e) {
+            await ShowLoader("Calculando mano de obra...");
+            await ManPowerVM.CalculateManPower();
+            await HideLoader("Calculo terminado", 500);
+        }
         public void CalculateIndirects() { }
         private async Task InitializeAsync()
         {
@@ -159,11 +179,15 @@ namespace Calculo_ductos_winUi_3.ViewModels
                     MunicipalityCatalog = catalogListWrapper.Municipalities ?? new();
                     LocalityCatalog = catalogListWrapper.Localities ?? new();
                     TruckTypeCatalog = catalogListWrapper.TruckTypeCatalog ?? new();
+                    ResourceCatalog = catalogListWrapper.Resources?? new();
+                    ResourceTypeCatalog = catalogListWrapper.ResourceTypes ?? new();
+                    Rentabilities = catalogListWrapper.Rentabilities ?? new();
 
                     FloorVM.LoadCatalogs(DoorTypeCatalog);
                     FloorVM.FilterDoorsTypes("basura");//ya que esta seleccionado por automatico basura
 
                     FreightVM.LoadCatalogs(StateCatalog, MunicipalityCatalog, LocalityCatalog, TruckTypeCatalog);
+                    ManPowerVM.LoadCatalogs(ResourceCatalog, ResourceTypeCatalog, Rentabilities);
 
                 }
             }
@@ -195,6 +219,9 @@ namespace Calculo_ductos_winUi_3.ViewModels
             try
             {
                 var quote = await Client.GetAsync<QuoteDetailModel>($"Quoter/{id}");
+                var selectedState = FreightVM.AllStates.Where(state => state.Id == quote.EntidadId).FirstOrDefault();
+                var selectedMunicipality = FreightVM.AllMunicipalities.Where(municipality => municipality.Id == quote.MunicipioId).FirstOrDefault();
+                var selectedLocality = FreightVM.AllLocalities.Where(locality => locality.Id == quote.LocalidadId).FirstOrDefault();
 
                 if (quote != null)
                 {
@@ -207,11 +234,20 @@ namespace Calculo_ductos_winUi_3.ViewModels
                     CompleteDuctVm.NeedSprinkler = quote.NecesitaAspersor;
                     CompleteDuctVm.NeedDesinfectionSystem = quote.NecesitaSistemaDD;
                     FloorVM.FloorList = quote.MapQuoteDetailToFloorList(FloorVM);
+                    FreightVM.SelectedState = selectedState;
+                    FreightVM.SelectedMunicipality = selectedMunicipality;
+                    FreightVM.SelectedLocality = selectedLocality;
+                    
 
                     DuctsVM.CalculateDuctsCommand.Execute(this.ToJsonString());
                     ComponentsVM.CalculateComponentsCommand.Execute(DuctsVM.CompleteDuct);
                     RemoveEmptyPieces();
                     DiferenceFloors();
+                    await FreightVM.CalculateFreight(DuctsVM.DucList.ToList());
+                    ManPowerVM.CalculateWorkDays(DuctsVM.CompleteDuct,selectedState);
+                    ManPowerVM.SelectedRentability = ManPowerVM.AvailableRentabilities.Where(r => r.Id == quote.RentabilidadMOId).FirstOrDefault();
+                    ManPowerVM.ManPower = quote.MapQuoteDetailManPower(ManPowerVM);
+                    await ManPowerVM.CalculateManPower();
                 }
             }
             catch (Exception ex)
@@ -259,6 +295,7 @@ namespace Calculo_ductos_winUi_3.ViewModels
             ComponentsVM.New();
             CompleteDuctVm.New();
             FreightVM.New();
+            ManPowerVM.New();
         }
         public async Task LoadQuote(int id)
         {

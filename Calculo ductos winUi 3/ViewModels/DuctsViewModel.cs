@@ -62,25 +62,22 @@ namespace Calculo_ductos_winUi_3.ViewModels
                 OnPropertyChanged();
             }
         }
+        public int FloorCount
+        {
+            get {
+                return CompleteDuct.floors.Count;
+            }
+        }
         private void CalculateDucts(string json)
         {
-            //string json = state.ToJsonString();
             
-            //Dictionary<DuctPiece.TypeDuct,int> ducts = DuctsLib.CalculateDucts(json);
-            //List<Floor> ductsDetail = DuctsLib.CalculateDuctsByFloor(json);
             Duct completeDuct = DuctsLib.CalculateDuctsByFloor(json);
             CompleteDuct = completeDuct;
             DucList = completeDuct.floors.SumDuctPieces().MapDuctsFromList();
             var list = completeDuct.floors.MapToFloorDuctDetails();
             
             DuctDetailList = list;
-            //DuctDetailList = completeDuct.floors.MapToFloorDuctDetails();
-            //string? lastFloor = null;
-            //foreach (var duct in DuctDetailList)
-            //{
-            //    duct.IsNewFloor = duct.FloorName != lastFloor;
-            //    lastFloor = duct.FloorName;
-            //}
+            
 
 
         }

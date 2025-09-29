@@ -13,8 +13,6 @@ Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "Ducto Planner (Package)", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ducto Planner", "Ducto Planner\Ducto Planner\Ducto Planner.csproj", "{7B4BA4C8-5C86-492B-AEE4-49F8931FA0D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CotizadorVerticalApi", "CotizadorVerticalApi\CotizadorVerticalApi.csproj", "{EC928082-2E8B-4430-A7E4-248E828212DE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CotizadorApiVertical", "CotizadorApiVertical\CotizadorApiVertical.csproj", "{6961CBE0-7640-46EE-8980-9B1D23182512}"
 EndProject
 Global
@@ -99,18 +97,6 @@ Global
 		{7B4BA4C8-5C86-492B-AEE4-49F8931FA0D8}.Release|x64.Build.0 = Release|x64
 		{7B4BA4C8-5C86-492B-AEE4-49F8931FA0D8}.Release|x86.ActiveCfg = Release|x86
 		{7B4BA4C8-5C86-492B-AEE4-49F8931FA0D8}.Release|x86.Build.0 = Release|x86
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Debug|x64.Build.0 = Debug|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Debug|x86.Build.0 = Debug|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Release|ARM64.Build.0 = Release|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Release|x64.ActiveCfg = Release|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Release|x64.Build.0 = Release|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Release|x86.ActiveCfg = Release|Any CPU
-		{EC928082-2E8B-4430-A7E4-248E828212DE}.Release|x86.Build.0 = Release|Any CPU
 		{6961CBE0-7640-46EE-8980-9B1D23182512}.Debug|ARM64.ActiveCfg = Debug|Any CPU
 		{6961CBE0-7640-46EE-8980-9B1D23182512}.Debug|ARM64.Build.0 = Debug|Any CPU
 		{6961CBE0-7640-46EE-8980-9B1D23182512}.Debug|x64.ActiveCfg = Debug|Any CPU

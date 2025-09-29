@@ -15,6 +15,5 @@ namespace CotizadorApiVertical.Models
         public string NombreLocalidad { get;set;}
         public string NombreEntidad { get; set; }
         public decimal Precio {get;set;}
-
     }
 }

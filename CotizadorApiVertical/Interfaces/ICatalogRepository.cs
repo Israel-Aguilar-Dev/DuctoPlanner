@@ -13,5 +13,8 @@ namespace CotizadorApiVertical.Interfaces
         IEnumerable<EntityCatalog> GetEntityCatalog();
         IEnumerable<MunicipalityCatalog> GetMunicipalityCatalog();
         IEnumerable<LocalityCatalog> GetLocalityCatalog();
+        IEnumerable<ResourceCatalog> GetResourceCatalog();
+        IEnumerable<ResourceTypeCatalog> GetResourceTypeCatalog();
+        IEnumerable<RentabilitiesCatalog> GetRentabilitiesCatalog();
     }
 }

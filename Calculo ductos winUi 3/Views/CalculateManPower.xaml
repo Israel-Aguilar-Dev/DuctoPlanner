@@ -11,14 +11,149 @@
 
     <Grid CornerRadius="8">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <!-- 1 parte -->
-            <ColumnDefinition Width="6*"/>
-            <ColumnDefinition Width="3*"/>
-            <!-- 3 partes -->
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid x:Name="TopGrid"
+              Grid.ColumnSpan="2"
+              Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                     Text="Mano de obra" 
+                     Style="{StaticResource TitleTextBlockStyle}"
+                     Padding="36,40,36,0"
+                     />
+        </Grid>
+        <Grid x:Name="LeftGrid"
+              Grid.Column="0"
+              Grid.Row="1">
+            <Grid 
+                Grid.Row="1" 
+                Grid.Column="0" CornerRadius="8" 
+                Margin="36,32,16,36"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                
+                    <Grid
+                        x:Name="DataCard"
+                        Margin="16,16,16,36"
+                        CornerRadius="8" 
+           
+                        >   
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="1" 
+                        Grid.ColumnSpan="2"
+                        Padding="0,8,0,0"
+                        Margin="8"
+                        Height="Auto">  
+                        <TextBlock x:Name="lblRecurso" Margin="0,0,0,8" >Recurso</TextBlock>
+                        <ComboBox x:Name="cbxRecurso"
+                            ItemsSource="{x:Bind stateApp.ManPowerVM.AvailableResources, Mode=OneWay}"
+                            SelectedItem="{x:Bind stateApp.ManPowerVM.Resource, Mode=TwoWay}" 
+                            DisplayMemberPath="Description">
+                        </ComboBox>
+                        </StackPanel>
+                        <StackPanel 
+                            Orientation="Vertical" 
+                            Grid.Column="0" 
+                            Grid.Row="2" 
+                            Grid.ColumnSpan="2"
+                            Padding="0,8,0,0"
+                            Margin="10"
+                            Height="Auto">      
 
+                            <TextBlock x:Name="lblTipoRecurso" Margin="0,0,0,8">Tipo de recurso</TextBlock>
 
-        <Image Source="ms-appx:///Assets/Construction.png"  Grid.Column="1"/>
+                            <ComboBox x:Name="cbxTipoRecurso"
+                                ItemsSource="{x:Bind stateApp.ManPowerVM.AvailableResourceTypes, Mode=OneWay}"
+                                SelectedItem="{x:Bind stateApp.ManPowerVM.ResourceType, Mode=TwoWay}" 
+                                DisplayMemberPath="Description">
+                            </ComboBox>
+                        </StackPanel>
+                    <StackPanel 
+                        Orientation="Vertical" 
+                        Grid.Column="0" 
+                        Grid.Row="3" 
+                        Grid.ColumnSpan="2"
+                        Padding="0,8,0,0"
+                        Margin="10"
+                        Height="Auto">
+
+                            <TextBlock x:Name="lblRentabilidad" Margin="0,0,0,8">Rentabilidad</TextBlock>
+
+                            <ComboBox x:Name="cbxRentabilidad"
+                            ItemsSource="{x:Bind stateApp.ManPowerVM.AvailableRentabilities, Mode=OneWay}"
+                            SelectedItem="{x:Bind stateApp.ManPowerVM.SelectedRentability, Mode=TwoWay}" 
+                            DisplayMemberPath="Description">
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel 
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Center"
+                            Grid.Column="0" 
+                            Grid.Row="4" 
+                            Grid.ColumnSpan="2"
+                            Margin="10"
+                            Height="Auto">
+
+                            <Button x:Name="btnAgregarMP" Margin="8" 
+                                    Command="{x:Bind stateApp.ManPowerVM.AddResourceCommand}">Agregar</Button>
+                        <Button x:Name="btnCalcularMP" Click="CalculateManPower_Click" Margin="8">Calcular</Button>
+
+                        </StackPanel>
+                    </Grid>
+                
+
+            </Grid>
+        </Grid>
+        <Grid x:Name="RightGrid"
+              Grid.Column="1"
+              Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <SelectorBar x:Name="SelectorSubPage" 
+             Grid.Row="0" 
+             SelectionChanged="SelectorSubPage_SelectionChanged" 
+             Margin="16,36,16,0"
+             Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+             CornerRadius="8">
+                <SelectorBarItem x:Name="SelectorBarResumeMO" Text="Mano de obra" IsSelected="True" Icon="AllApps" />
+                <SelectorBarItem x:Name="SelectorBarDetailMO" Text="Detalle" Icon="ViewAll" />
+            </SelectorBar>
+            <Frame 
+                x:Name="contentsubPage"
+                Grid.Row="1" 
+                CornerRadius="8"
+                Margin="16,16,32,32"
+                >
+
+            </Frame>
+        </Grid>
     </Grid>
 </Page>

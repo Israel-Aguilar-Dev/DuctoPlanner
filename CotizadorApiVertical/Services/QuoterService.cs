@@ -1,8 +1,10 @@
 ﻿using CotizadorApiVertical.Data;
 using CotizadorApiVertical.Facades;
 using CotizadorApiVertical.Interfaces;
+using CotizadorApiVertical.Models;
 using CotizadorApiVertical.Params;
 using CotizadorVerticalApi.Data;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -14,11 +16,16 @@ namespace CotizadorVerticalApi.Services
 {
     public class QuoterService : IQuoterFacade
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IQuoteRepository _quoteRepository;
+        private readonly IFreightRepository _freightRepository;
+        private readonly IManPowerRepository _manPowerRepository;
 
         public QuoterService() 
         {
             _quoteRepository = new QuoteRepository();
+            _freightRepository = new FreightRepository();
+            _manPowerRepository = new ManPowerRepository();
         }
         public async Task<Response> GetLastQuotes()
         {
@@ -47,6 +54,12 @@ namespace CotizadorVerticalApi.Services
             try
             {
                 var detail = _quoteRepository.GetQuoteById(cotizacionId);
+                var manpowerQuery = _manPowerRepository.GetManPower(cotizacionId);
+                List<HumanResource> manpower = new List<HumanResource>();
+
+                if (manpowerQuery.Success) { manpower = (List<HumanResource>)manpowerQuery.Data; }
+                else { log.Error(manpowerQuery.Message); }
+
                 var quote = new
                 {
                     CotizacionId = cotizacionId,
@@ -60,6 +73,10 @@ namespace CotizadorVerticalApi.Services
                     NecesitaAspersor = detail.FirstOrDefault().NecesitaAspersor,
                     NecesitaSistemaDD = detail.FirstOrDefault().NecesitaSistemaDD,
                     NumeroVersion = detail.FirstOrDefault().NumeroVersion,
+                    EntidadId = detail.FirstOrDefault().EntidadId,
+                    MunicipioId = detail.FirstOrDefault().MunicipioId,
+                    LocalidadId = detail.FirstOrDefault().LocalidadId,
+                    RentabilidadMOId = detail.FirstOrDefault().RentabilidadMOId,
                     Niveles = detail.Select(d=> new {
                         TipoNivelId = d.TipoNivelId,
                         Cantidad = d.Cantidad,
@@ -69,7 +86,9 @@ namespace CotizadorVerticalApi.Services
                         NecesitaAntiImpactos = d.NecesitaAntiImpacto,
                         TipoPuertaId = d.TipoPuertaId,
                         TipoDescargaId = d.TipoDescargaId
-                    }).ToList()
+                    }).ToList(),
+                    ManoDeObra = manpower
+
                 };
                 response.Data = quote;
                 response.StatusCode = 200;
@@ -85,58 +104,72 @@ namespace CotizadorVerticalApi.Services
         }
         public async Task<Response> InsertQuote(QuoteParam quote)
         {
+            log.Info("========== Dentro de InsertQuote ==========");
             var response = new Response();
-
-            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
+            try
             {
-                await connection.OpenAsync();
-                using (var transaction = connection.BeginTransaction())
+                var connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                log.Debug($"Conexión usada: {connectionString}");
+                //log.Debug($"Coneccion usada: {connectionString}");
+                using (var connection = new SqlConnection(connectionString))
                 {
-                    try
+                    log.Debug("Intentando abrir la conexión...");
+                    connection.Open();
+                    log.Debug("Conexion abierta correctamente");
+                    using (var transaction = connection.BeginTransaction())
                     {
-                        var quoteResult = _quoteRepository.InsertQuote(connection, transaction, quote);
-                        quote.CotizacionId = quoteResult.CotizacionId;
+                        log.Debug("Inicio de transacción");
+                        try
+                        {
+                            var resultOperation = new ResultOperationModel();
+                            log.Debug($"Quote: {JsonConvert.SerializeObject(quote)}");
+                            var quoteResult = _quoteRepository.InsertQuote(connection, transaction, quote);
+                            quote.CotizacionId = quoteResult.CotizacionId;
+                            log.Debug($"Se guardo contización con exito id:{quote.CotizacionId}");
 
-                        _quoteRepository.InsertLevels(connection, transaction, quote);
+                            _quoteRepository.InsertLevels(connection, transaction, quote);
+                            log.Debug($"Insert Levels ejecutado");
 
-                        transaction.Commit();
+                            resultOperation = _freightRepository.InsertFreight(connection,transaction,quote.LocalidadId,quote.CotizacionId);
+                            if (resultOperation.Success)
+                                log.Debug($"InsertFreight ejecutado");
+                            else 
+                                log.Debug(resultOperation.Message);
 
-                        response.Data = new { Id = quoteResult.CotizacionId, Version = quoteResult.NumeroVersion };
-                        response.StatusCode = 200;
-                        response.Message = "Éxito";
-                    }
-                    catch (Exception ex)
-                    {
-                        var message = ex.Message;
-                        transaction.Rollback();
-                        response.StatusCode = 500;
-                        response.Message = "No se pudo guardar la cotización";
+                            resultOperation = _manPowerRepository.InsertManPower(connection,transaction,quote.ManoDeObra,quote.CotizacionId);
+                            if(resultOperation.Success)
+                                log.Debug($"InsertManPower ejecutado");
+                            else
+                                log.Error(resultOperation.Message);
+
+                            transaction.Commit();
+
+                            response.Data = new { Id = quoteResult.CotizacionId, Version = quoteResult.NumeroVersion };
+                            response.StatusCode = 200;
+                            response.Message = "Éxito";
+                            log.Info("Se guardo con exito");
+                            log.Debug($"Parametros: {JsonConvert.SerializeObject(response.Data)}");
+                        }
+                        catch (Exception ex)
+                        {
+                            var message = ex.Message;
+                            log.Error($"No se pudo guardar la cotización. Error: {message}");
+                            transaction.Rollback();
+                            response.StatusCode = 500;
+                            response.Message = "No se pudo guardar la cotización";
+                        }
                     }
                 }
-            }
 
+            }
+            catch (Exception ex)
+            {
+
+                log.Error($"Ocurrio un error: {ex.Message}");
+            }
             return response;
         }
 
-        //public async Task<Response> InsertQuote(QuoteParam quote)
-        //{
-        //    Response response = new Response();
-        //    try
-        //    {
-        //        var quoteResult = _quoteRepository.InsertQuote(quote);
-        //        quote.CotizacionId = quoteResult.CotizacionId;
-        //        _quoteRepository.InsertLevels(quote);
-        //        response.Data = quoteResult;
-        //        response.StatusCode = 200;
-        //        response.Message = "Éxito";
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.StatusCode = 500;
-        //        response.Message = "No se pudo guardar la cotizacion";
-
-        //    }
-        //    return response;
-        //}
+       
     }
 }

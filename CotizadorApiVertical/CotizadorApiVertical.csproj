@@ -48,6 +48,9 @@
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.1.66\lib\net461\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=3.2.0.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.3.2.0\lib\net462\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=9.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.9.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -174,6 +177,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\CatalogRepository.cs" />
     <Compile Include="Data\FreightRepository.cs" />
+    <Compile Include="Data\ManPowerRepository.cs" />
     <Compile Include="Data\QuoteRepository.cs" />
     <Compile Include="Facades\ICatalogFacade.cs" />
     <Compile Include="Facades\IFreightFacade.cs" />
@@ -183,13 +187,17 @@
     </Compile>
     <Compile Include="Interfaces\ICatalogRepository.cs" />
     <Compile Include="Interfaces\IFreightRepository.cs" />
+    <Compile Include="Interfaces\IIndirectsRepository.cs" />
+    <Compile Include="Interfaces\IManPowerRepository.cs" />
     <Compile Include="Interfaces\IQuoteRepository.cs" />
     <Compile Include="Models\CatalogModel.cs" />
     <Compile Include="Models\DoorTypeCatalog.cs" />
     <Compile Include="Models\FreigthModel.cs" />
+    <Compile Include="Models\ManPowerModel.cs" />
     <Compile Include="Models\QuoteDetailModel.cs" />
     <Compile Include="Models\QuoteInsertionResultModel.cs" />
     <Compile Include="Models\QuoteModel.cs" />
+    <Compile Include="Models\ResultOperationModel.cs" />
     <Compile Include="Params\QuoteParam.cs" />
     <Compile Include="Params\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -242,6 +250,9 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="log4net.Config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

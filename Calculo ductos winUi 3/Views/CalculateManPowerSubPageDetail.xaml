@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Calculo_ductos_winUi_3.Views.CalculateManPowerSubPageDetail"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Calculo_ductos_winUi_3.Views"
+    xmlns:localState="using:Calculo_ductos_winUi_3.ViewModels"
+    xmlns:model="using:Calculo_ductos_winUi_3.Models"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid 
+        CornerRadius="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Jornadas Efectivas"
+                   Grid.Row="0"
+                   HorizontalAlignment="Center"
+                   Style="{StaticResource SubtitleTextBlockStyle}"></TextBlock>
+        <Grid x:Name="DetailTable"
+              CornerRadius="8"
+              Grid.Row="1"
+              Margin="0,16,0,0"
+              Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid 
+                Grid.Column="1"
+                BorderThickness="1"
+                BorderBrush="Gray"
+                CornerRadius="8"
+                Margin="0,32,0,32"
+                Background="{StaticResource CardBackgroundFillColorSecondaryBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock 
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center"
+                    Margin="16"
+                    TextWrapping="Wrap"
+                    Text="{x:Bind stateApp.FreightVM.SelectedLocality.Name, Mode=OneWay}"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"></TextBlock>
+                <TextBlock
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="16"
+                    HorizontalAlignment="Center"
+                    Text="Jornadas"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"></TextBlock>
+                <StackPanel
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left"
+                    Margin="56,4,0,0">
+                    <TextBlock Text="{x:Bind stateApp.DuctsVM.FloorCount, Mode=OneWay}"></TextBlock>
+                    <TextBlock Text=" Niveles"></TextBlock>
+                </StackPanel>
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="56,8,0,0"
+                    Text="{x:Bind stateApp.ManPowerVM.EfectiveWorkDays.WorkDaysBase, Mode=OneWay}"></TextBlock>
+                <TextBlock
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Text="Entrega"
+                    Margin="56,8,0,0"
+                    HorizontalAlignment="Left"></TextBlock>
+                <StackPanel
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="48,8,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left">
+                    <TextBlock Text="+  "></TextBlock>
+                    <TextBlock Text="{x:Bind stateApp.ManPowerVM.EfectiveWorkDays.WorkDayDueDate}"></TextBlock>
+                </StackPanel>
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Text="Proyecto foráneo"
+                    Margin="56,8,0,0"
+                    HorizontalAlignment="Left"></TextBlock>
+                <StackPanel
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Margin="48,8,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left">
+                    <TextBlock Text="+  "></TextBlock>
+                    <TextBlock Text="{x:Bind stateApp.ManPowerVM.EfectiveWorkDays.WorkDayForeign}"></TextBlock>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Orientation="Horizontal"
+                    Margin="56,8,0,0"
+                    HorizontalAlignment="Left">
+                    <TextBlock Text="Niveles doble altura"></TextBlock>
+                    <TextBlock Text="Niveles doble altura"></TextBlock>
+                </StackPanel>
+                <StackPanel
+                    Grid.Row="4"
+                    Grid.Column="1"
+                    Margin="48,8,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left">
+                    <TextBlock Text="+  "></TextBlock>
+                    <TextBlock Text="{x:Bind stateApp.ManPowerVM.EfectiveWorkDays.WorkDaysDobleFloors}"></TextBlock>
+                </StackPanel>
+                <TextBlock
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Text="Mayor a 11 niveles"
+                    Margin="56,8,0,0"
+                    HorizontalAlignment="Left"></TextBlock>
+                <StackPanel
+                    Grid.Row="5"
+                    Grid.Column="1"
+                    Margin="48,8,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left">
+                    <TextBlock Text="+  "></TextBlock>
+                    <TextBlock Text="{x:Bind stateApp.ManPowerVM.EfectiveWorkDays.WorkDaysExtraFloors}"></TextBlock>
+                </StackPanel>
+                <Path 
+                    Tag="0"
+                    Stroke="Gray"
+                    StrokeThickness="0.5"
+                    Data="M 0,0 L 1,0" 
+                    Grid.ColumnSpan="2"
+                    Margin="32,4,32,0"
+                    Grid.Row="6"
+                    Stretch="Fill" 
+                    VerticalAlignment="Top"
+                    StrokeDashArray="8,12" />
+                <TextBlock
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Text="Subtotal"
+                    Margin="56,8,0,0"
+                    HorizontalAlignment="Left"></TextBlock>
+                <StackPanel
+                    Grid.Row="6"
+                    Grid.Column="1"
+                    Margin="56,8,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Left">
+                    <TextBlock Text="{x:Bind stateApp.ManPowerVM.EfectiveWorkDays.TotalWorkDays}"></TextBlock>
+                </StackPanel>
+                <TextBlock
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Text="Total"
+                    Margin="56,8,0,0"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"></TextBlock>
+                <TextBlock 
+                    Grid.Row="7"
+                    Grid.Column="1"
+                    Margin="56,8,0,0"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource BodyStrongTextBlockStyle}"
+                    Text="{x:Bind stateApp.ManPowerVM.EfectiveWorkDays.TotalWorkDays}"></TextBlock>
+                
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

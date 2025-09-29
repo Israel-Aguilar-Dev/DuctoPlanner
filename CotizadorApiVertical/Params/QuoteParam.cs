@@ -17,8 +17,10 @@ namespace CotizadorApiVertical.Params
         public string SiteRef { get; set; } = "VERS";
         public bool NecesitaAspersor { get; set; } = false;
         public bool NecesitaSistemaDD { get; set; } = false;
-        
+        public int LocalidadId { get; set; } = 0;
+        public int RentabilidadMOId { get; set; } = 0;
         public List<LevelParam> Niveles { get; set; }
+        public List<HumanResource> ManoDeObra { get; set; }
     }
     public class LevelParam 
     {
@@ -30,6 +32,12 @@ namespace CotizadorApiVertical.Params
         public bool NecesitaAntiImpactos { get; set; } = false;
         public int TipoPuertaId { get; set; } = 0;
         public int TipoDescargaId { get; set; } = 0;
+
+    }
+    public class HumanResource 
+    {
+        public int RecursoId { get; set; } = 0;
+        public int TipoRecursoId { get; set; } = 0;
 
     }
 }

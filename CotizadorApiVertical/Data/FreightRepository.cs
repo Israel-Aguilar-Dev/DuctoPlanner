@@ -30,5 +30,37 @@ namespace CotizadorApiVertical.Data
 
             }
         }
+
+        public ResultOperationModel InsertFreight(SqlConnection connection, SqlTransaction transaction, int localidadId, int cotizacionId)
+        {
+            var result = new ResultOperationModel();
+            try
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@CotizacionId", cotizacionId);
+                parameters.Add("@LocalidadId", localidadId);
+
+                connection.Execute(
+                    "Insertar_Flete_Cotizacion",
+                    parameters,
+                    transaction: transaction,
+                    commandType: CommandType.StoredProcedure
+                );
+
+                result.Success = true;
+                result.Message = "Se agrego correctamente";
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = $"Ocurrio un error: {ex.Message}";
+            }
+            return result;
+            
+
+        }
+
+        
     }
 }
