@@ -27,7 +27,12 @@ namespace Calculo_ductos_winUi_3.Models
         public string SiteRef { get; set; } = string.Empty;
         public bool NecesitaAspersor { get; set; } = false;
         public bool NecesitaSistemaDD { get; set; } = false;
+        public int EntidadId { get; set; } = 0;
+        public int MunicipioId { get; set; } = 0;
+        public int LocalidadId { get; set; } = 0;
+        public int RentabilidadMOId { get; set; } = 1;
         public List<FloorDetailModel> Niveles { get; set; }
+        public List<HumanResource> ManoDeObra { get; set; }
 
 
     }
@@ -41,5 +46,10 @@ namespace Calculo_ductos_winUi_3.Models
         public bool NecesitaAntiImpactos { get; set; } = false;
         public int TipoPuertaId {get;set;} = 0;
         public int TipoDescargaId { get; set; } = 0;
+    }
+    public class HumanResource
+    { 
+        public int RecursoId { get; set; }
+        public int TipoRecursoId { get; set; }
     }
 }

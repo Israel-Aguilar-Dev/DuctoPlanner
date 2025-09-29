@@ -219,6 +219,9 @@ namespace Calculo_ductos_winUi_3.ViewModels
             try
             {
                 var quote = await Client.GetAsync<QuoteDetailModel>($"Quoter/{id}");
+                var selectedState = FreightVM.AllStates.Where(state => state.Id == quote.EntidadId).FirstOrDefault();
+                var selectedMunicipality = FreightVM.AllMunicipalities.Where(municipality => municipality.Id == quote.MunicipioId).FirstOrDefault();
+                var selectedLocality = FreightVM.AllLocalities.Where(locality => locality.Id == quote.LocalidadId).FirstOrDefault();
 
                 if (quote != null)
                 {
@@ -231,12 +234,20 @@ namespace Calculo_ductos_winUi_3.ViewModels
                     CompleteDuctVm.NeedSprinkler = quote.NecesitaAspersor;
                     CompleteDuctVm.NeedDesinfectionSystem = quote.NecesitaSistemaDD;
                     FloorVM.FloorList = quote.MapQuoteDetailToFloorList(FloorVM);
+                    FreightVM.SelectedState = selectedState;
+                    FreightVM.SelectedMunicipality = selectedMunicipality;
+                    FreightVM.SelectedLocality = selectedLocality;
+                    
 
                     DuctsVM.CalculateDuctsCommand.Execute(this.ToJsonString());
                     ComponentsVM.CalculateComponentsCommand.Execute(DuctsVM.CompleteDuct);
                     RemoveEmptyPieces();
                     DiferenceFloors();
-                    ManPowerVM.CalculateWorkDays(DuctsVM.CompleteDuct,FreightVM.SelectedState);
+                    await FreightVM.CalculateFreight(DuctsVM.DucList.ToList());
+                    ManPowerVM.CalculateWorkDays(DuctsVM.CompleteDuct,selectedState);
+                    ManPowerVM.SelectedRentability = ManPowerVM.AvailableRentabilities.Where(r => r.Id == quote.RentabilidadMOId).FirstOrDefault();
+                    ManPowerVM.ManPower = quote.MapQuoteDetailManPower(ManPowerVM);
+                    await ManPowerVM.CalculateManPower();
                 }
             }
             catch (Exception ex)

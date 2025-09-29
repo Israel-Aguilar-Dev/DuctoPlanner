@@ -10,6 +10,8 @@ using DocumentFormat.OpenXml.Bibliography;
 using Calculo_ductos_winUi_3.ViewModels;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Security.AccessControl;
+using System.Security.Cryptography;
 
 namespace Calculo_ductos_winUi_3.Services
 {
@@ -76,6 +78,7 @@ namespace Calculo_ductos_winUi_3.Services
                         SiteRef ="VERS",
                         NecesitaAspersor = stateApp.CompleteDuctVm.NeedSprinkler,
                         NecesitaSistemaDD = stateApp.CompleteDuctVm.NeedDesinfectionSystem,
+                        LocalidadId = stateApp.FreightVM.SelectedLocality.Id,
                         Niveles = stateApp.FloorVM.FloorList.Select(
                             floor => new FloorDetailModel
                             {
@@ -88,7 +91,12 @@ namespace Calculo_ductos_winUi_3.Services
                                 TipoPuertaId = floor.TypeDoor.Id,
                                 TipoDescargaId = Convert.ToInt32(floor.Discharge)
                             }
-                            ).ToList()
+                            ).ToList(),
+                        ManoDeObra = stateApp.ManPowerVM.ManPower.Select(
+                            resource => new HumanResource{
+                                RecursoId = resource.Recurso.Id,
+                                TipoRecursoId = resource.TipoRecurso.Id
+                            }).ToList()
                     };
             }
             catch (Exception ex)
@@ -119,7 +127,22 @@ namespace Calculo_ductos_winUi_3.Services
 
             return map;
         }
-        
+        public static ObservableCollection<HumanResourceModel> MapQuoteDetailManPower(this QuoteDetailModel quote,ManPowerViewModel manPowerVm)
+        {
+            ObservableCollection<HumanResourceModel> map = new ObservableCollection<HumanResourceModel>();
+            var humaResourceList = quote.ManoDeObra.Select(resource =>
+                new HumanResourceModel { 
+                    Uuid = new Guid(),
+                    Recurso = manPowerVm.AvailableResources.Where(x => x.Id == resource.RecursoId).FirstOrDefault(),
+                    TipoRecurso = manPowerVm.AvailableResourceTypes.Where(x => x.Id ==resource.TipoRecursoId).FirstOrDefault(),
+                    JornadasEfectivas = manPowerVm.EfectiveWorkDays.TotalWorkDays,
+                    DiasNoLaborales = manPowerVm.AvailableResourceTypes.Where(x => x.Id == resource.TipoRecursoId).FirstOrDefault().Id == 1 ? manPowerVm.EfectiveWorkDays.TotalWorkDays / 7 : 0
+                }
+                ).ToList();
+            foreach(var resource in humaResourceList)
+                map.Add(resource);
+            return map;
+        }
 
     }
 }

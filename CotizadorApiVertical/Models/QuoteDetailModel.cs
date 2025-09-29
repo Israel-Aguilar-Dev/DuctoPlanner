@@ -31,5 +31,6 @@ namespace CotizadorApiVertical.Models
         public int LocalidadId { get; set; } = 0;
         public int MunicipioId { get; set; } = 0;
         public int EntidadId { get; set; } = 0;
+        public int RentabilidadMOId { get; set; } = 0;
     }
 }

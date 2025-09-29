@@ -18,6 +18,7 @@ namespace CotizadorApiVertical.Params
         public bool NecesitaAspersor { get; set; } = false;
         public bool NecesitaSistemaDD { get; set; } = false;
         public int LocalidadId { get; set; } = 0;
+        public int RentabilidadMOId { get; set; } = 0;
         public List<LevelParam> Niveles { get; set; }
         public List<HumanResource> ManoDeObra { get; set; }
     }

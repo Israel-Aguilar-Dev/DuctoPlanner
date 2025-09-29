@@ -177,6 +177,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Data\CatalogRepository.cs" />
     <Compile Include="Data\FreightRepository.cs" />
+    <Compile Include="Data\ManPowerRepository.cs" />
     <Compile Include="Data\QuoteRepository.cs" />
     <Compile Include="Facades\ICatalogFacade.cs" />
     <Compile Include="Facades\IFreightFacade.cs" />
@@ -192,9 +193,11 @@
     <Compile Include="Models\CatalogModel.cs" />
     <Compile Include="Models\DoorTypeCatalog.cs" />
     <Compile Include="Models\FreigthModel.cs" />
+    <Compile Include="Models\ManPowerModel.cs" />
     <Compile Include="Models\QuoteDetailModel.cs" />
     <Compile Include="Models\QuoteInsertionResultModel.cs" />
     <Compile Include="Models\QuoteModel.cs" />
+    <Compile Include="Models\ResultOperationModel.cs" />
     <Compile Include="Params\QuoteParam.cs" />
     <Compile Include="Params\Response.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
